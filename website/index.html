@@ -1,0 +1,43 @@
+﻿<!doctype html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COMCO | Home</title>
+    <!--<link rel="stylesheet" href="{{ url_for('static', path='/homepage.css') }}" />-->
+    <link rel="stylesheet" href="homepage.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="images/logo.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    <div class="competitionSearchArea">
+        <form class="competitionSearchForm" action="/competitions/search/">
+
+            <input id="competitionSearchBar" type="search" name="q" placeholder="Competition Search..." />
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+        <div class="competitionSearchPopular">
+            <text lang="en">Trending Searches:</text>
+            <text hidden lang="zh">热门搜索：</text>
+            <a href="/competitions/search/?q=midas">Midas</a>
+            <a href="/competitions/search/?q=brandon">Brandon</a>
+            <a href="/competitions/search/?q=NSL">NSL</a>
+        </div>
+    </div>
+    <div class="banner">
+        <img id="bannerimg" class="bannerImage">
+        <button id="bannerimg-1" onclick="toggleBanner(1)" class="bannerToggle" style=" left: calc(50% - 30px); background-color:white;"></button>
+        <button id="bannerimg-2" onclick="toggleBanner(2)" class="bannerToggle" style=" left: calc(50% + 30px);"></button>
+    </div>
+    <div style="height:1000px">
+
+    </div>
+    <footer id="footer"></footer>
+</body>
+</html>
+
+<script src="jquery-3.6.0.js"></script>
+<script src="jquery-ui-1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="homepage.js"></script>
+<script type="text/javascript" src="loadEssentials.js"></script>

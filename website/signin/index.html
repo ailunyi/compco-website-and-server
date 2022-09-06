@@ -1,0 +1,38 @@
+﻿<!doctype html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>NAME</title>
+    <link rel="stylesheet" href="/homepage.css" />
+    <link rel="stylesheet" href="signin.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/logo.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <div class="signinBox">
+        <div class="title"> Sign in</div>
+        <form id="signinForm">
+            <div id="form_message_box" class="form__message form__message--success"></div>
+            <!--<div class="inputTitle">Email address</div>-->
+            <input id="name" type="text" placeholder="Email Address" />
+
+            <!--<div class="inputTitle">Password</div>-->
+            <input id="password" type="password" placeholder="Password" />
+            <button type="submit">sign in</button>
+
+            <div style="text-align: center;margin-top: 10px; ">
+                <a class="signinRegisterToggle" href="/register">Create Account</a>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
+
+<script src="/jquery-3.6.0.js"></script>
+<script src="/jquery-ui-1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="signin.js"></script>
+<script type="text/javascript" src="/loadEssentials.js"></script>

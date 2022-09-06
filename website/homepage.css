@@ -1,0 +1,350 @@
+﻿@font-face {
+    font-family: Montserrat-Bold;
+    src: url('Montserrat/montserrat-bold-webfont.woff2') format('woff2'),
+         url('Montserrat/montserrat-bold-webfont.woff') format('woff');
+}
+
+body {
+    overflow-x: hidden;
+    background-color: #fcfcfc;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction:column;
+
+}
+
+.dark-mode {
+    background-color: black;
+    color: white;
+}
+
+.navigation {
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    height: 70px;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    box-shadow: 0 1px 3px -2px grey;
+    white-space: nowrap;
+}
+
+.competitionSearchArea {
+    margin-top: 80px;
+    height: 140px;
+    width: 100%;
+}
+
+.exploreDropdown {
+    position: fixed;
+    width: 100%;
+    height: 300px;
+    background-color: #3175fa;
+    top: 70px;
+}
+
+.competitionSearchForm input {
+    height: 72px;
+    margin-top: 25px;
+    margin-left: 25%;
+    width: 45%;
+    font-size: 25px;
+    float: left;
+    padding-left: 10px;
+    border-radius: 3px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-width: 1px;
+    outline: 0;
+}
+
+
+
+.competitionSearchForm input:focus {
+    border-width: 2px;
+    border-color: #3175fa;
+}
+
+.competitionSearchPopular{
+    float:left;
+    margin-top:3px;
+    margin-left:25%;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.competitionSearchPopular a{
+    margin-left:10px;
+    float:left;
+    cursor:pointer;
+    color:black;
+    text-decoration:none;
+}
+
+
+.competitionSearchPopular a:hover{
+    color:#3175fa;
+}
+
+.competitionSearchPopular text{
+    float:left;
+}
+.navLink {
+    float:left;
+    margin-left: 50px;
+    font-size: 17px;
+    font-family: Montserrat-Bold;
+    cursor: pointer;
+    text-decoration:none;
+    color:black;
+}
+
+.bannerToggle {
+    position: absolute;
+    background-color: rgba(0,0,0,0.3 );
+    padding: 8px;
+    border-radius: 30px;
+    border-color: white;
+    top: 650px;
+    cursor: pointer;
+}
+
+
+.competitionSearchForm button {
+    float: left;
+    height: 72px;
+    margin-top: -72px;
+    margin-left: 70%;
+    width: 5%;
+    font-size: 25px;
+    cursor: pointer;
+    float: left;
+    border-left: 0;
+    border-radius: 3px;
+    border-width: 1px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+}
+
+.competitionSearchForm{
+   
+}
+
+.registerButton {
+    position: absolute;
+    left: 1420px;
+    width: 100px;
+    top: 10px;
+    height: 50px;
+    background-color: #3175fa;
+    color: white;
+    border: white;
+    border-radius: 5px;
+    text-align: center;
+    margin: auto;
+    text-decoration: none;
+    font-family: Montserrat-Bold;
+}
+
+
+.signInButton:hover {
+    background-color: red;
+}
+
+.signinButton {
+    position: absolute;
+    left: 1330px;
+    top: 27px;
+    height: 50px;
+    color: black;
+    text-decoration: none;
+    font-family: Montserrat-Bold;
+}
+
+.languageToggler{
+    position:absolute;
+    right:50px;
+    top:10px;
+    height:50px;
+    width:50px;
+    cursor:pointer; 
+
+}
+
+.languageToggler:hover{
+    background-color:rgba(0,0,0,0.2);
+    border-radius:10px;
+}
+
+.languageTogglerDropdown {
+    background-color: white;
+    position: fixed;
+    top: 65px;
+    right: 25px;
+    width: 100px;
+    height: 100px;
+    box-shadow: 0px 2px 4px 1px grey;
+}
+
+.languageTogglerDropdown a {
+    cursor:pointer;
+    width:100%;
+    text-align:center;
+    margin-top:15px;
+    text-align:center;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-decoration: none;
+    color:black;
+    display:block;
+}
+
+
+.languageToggler img {
+    margin-top:12.5px;
+    margin-left: 12.5px;
+    height: 25px;
+    width:25px;
+}
+
+.navShowBar {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    font-size: 30px;
+    color: black;
+    cursor: pointer;
+    background-color: inherit;
+    text-align: center;
+    outline: none;
+    border: none;
+}
+.mobileNav {
+    position: fixed;
+    right: 0%;
+    top: 0%;
+    height: 100%;
+    width: 60vw;
+    background-color: #1F1E1E;
+    z-index:2;
+}
+.bannerImage {
+    background-image: url(images/covers/1.jpg);
+    height: 100%;
+    width: 100%;
+    filter: brightness(50%);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.banner {
+    position: relative;
+    width: 100%;
+    height: 700px;
+    color: white;
+    background-color:#f0f0f0;
+}
+
+@keyframes animate {
+
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+.mobileNavItem {
+    font-family: Montserrat-Bold;
+    font-size:25px;
+    text-align:center;
+    cursor:pointer;
+    color:white;
+    border:2px solid black;
+    padding-top:10px;
+    padding-bottom:10px;
+}
+
+.mobileNavItem:hover{
+   background-color:red;
+}
+
+@viewport{
+    zoom:1.0;
+    width: auto;
+}
+@-ms-viewport {
+    zoom: 1.0;
+    width: auto;
+}
+
+
+.footer {
+    margin-top: auto;
+    padding:0;
+    height: 250px;
+    width: 100%;
+    background-color: #f0f0f0;
+    left: 0px;
+}
+
+.bottomLogo{
+     display:block;
+     margin-left:auto;
+     margin-right:auto;
+     margin-top:20px;
+     height:100px;
+     position:relative;
+     color:white;
+     
+}
+
+.trademarkText {
+    position:absolute;
+    margin-top:150px;
+    font-size:15px;
+    color:black;
+    left:calc((100vw - 800px)/2);
+    width:800px;
+    text-align:center;
+}
+.navLogo {
+    position: fixed;
+    top: 0.5%;
+    left: 3%;
+    max-height: 60px;
+}
+
+
+#titleT:hover {
+    color: #FC3434;
+}
+
+
+/*
+
+    #navGames:hover + .navGamesDropDown {
+    visibility: visible;
+    }
+
+    .navAboutDropDown {
+    position: fixed;
+    top: 7%;
+    width: 10%;
+    left: 19%;
+    height: 16%;
+    background-color: white;
+    visibility: hidden;
+}
+
+
+    #navAbout:hover + .navAboutDropDown {
+    visibility: visible;
+}
+*/

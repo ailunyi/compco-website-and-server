@@ -1,0 +1,49 @@
+﻿<!doctype html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COMCO | Home</title>
+    <link rel="stylesheet" href="/homepage.css" />
+    <link rel="stylesheet" href="competitionSearch.css" />
+    <link rel="shortcut icon" type="/image/x-icon" href="/images/logo.png" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <div class="competitionSearchArea">
+        <form class="competitionSearchForm" action="/competitions/search/">
+
+            <input id="competitionSearchBar" type="search" name="q" placeholder="Competition Search..." />
+            <button type="submit"><i class="fa fa-search"></i></button>
+        </form>
+        <div class="competitionSearchPopular">
+            <text lang="en">Trending Searches:</text>
+            <text hidden lang="zh">热门搜索：</text>
+            <a href="/competitions/search/?q=midas">Midas</a>
+            <a href="/competitions/search/?q=brandon">Brandon</a>
+            <a href="/competitions/search/?q=NSL">NSL</a>
+        </div>
+    </div>
+
+    <div class="searchInfoArea">
+        <text lang="en">found</text>
+        <text lang="zh">找到</text>
+        <text id="searchedItemNumber" class="searchInfo">0</text>
+
+        <text lang="zh">个与</text>
+        <text lang="en">results for</text>
+        <text id="searchedItemName" class="searchInfo">null</text>
+        <text lang="zh">相关的结果</text>
+    </div>
+    <div id="competitionPreviewArea" class="competitionPreviewArea">
+    </div>
+    <footer id="footer"></footer>
+</body>
+</html>
+
+<script src="/jquery-3.6.0.js"></script>
+<script src="/jquery-ui-1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="/loadEssentials.js"></script>
+<script type="text/javascript" src="competitionSearch.js"></script>

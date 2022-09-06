@@ -1,0 +1,41 @@
+﻿<nav class="navigation">
+    <!-- PC NAVIGATION -->
+    <a href="/"><img class="navLogo" alt="Bakeneko" src="/images/logo.png" /></a>
+    <a lang="en" class="registerButton" href="/register"><p>Register</p></a>
+    <a lang="en" class="signinButton" href="/signin">Sign in</a>
+
+    <a hidden lang="zh" class="registerButton"  href="/register"><p>登记</p></a>
+    <a hidden lang="zh" class="signinButton"href="/signin">登入</a>
+        
+    <div style="margin-top:27px">
+        <a class="navLink" href="/news"  lang="en" style="margin-left:250px">News</a>
+        <a class="navLink" href="/explore" lang="en" onmouseover="toggleVisibility('exploreDropdown')">Explore</a>
+        <a class="navLink" href="/forum" lang="en">Forum</a>
+        <a class="navLink" href="/about-us" lang="en">About us</a>
+        <a class="navLink" href="/download" lang="en">Download</a>
+
+        <a class="navLink" href="/news" hidden lang="zh" style="margin-left:250px">新闻</a>
+        <a class="navLink" href="/explore" hidden lang="zh" onmouseover="toggleVisibility('exploreDropdown')">探索</a>
+        <a class="navLink" href="/forum" hidden lang="zh">论坛</a>
+        <a class="navLink" href="/about-us" hidden lang="zh">关于我们</a>
+        <a class="navLink" href="/download" hidden lang="zh">下载</a>
+    </div>
+
+    <!--explore-->
+    <div hidden onmouseout="toggleVisibility('exploreDropdown')" id="exploreDropdown" class="exploreDropdown">hi</div>
+
+    <div onclick="toggleVisibility('languageTogglerDropdown')" id="languageToggler" class="languageToggler"><img src="/images/language.png" /> </div>
+    <div hidden id="languageTogglerDropdown" class="languageTogglerDropdown">
+        <a lang="en" style="cursor:default; color:darkred" href="#en">English</a>
+        <a lang="en" href="#cn">中文</a>
+
+        <a lang="zh" hidden href="#en">English</a>
+        <a lang="zh" hidden style="cursor:default; color:darkred">中文</a>
+    </div>
+
+    <!-- PHONE NAVIGATION -->
+    <button onclick="showBar('#mobileNav')" hidden id="showBar" class="navShowBar">☰</button>
+    <div id="mobileNav" hidden class="mobileNav">
+
+    </div>
+</nav>
