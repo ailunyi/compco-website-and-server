@@ -67,6 +67,11 @@ class LoginInfo(BaseModel):
     username: str
     password: str
 
+class RegisterInfo(BaseModel):
+    username: str
+    password: str
+    email: str
+
 @app.post("/login")
 async def request(loginInfo: LoginInfo):
     userLoginInfo = getUser(loginInfo.username)
@@ -80,19 +85,19 @@ async def request(loginInfo: LoginInfo):
         else: 
             return {"message":"user found but wrong password", "login": 1}
 
-        
-@app.post("/register")
-async def request(loginInfo: LoginInfo):
-    userLoginInfo = getUser(loginInfo.username)
-    print(loginInfo)
-    if (userLoginInfo == None):
-        return {"message":"user not found", "login": 0}
 
+minUsernameLength = 3;
+minPasswordLength = 3;
+@app.post("/register")
+async def request(registerInfo: RegisterInfo):
+    if (len(registerInfo.username) <minUsernameLength or len(registerInfo.password) <minPasswordLength):
+            return {"message":"invalid username or password", "register": 0}
     else:
-        if userLoginInfo["password"] == loginInfo.password:
-            return {"message":"user found and right password", "login": 2}
-        else: 
-            return {"message":"user found but wrong password", "login": 1}
+        userRegisterInfo = addUser(registerInfo.username, registerInfo.email, registerInfo.password)
+        if (userRegisterInfo == -1):
+            return {"message":"username taken", "register": 1}
+        elif (userRegisterInfo != None):
+            return {"message":"success", "register": 2}
 
 if __name__ == "__main__":
     uvicorn.run("main:app", host="0.0.0.0", port=8000, reload=True)

@@ -9,12 +9,15 @@ mydb = myclient["mydatabase"]
 userCol = mydb["users"]
 compCol = mydb["competitions"]
 
-def addUser(username, password):
+def addUser(username,email, password):
     #force lowercase
     username = username.lower();
-    userInfo = { "username": username, "password": password }
-    x = userCol.insert_one(userInfo)
-
+    if (getUser(username) == None):
+        userInfo = { "username": username, "password": password, "email":email }    
+        x = userCol.insert_one(userInfo)
+        return x
+    else:
+        return -1
 def getUser(username):
     username = username.lower();
     user = userCol.find_one({"username": username})

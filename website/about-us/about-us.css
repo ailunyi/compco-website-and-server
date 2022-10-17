@@ -1,0 +1,14 @@
+.title{
+    font-size:30px;
+    margin-top:40px;
+}
+.textArea{
+    margin-top:50px;
+    margin-left:100px;
+    width:calc(100% - 200px);
+}
+
+.text {
+    margin-top: 10px;
+    font-size: 20px;
+}

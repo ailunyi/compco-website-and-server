@@ -34,6 +34,18 @@ function autoToggleBanner() {
 
 }
 
+function createToggleButtons() {
+    for (let i = 0; i < totalBanners; i++) {
+        const element = document.createElement("button");
+        element.onclick = "toggleBanner(" + (i + 1) + ")";
+        element.id = "bannerimg-" + (i + 1);
+        element.className = "bannerToggle";
+        element.style = " left: calc(50% - 30px)";
+        if (i == 0)
+            element.backgroundColor = "white";
+    }
+}
+
 var toggleBannerTimer = setInterval(autoToggleBanner, 5000);
 
 if (document.getElementById("bannerimg"))

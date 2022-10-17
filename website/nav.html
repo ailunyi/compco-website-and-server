@@ -1,14 +1,23 @@
 ﻿<nav class="navigation">
     <!-- PC NAVIGATION -->
     <a href="/"><img class="navLogo" alt="Bakeneko" src="/images/logo.png" /></a>
-    <a lang="en" class="registerButton" href="/register"><p>Register</p></a>
-    <a lang="en" class="signinButton" href="/signin">Sign in</a>
 
-    <a hidden lang="zh" class="registerButton"  href="/register"><p>登记</p></a>
-    <a hidden lang="zh" class="signinButton"href="/signin">登入</a>
-        
+    <!-- login & signin buttons -->
+    <div id="notLoggedIn">
+
+        <a lang="en" class="registerButton" href="/register"><p>Register</p></a>
+        <a lang="en" class="signinButton" href="/signin">Sign in</a>
+
+        <a hidden lang="zh" class="registerButton" href="/register"><p>登记</p></a>
+        <a hidden lang="zh" class="signinButton" href="/signin">登入</a>
+    </div>
+
+    <div id="loggedIn" hidden>
+        <a lang="en" class="signinButton" href="/logout">Logout</a>
+    </div>
+
     <div style="margin-top:27px">
-        <a class="navLink" href="/news"  lang="en" style="margin-left:250px">News</a>
+        <a class="navLink" href="/news" lang="en" style="margin-left:250px">News</a>
         <a class="navLink" href="/explore" lang="en" onmouseover="toggleVisibility('exploreDropdown')">Explore</a>
         <a class="navLink" href="/forum" lang="en">Forum</a>
         <a class="navLink" href="/about-us" lang="en">About us</a>
