@@ -1,4 +1,6 @@
-var serverAdress = "http://localhost:8000/login"
+//var serverAdress = "http://www.compco.cc:8000/login"
+//var serverAdress = "http://localhost:8000/login"
+
 //import writeCookie from "/essentials.js"
 
 function setFormMessage(formElement, type, message) {
@@ -10,21 +12,14 @@ function setFormMessage(formElement, type, message) {
     messageElement.classList.add(`form__message--${type}`);
 }
 
-function writeCookie(name, value, days) {
-    var date, expires;
-    if (days) {
-        date = new Date();
-        date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
-        expires = "; expires=" + date.toGMTString();
-    } else {
-        expires = "";
-    }
-    document.cookie = name + "=" + value + expires + "; path=/";
+// aready logged in
+if (readCookie("SESSIONID") != "") {
+    window.location.href = "/";
 }
 
 function login(username, password) {
 
-    return fetch(serverAdress, {
+    return fetch(serverAddress + "/login", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -51,16 +46,23 @@ document.addEventListener("DOMContentLoaded", () => {
     const loginForm = document.querySelector("#signinForm")
     loginForm.addEventListener("submit", e => {
         e.preventDefault();
-        console.log("username:" + e.target[0].value);
-        console.log("password:" + e.target[1].value);
+        
+        setFormMessage(loginForm, "success", "loading...");
+            
         login(e.target[0].value, e.target[1].value).then(loginData => {
+            
             if (loginData.login == 2) {
                 console.log("loginSuccess");
                 setFormMessage(loginForm, "success", "Login success");
-                writeCookie("SESSIONID", e.target[0].value, 3);
+                writeCookie("SESSIONID", loginData.SESSIONID, 3);
+                writeCookie("username", loginData.username, 3);
+                writeCookie("profilePicture", loginData.profilePicture, 3);
+                writeCookie("firstName", loginData.firstName, 3);
+                writeCookie("lastName", loginData.lastName, 3);
                 //set logged in stuff to visible
                 document.getElementById("loggedIn").hidden = false;
                 document.getElementById("notLoggedIn").hidden = true;
+                window.location.href = "/";
             } else if (loginData.login == 1) {
                 console.log("wrong pass");
                 setFormMessage(loginForm, "error", "Incorrect username or password");

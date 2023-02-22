@@ -3,22 +3,156 @@
 <html>
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>COMCO | Explore</title>
+    <title>Explore</title>
     <link rel="stylesheet" href="/homepage.css" />
-    <link rel="shortcut icon" type="/image/x-icon" href="/images/logo.png" />
+    <link rel="stylesheet" href="/explore/explore.css" />
+    <link rel="shortcut icon" type="/image/x-icon" href="/images/logo.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+    <script src="/loadtheme.js"></script>
+    <script src="/jquery-3.6.0.js"></script>
+    <script src="/jquery-ui-1.12.1/jquery-ui.js"></script>
 </head>
 <body>
     <div id="nav-placeholder"></div>
 
+    <script type="text/javascript" src="/loadEssentials.js"></script>
 
-    <div style="height:1000px">
+    <div class="exploreCategories">
+        <div>Explore</div>
+        <a href="/explore" class="exploreCategoriesSelected">All</a>
+        <a href="/explore/subject">Subject</a>
+        <a href="/explore/sports">Sports</a>
+        <a href="/explore/other">Other</a>
+        <label> | </label>
+        <a>Users</a>
+        <a>Communities</a>
 
+    </div>
+
+    <div class="exploreCompetitionsArea">
+        <!--<div class="sortOptions">
+            <div class="sortOptionsSelected" style="margin-left:0px">trending</div>
+            <div>recent</div>
+            <div>official</div>
+            <div>most viewed</div>
+            <div>most liked</div>
+        </div>-->
+
+        <div class="title">Trending</div>
+        <div id="competitionPreviewArea-Trending" class="competitionPreviewAreaTop"></div>
+
+        <div class="title">Ongoing Activites <a>see more</a></div>
+        <div id="competitionPreviewArea-Ongoing" class="competitionPreviewArea"></div>
+
+        <div class="title">Official Competitions <a>see more</a></div>
+        <div id="competitionPreviewArea-Official" class="competitionPreviewArea"></div>
+
+        <div class="title">Trending Events <a>see more</a></div>
+        <div id="competitionPreviewArea-Events" class="competitionPreviewArea"></div>
+
+        <div class="title">Trending Summer & Winter Programs <a>see more</a></div>
+        <div id="competitionPreviewArea-Programs" class="competitionPreviewArea"></div>
+
+        <div class="title">Trending Internships & Jobs <a>see more</a></div>
+        <div id="competitionPreviewArea-Internships" class="competitionPreviewArea"></div>
+
+
+        <div class="title">Most viewed <a>see more</a></div>
+        <div id="competitionPreviewArea-MostViewed" class="competitionPreviewArea"></div>
+
+        <div class="title">Newest <a>see more</a></div>
+        <div id="competitionPreviewArea-Newest" class="competitionPreviewArea"></div>
+
+        <div class="title">Most liked <a>see more</a></div>
+        <div id="competitionPreviewArea-MostLiked" class="competitionPreviewArea"></div>
+
+
+        <div class="title">Just Finished<a>see more</a></div>
+        <div id="competitionPreviewArea-Finished" class="competitionPreviewArea"></div>
+
+        <!--<div class="competitionMainCategory">
+            <div class="categoryNamesArea">
+                <div class="title categoryTitle">Subjects</div>
+                <div class="competitionSubCategoryArea" style="height:40px">
+                    <div class="competitionSubCategoryAreaSelected">All</div>
+                    <div>Math</div>
+                    <div>Chem</div>
+                    <div>CS</div>
+                    <div>Econ</div>
+                    <div>Business</div>
+                    <div>Physics</div>
+                    <div>Chinese</div>
+                    <div>History</div>
+                    <div>English</div>
+                    <div>Other</div>
+                </div>
+            </div>
+            <div class="sortOptions">
+                <div class="sortOptionsSelected">trending</div>
+                <div>recent</div>
+                <div>popular</div>
+            </div>
+            <div class="categoryCompetitionsArea"></div>
+        </div>
+        <div class="competitionMainCategory">
+            <div class="categoryNamesArea">
+                <div class="title categoryTitle">Sports</div>
+                <div class="competitionSubCategoryArea">
+                    <div class="competitionSubCategoryAreaSelected">All</div>
+                    <div>Tennis</div>
+                    <div>Basketball</div>
+                    <div>Volleyball</div>
+                </div>
+            </div>
+            <div class="sortOptions">
+                <div class="sortOptionsSelected">trending</div>
+                <div>recent</div>
+                <div>popular</div>
+            </div>
+            <div class="categoryCompetitionsArea"></div>
+        </div>
+        <div class="competitionMainCategory">
+            <div class="categoryNamesArea">
+                <div class="title categoryTitle">Hobbies</div>
+                <div class="competitionSubCategoryArea">
+                    <div class="competitionSubCategoryAreaSelected">All</div>
+                    <div>Tennis</div>
+                    <div>Basketball</div>
+                    <div>Volleyball</div>
+                </div>
+            </div>
+            <div class="sortOptions">
+                <div class="sortOptionsSelected">trending</div>
+                <div>recent</div>
+                <div>popular</div>
+            </div>
+            <div class="categoryCompetitionsArea"></div>
+        </div>
+        <div class="competitionMainCategory">
+            <div class="categoryNamesArea">
+                <div class="title categoryTitle">Other</div>
+            </div>
+            <div class="sortOptions">
+                <div class="sortOptionsSelected">trending</div>
+                <div>recent</div>
+                <div>popular</div>
+            </div>
+            <div class="categoryCompetitionsArea"></div>
+        </div>-->
+    </div>
+
+    <div class="exploreCommunitiesArea">
+        <div class="title">Communities</div>
+    </div>
+
+
+    <div class="exploreUsersArea" id="exploreUsersArea">
+        <div class="title">Newest Users</div>
     </div>
     <footer id="footer"></footer>
 </body>
 </html>
 
-<script src="/jquery-3.6.0.js"></script>
-<script src="/jquery-ui-1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="/loadEssentials.js"></script>
+<script type="text/javascript" src="explore.js"></script>

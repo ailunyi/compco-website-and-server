@@ -1,0 +1,173 @@
+﻿<!doctype html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Create</title>
+    <link rel="stylesheet" href="/homepage.css" />
+    <link rel="stylesheet" href="create.css" />
+    <link rel="stylesheet" href="/common/imageCrop/imageCrop.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="/images/logo.ico" />
+    <script src="/loadtheme.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+
+    <div hidden id="sectionResize">
+        <div class="overlay"> </div>
+        <div class="imageCropper" id="imageResize"></div>
+        <button class="cropImageButton" id="crop"><span class='fa fa-crop'></span> Crop</button>
+    </div>
+    <section class="hidden" id="sectionResize">
+        <div class="image-resize" id="imageResize"></div>
+        <button class="btn" id="crop"><span class='fa fa-crop'></span> Crop</button>
+    </section>
+    <div id="nav-placeholder"></div>
+
+    <div class="mainContent">
+        <div class="title">Create Activity</div>
+        <form id="area1">
+            <div id="form_message_box" class="form__message form__message--success"></div>
+
+            <div class="inputLabel">Activity Name <label class="star">*</label></div>
+            <input class="inputArea" id="name" type="text" placeholder="Activity Name" />
+
+            <div class="inputLabel">Activity Type <label class="star">*</label></div>
+            <select>
+                <option value="None">Choose Type</option>
+                <option value="Subject">Competition</option>
+                <option value="Sports">Club/Event</option>
+                <option value="Hobbies">Summer/Winter Program</option>
+                <option value="Hobbies">Internship/Job</option>
+            </select>
+
+
+            <div class="inputLabel">Location <label class="star">*</label></div>
+            <input class="inputArea" id="location" type="text" placeholder="Location" />
+
+            <div class="inputLabel">Registration Deadline <label class="star">*</label></div>
+            <input class="inputArea date" style="width:45%; " id="date1" type="date" value="2018-07-22" min="2018-01-01" />
+            <input class="inputArea" style="width:45%; float:right; " id="time1" type="text" placeholder="Specific Time" />
+
+            <div class="inputLabel">Activity Start Date <label class="star">*</label></div>
+            <input class="inputArea date" style="width:45%; " id="date2" type="date" value="2018-07-22" min="2018-01-01" />
+            <input class="inputArea" style="width:45%; float:right; " id="time2" type="text" placeholder="Specific Time" />
+
+
+            <div class="inputLabel">Activity End Date <label class="star">*</label></div>
+            <input class="inputArea date" style="width:45%; " id="date3" type="date" value="2018-07-22" min="2018-01-01" />
+            <input class="inputArea" style="width:45%; float:right; " id="time3" type="text" placeholder="Specific Time" />
+
+
+
+            <div class="inputLabel">Difficulty <label class="star">*</label></div>
+            <select>
+                <option value="None">Choose Difficulty</option>
+                <option value="Subject">Beginner</option>
+                <option value="Sports">Intermediate</option>
+                <option value="Hobbies">Advanced</option>
+                <option value="Hobbies">All skill levels</option>
+            </select>
+
+
+            <div class="inputLabel">Fee</div>
+            <input class="inputArea" id="location" type="text" placeholder="Cost for participation (leave blank if free)" />
+
+
+            <div class="inputLabel">Requirements</div>
+            <input class="inputArea" id="name" type="text" placeholder="Requirements for participation" />
+            
+            <div class="inputLabel">Description <label class="star">*</label></div>
+            <textarea id="description" placeholder="Description (20 letters minimum)"></textarea>
+
+            <div class="inputLabel">Thumbnail/logo <label class="star">*</label></div>
+
+            <div class="picArea" id="drop1" onclick="triggerImageSelection('#preview1') ">
+                <div>Click Or Drag In Image/Gif</div>
+                <img hidden id="logo" src="#" alt="cropping image..." />
+            </div>
+            <input class="inputfile" id="preview1" type="file" accept="image/*" onchange="selectImage(this,'logo')" />
+
+            <div class="inputLabel">Images (Multiple) <label class="star">*</label></div>
+            <div class="picArea" id="drop2" onclick="triggerImageSelection('#preview2')">
+                <div>Click Or Drag To Add Image/Gif</div>
+            </div>
+            <input class="inputfile" id="preview2" type="file" accept="image/*" onchange="selectImage(this, 'image')" />
+
+
+            <div class="inputLabel">Organization</div>
+            <input class="inputArea" id="name" type="text" placeholder="Organization/Club Name" />
+            
+
+            <div class="inputLabel">Contact <label class="star">*</label></div>
+            <input class="inputArea" id="location" type="text" placeholder="Contact Information" />
+
+            <div class="inputLabel">Prize</div>
+            <input class="inputArea" id="prize" type="text" placeholder="Prize (optional)" />
+
+
+            <div class="inputLabel">Category <label class="star">*</label></div>
+            <select id="mainCategories">
+                <option value="None">Choose Category</option>
+                <option value="Subject">Subject</option>
+                <option value="Sports">Sports</option>
+                <option value="Hobbies">Hobbies</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <select id="subject" hidden>
+                <option value="None">Choose Subject</option>
+                <option value="Math">Math</option>
+                <option value="Chemistry">Chemistry</option>
+                <option value="Economics">Economics</option>
+                <option value="Business">Business</option>
+                <option value="Physics">Physics</option>
+                <option value="Computer Science">Computer Science</option>
+                <option value="Chinese">Chinese</option>
+                <option value="History">History</option>
+                <option value="English">English</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <select id="sports" hidden>
+                <option value="None">Choose Sport</option>
+                <option value="Tennis">Tennis</option>
+                <option value="Basketball">Basketball</option>
+                <option value="Volleyball">Volleyball</option>
+                <option value="Hockey">Hockey</option>
+                <option value="Badminton">Badminton</option>
+                <option value="Table Tennis">Table Tennis</option>
+                <option value="Soccer">Soccer</option>
+                <option value="Other">Other</option>
+            </select>
+
+            <select id="hobbies" hidden>
+                <option value="None">Choose Hobby</option>
+                <option value="Game Jam">Game Jam</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Eating">Eating</option>
+                <option value="Other">Other</option>
+            </select>
+            <!--<div>Once you submit, your competition will be avaliable once we approve it.</div>-->
+            <button type="submit">Submit</button>
+        </form>
+        <form id="area2" hidden>
+            <div class="submittionInfo">Your competition is under review! You will recieve an email when updated.</div>
+            <!--<button type="submit" id="submit" value="next">Submit</button>
+            <button type="submit" id="back" value="back">Back</button>-->
+        </form>
+    </div>
+
+    <footer id="footer"></footer>
+
+</body>
+</html>
+
+<script src="/jquery-3.6.0.js"></script>
+<script src="/jquery-ui-1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="/common/imageCrop/imageCrop.js"></script>
+<script src="https://cdn.bootcss.com/cropperjs/1.5.1/cropper.min.js"></script>
+<script src="https://cdn.bootcss.com/es6-promise/4.1.1/es6-promise.min.js"></script>
+<link href="https://cdn.bootcss.com/cropperjs/1.5.1/cropper.min.css" rel="stylesheet">
+<script type="text/javascript" src="create.js"></script>
+<script type="text/javascript" src="/loadEssentials.js"></script>

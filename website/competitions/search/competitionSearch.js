@@ -11,7 +11,7 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
 });
 
 const searchedCompetition = params.q;
-const serverAddress = "http://localhost:8000";
+//const serverAddress = "http://localhost:8000";
 var competitions = [];
 var previews = [];
 document.getElementById("competitionSearchBar").value = searchedCompetition;
@@ -56,7 +56,7 @@ function findCompetitionsWithName(name) {
 }
 
 function redirectToComp(index) {
-    window.location.replace("/competitions/" + competitions[index].url);
+    window.location.href = "/competitions/page/?q=" + competitions[index].url; // or use windlow.location.replace()
 }
 
 function createCompetitionElement(competition, index) {
@@ -71,6 +71,8 @@ function createCompetitionElement(competition, index) {
     // comp image
     const compImage = document.createElement("img");
     compImage.className = "competitionPreviewImage";
+    if (competition.preview.substring(0, 6) == "static")
+        competition.preview = serverAddress + "/" + competition.preview 
     compImage.src = competition.preview;
     element.appendChild(compImage);
 

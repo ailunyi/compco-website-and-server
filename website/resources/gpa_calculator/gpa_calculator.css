@@ -1,0 +1,255 @@
+.calculatorArea {
+    float:left;
+    width: calc(100% - 450px);
+}
+.predictionArea {
+    position:relative;
+    float:right;
+    margin-right:-25px;
+    background-color: var(--main-panel-color);
+    height: 700px;
+    width: 425px;
+    border-radius: 10px;
+}
+.subjectArea {
+    width: 100%;
+    float: left;
+    min-height: 50px;
+    margin-bottom: 50px;
+    background: var(--main-panel-color);
+    border-radius: 10px;
+}
+
+.topButton {
+    cursor: pointer;
+    border-radius: 6px;
+    float: left;
+    background-color: var(--secondary-panel-color);
+    margin-top: 3px;
+    margin-bottom: 2px;
+    margin-left: 15px;
+    margin-right: 10px;
+    min-width: 45px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+    text-align: center;
+    font-size:17px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: solid var(--main-text-color) 1px;
+}
+
+.topButton:hover {
+    background-color: var(--main-text-color);
+    color: white;
+}
+.subjectLevel {
+
+    float:left;
+    width: calc(100% - 20px);
+    padding-top: 20px;
+    padding-left: 20px;
+    min-height: 20px;
+    padding-bottom: 15px;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    border-bottom: solid var(--main-text-color) 1px;
+}
+.subjectChooseGpa {
+    display: table-row;
+    height: 135px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.subjectChooseGpa div {
+    cursor:pointer;
+    border-radius: 10px;
+    float: left;
+    background-color: var(--secondary-panel-color);
+    margin-top:10px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 45px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom:10px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: solid var(--main-text-color) 1px;
+}
+.subjectChooseGpa div:hover {
+    background-color: var(--main-text-color);
+    color: white;
+}
+
+.subjectGpaArea {
+    margin-left: 120px;
+}
+
+.title {
+    float:left;
+    font-size: 30px;
+    font-family: Montserrat-Bold;
+    margin-bottom:20px;
+}
+
+.categoryTitle {
+    font-size: 25px;
+    font-family: Montserrat-Bold;
+    float: left;
+    width: 120px;
+    background:none;
+    border:none;
+    color:var(--main-text-color);
+}
+
+.collegeChance{
+    margin-top:20px;
+    margin-left:15px;
+    font-size:20px;
+}
+.collegeChance div{
+    margin-top:10px;
+}
+
+.collegeChance a{
+    text-decoration:none;
+    color:var(--main-text-color);
+}
+.categoryTitle::placeholder {
+    color: var(--main-text-color);
+}
+.gpaArea input::placeholder {
+    color: var(--main-text-color);
+}
+.satArea input::placeholder {
+    color: var(--main-text-color);
+}
+.subjectGpaArea div {
+    border-radius: 10px;
+    float: left;
+    background-color: var(--secondary-panel-color);
+    margin-top: 2px;
+    margin-bottom: 5px;
+    margin-left: 10px;
+    margin-right: 10px;
+    width: 65px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: solid var(--main-text-color) 1px;
+}
+
+
+.subjectGpaArea div:hover {
+    background-color: var(--main-text-color);
+    color: white;
+    cursor: pointer;
+}
+
+.subjectGpaSelected {
+    background-color: var(--main-searchbar-color) !important;
+    color: var(--searchbar-text-color);
+    cursor: pointer;
+}
+
+.removeSubjectButton {
+    text-align: center;
+    margin-bottom:5px;
+    cursor: pointer;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.removeSubjectButton:hover{
+    color:darkred;
+}
+
+.addSubjectButton {
+    float: left;
+    margin-left: calc((100% - 50px)/2);
+    width: 50px;
+    height: 30px;
+    border-radius: 20px;
+    background-color: var(--main-panel-color);
+    margin-bottom: 20px;
+    text-align: center;
+    padding-top: 15px;
+    cursor: pointer;
+}
+
+.addSubjectButton:hover{
+    box-shadow: 0px 0px 5px 0px var(--main-text-color);
+}
+
+.addChoices {
+    float: left;
+    margin-left: calc((100% - 200px)/2);
+    width: 200px;
+    height: 200px;
+    border-radius: 10px;
+    background-color: var(--main-panel-color);
+    margin-bottom: 20px;
+    text-align: center;
+    padding-top: 15px;
+    cursor: pointer;
+}
+
+
+/*PREDICTION AREA*/
+.gpaArea {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 40px;
+    font-family: Montserrat-Bold;
+}
+.gpaArea input {
+    font-size: 40px;
+    font-family: Montserrat-Bold;
+    border: none;
+    background: none;
+    width: 100px;
+    color: var(--main-text-color);
+}
+.satArea {
+    margin-top: 20px;
+    font-size: 20px;
+    font-family: Montserrat-Bold;
+}
+.satArea input {
+    font-size: 20px;
+    border-radius:5px;
+    border:solid 1px;
+    background: none;
+    width: 150px;
+    color: var(--main-text-color);
+}
+.averageChance {
+    float: right;
+    margin-right: 15px;
+}
+.subTitle {
+    font-family: Montserrat-Bold;
+}
+@media only screen and (max-width: 1500px) {
+    .predictionArea {
+        width: 325px;
+        height: 790px;
+    }
+    .calculatorArea {
+        width: calc(100% - 325px);
+    }
+}
+@media only screen and (max-width: 1100px) {
+    .predictionArea {
+        margin-right:0px;
+        width: 100%;
+        margin-top: 20px;
+    }
+
+    .calculatorArea {
+        width: 100%;
+    }
+}

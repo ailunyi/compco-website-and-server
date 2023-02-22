@@ -1,0 +1,341 @@
+﻿<!doctype html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin</title>
+    <style>
+
+        .viewArea {
+            position: absolute;
+            top:0px;
+            left:300px;
+            height:100%;
+            width:calc(100% - 300px);
+            background-color: rgba(0,0,0,0.5);
+            padding-top: 15px;
+            padding-left: 10px;
+            padding-right: 10px;
+            padding-bottom: 40px;
+            font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .navigation{
+            position:fixed;
+            left:0px;
+            top:0px;
+            width:300px;
+            height:100vh;
+            background-color: #66B0BE;
+            font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+        }
+        .navigation div{
+            text-align: center;
+            font-size: 30px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+        .navigation a {
+            padding-bottom: 10px;
+            text-align: center;
+            font-size: 20px;
+            padding-top: 10px;
+            cursor: pointer;
+            display: block;
+
+        }
+
+        .navigation a:hover {
+            background-color: #417681;
+        }
+
+
+        .competitionPreview {
+            margin-top: 30px;
+            float: left;
+            background-color: white;
+            height: 300px;
+            width: 300px;
+            margin-left: 20px;
+            cursor: pointer;
+            box-shadow: 2px 2px 4px 1px grey;
+            border-radius: 10px;
+        }
+
+
+        .competitionPreviewName {
+            float: left;
+            margin-left: 10px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            font-size: 20px;
+        }
+
+
+        .competitionPreviewLocation {
+            float: left;
+            margin-left: 10px;
+            font-size: 20px;
+        }
+
+        .competitionPreviewImage {
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            height: 200px;
+            width: 300px;
+            background-size: contain;
+        }
+
+        .overlay {
+            position: fixed;
+            background-color: rgba(0,0,0,0.2);
+            top: 0px;
+            left: 0px;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        .competitionInfoArea {
+            position: fixed;
+            width: 1000px;
+            height: 80%;
+            top: 10%;
+            left: calc((100vw - 1000px)/2);
+            border-radius: 10px;
+            background-color: rgb(128 128 128);
+            padding-top: 15px;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+        .approveCompetitionButton {
+            position: fixed;
+            width: 200px;
+            border-radius: 10px;
+            top: 85%;
+            background-color: chocolate;
+            height: 40px;
+            text-align: center;
+            padding-top: 15px;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            cursor: pointer;
+        }
+
+        .officialButton {
+            cursor: pointer;
+            position: fixed;
+            font-size: 20px;
+            top: 85%;
+            right: calc((100vw - 500px)/2 - 120px);
+        }
+    </style>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div class="navigation">
+        <div>ADMIN PANEL</div>
+        
+        <hr />
+        <a>Pending Competitions</a>
+        <a>Users</a>
+        <a>Articles</a>
+        <a>Statistics</a>
+        <hr />
+        
+        <a href="http://127.0.0.1:5500/">Back To Compco</a>
+    </div>
+    <div class="viewArea">
+        
+        <text>Total Pending Competitions: </text>
+        <text id="searchedItemNumber">0</text>
+        <div hidden id="competitionInfoPopup">
+            <div class="overlay" onclick="toggleVisibilityNoFade('competitionInfoPopup')"></div>
+            <div id="competitionInfoArea" class="competitionInfoArea">
+                <div id="competitionName">Name</div>
+                <div id="competitionLocation">Location</div>
+                <div id="competitionDescription">Description</div>
+                <div id="competitionCreator">Creator</div>
+                <div id="competitionURL">Url</div>
+                <img id="competitionImage" style="cursor:pointer" onclick="toggleImage(1)" />
+                <div onclick="rejectCompetition()" class="approveCompetitionButton" style="left: calc((100vw - 500px)/2)">Reject</div>
+                <div onclick="approveCompetition()" class="approveCompetitionButton" style="right: calc((100vw - 500px)/2)">Approve</div>
+                <div class="officialButton" onclick="toggleOfficial()" >Official?: <label id="officialButton">NO</label></div>
+            </div>
+        </div>
+        <div id="competitionPreviewArea"></div>
+    </div>
+
+    <footer id="footer"></footer>
+</body>
+</html>
+
+<script>
+
+    const serverAddress = "http://localhost:8000";
+    var competitions = [];
+    var previews = [];
+    var currentImage = 0;
+    var currentCompetition = 0;
+    var official = false;
+
+
+    function toggleVisibilityNoFade(element) {
+        if (document.getElementById(element).hidden == true) {
+            document.getElementById(element).hidden = false;
+        } else {
+            document.getElementById(element).hidden = true;
+            document.getElementById(element).style.display = "";
+        }
+    }
+
+    function getPendingCompetitions() {
+        fetch(serverAddress + "/admin/pendingComptitions").then((Response) => {
+            return Response.json()
+        }).then((data) => {
+
+            currentCompetition = 0;
+            competitions = [];
+            previews = [];
+            official = false;
+            console.log(JSON.parse(data));
+            competitions = JSON.parse(data);
+            document.getElementById("competitionPreviewArea").innerHTML = ""; //remove existing
+            document.getElementById("searchedItemNumber").innerHTML = Object.keys(competitions).length;
+            var index = 0;
+            competitions.forEach(function (i) {
+                createCompetitionElement(i, index);
+                index += 1;
+            })
+        })
+
+    }
+    function toggleImage(dir) {
+        currentImage += dir;
+        if (currentImage >= competitions[currentCompetition].images.length)
+            currentImage = 0;
+        else if (currentImage < 0)
+            currentImage = competitions[currentCompetition].images.length - 1;
+        document.getElementById("competitionImage").src = competitions[currentCompetition].images[currentImage];
+    }
+
+    function showCompInfo(index) {
+        official = false;
+        document.getElementById("officialButton").innerText = "NO";
+        document.getElementById("competitionInfoPopup").hidden = false;
+        document.getElementById("competitionName").innerHTML = "competition name: " + competitions[index].name;
+        document.getElementById("competitionLocation").innerHTML = "location: " + competitions[index].location;
+        document.getElementById("competitionDescription").innerHTML = "description: " + competitions[index].description;
+        document.getElementById("competitionCreator").innerHTML = "creator: " + competitions[index].creatorName;
+        document.getElementById("competitionURL").innerHTML = "url: " + competitions[index].url;
+
+        // check images
+        for (var i = 0; i < competitions[index].images.length; i++)
+            if (competitions[index].images[i].substring(0, 6) == "static")
+                competitions[index].images[i] = serverAddress + "/" + competitions[index].images[i]
+
+        document.getElementById("competitionImage").src = competitions[index].images[0];
+    }
+
+    function toggleOfficial() {
+        official = !official;
+        if (official) {
+            document.getElementById("officialButton").innerText = "YES";
+        } else {
+            document.getElementById("officialButton").innerText = "NO";
+        }
+    }
+
+    function approveCompetition() {
+        if (confirm("Are you sure you want to approve?") == true) {
+            return fetch(serverAddress + "/admin/approveCompetition", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+
+                },
+                body: JSON.stringify({ url: competitions[currentCompetition].url, official: official })
+            })
+                .then((res) => res.json()).then((data) => {
+                    // Handle response 
+                    console.log('Response: ', data);
+
+                    document.getElementById("competitionInfoPopup").hidden = true;
+                    getPendingCompetitions();
+                    return data;
+                })
+                .catch(err => {
+                    // Handle error 
+                    console.log('Error message: ', err);
+                });
+        }
+    }
+
+
+    function rejectCompetition() {
+        if (confirm("Are you sure you want to reject?") == true) {
+            return fetch(serverAddress + "/admin/rejectCompetition", {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+
+                },
+                body: JSON.stringify({ url: competitions[currentCompetition].url, official: official })
+            })
+                .then((res) => res.json()).then((data) => {
+                    // Handle response 
+                    console.log('Response: ', data);
+
+                    document.getElementById("competitionInfoPopup").hidden = true;
+                    getPendingCompetitions();
+                    return data;
+                })
+                .catch(err => {
+                    // Handle error 
+                    console.log('Error message: ', err);
+                });
+        }
+    }
+
+    function createCompetitionElement(competition, index) {
+
+        // comp preview box
+        const element = document.createElement("div");
+        element.className = "competitionPreview";
+        element.id = "comptitionPreview--" + index;
+        document.getElementById("competitionPreviewArea").appendChild(element);
+
+
+        // comp image
+        const compImage = document.createElement("img");
+        compImage.className = "competitionPreviewImage";
+        if (competition.preview.substring(0, 6) == "static")
+            competition.preview = serverAddress + "/" + competition.preview
+        compImage.src = competition.preview;
+        element.appendChild(compImage);
+
+        // comp name
+        const compName = document.createElement("div");
+        compName.innerHTML = competition.name;
+        compName.className = "competitionPreviewName";
+        element.appendChild(compName);
+
+        // comp location
+        const compLocation = document.createElement("div");
+        compLocation.innerHTML = competition.location;
+        compLocation.className = "competitionPreviewLocation";
+        element.appendChild(compLocation);
+
+
+        previews.push(element);
+
+        previews[index].addEventListener('click', function handleClick() {
+            showCompInfo(index);
+            currentCompetition = index;
+        });
+    }
+
+    getPendingCompetitions()
+
+</script>

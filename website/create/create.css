@@ -1,0 +1,220 @@
+﻿body {
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+
+
+.inputArea {
+    width: calc(80% - 10px);
+    margin-top: 10px;
+    height: 70px;
+    font-size: 15px;
+    background-color: #E8E8E8;
+    border: none;
+    padding-left: 10px;
+    font-family: Montserrat-Bold;
+    border-radius: 12px;
+    outline: none;
+}
+
+.inputArea:focus {
+    box-shadow: 0px 0px 4px 1px var(--main-text-color);
+}
+
+.picArea {
+    margin-top: 10px;
+    text-align: center;
+    min-height: 200px;
+    font-size: 15px;
+    display: inline-block;
+    min-width: 70%;
+    background-color: #E8E8E8;
+    border: none;
+    padding-top: 10px;
+    font-family: Montserrat-Bold;
+    border-radius: 12px;
+    cursor: pointer;
+    padding-right: 30px;
+    padding-left: 30px;
+}
+
+input[type="file"] {
+    display: none;
+}
+.picArea img {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height:200px;
+    width:300px;
+    /*
+    height:200px;
+    width:200px;*/
+}
+.compImage {
+    float:left;
+    margin-left:20px;
+
+    height: 270px !important; 
+    width: 480px !important;
+}
+
+.compImage:hover {
+    filter: grayscale(0.6);
+    box-shadow:0px 0px 3px 1px red;
+}
+
+
+.mainContent select {
+    width: 60%;
+    margin-top: 15px;
+    height: 70px;
+    font-size: 15px;
+    background-color: #E8E8E8;
+    border: none;
+    padding-left: 10px;
+    font-family: Montserrat-Bold;
+    cursor: pointer;
+    border-radius: 12px;
+}
+
+.inputFile {
+}
+
+.submittionInfo{
+    text-align:center;
+    width:100%;
+    font-size:20px;
+}
+
+
+.title {
+    font-family: Montserrat-Bold;
+    font-size: 45px;
+    margin-bottom: 40px;
+}
+
+.mainContent textarea {
+    width: calc(80% - 10px);
+    margin-top: 10px;
+    height: 100px;
+    font-size: 15px;
+    background-color: #E8E8E8;
+    border: none;
+    padding-left: 10px;
+    padding-top: 10px;
+    font-family: Montserrat-Bold;
+    resize: none;
+    border-radius: 12px;
+}
+
+
+.mainContent button {
+    padding: 20px;
+    width: 150px;
+    font-size: 20px;
+    font-family: Montserrat-Bold;
+    color: white;
+    background-color: var(--main-button-color);
+    border: none;
+    margin-top: 40px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: calc((100% - 150px)/2);
+}
+
+
+.form__message {
+    font-size: 20px;
+    font-family: Montserrat-Bold;
+}
+
+.form__message--success {
+    color: green;
+}
+
+.form__message--error {
+    color: red;
+}
+
+.inputLabel {
+    margin-top:50px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+
+.star{
+    color:red;
+}
+
+.overlay {
+    z-index: 2;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    height: 100vh;
+    width: 100vw;
+    background-color: var(--main-panel-color);
+}
+.stop-scrolling {
+    height: 100%;
+    overflow: hidden;
+}
+.imageCropper {
+    z-index: 3;
+    position: fixed;
+    top: 50px;
+    background-color: var(--main-bg-color);
+    height: 600px;
+    width: 600px;
+    top: calc((100vh - 600px)/2);
+    left: calc((100vw - 600px)/2);
+    border-radius: 10px;
+}
+.picArea:hover {
+    box-shadow: 0px 0px 3px 1px var(--main-text-color);
+}
+.dragging {
+    border: dashed var(--main-text-color) 2px;
+}
+.hidden {
+    display: none;
+}
+
+.croppingImage{
+    max-width:100%;
+    max-height:500px;
+}
+
+.cropImageButton {
+    position: fixed;
+    margin-top: 50px;
+    z-index: 4;
+    width: 150px;
+    top: calc((100vh - 600px)/2 + 500px);
+    left: calc((100vw - 150px)/2);
+    padding: 8px 25px;
+    font-family: "Ubuntu";
+    font-size: 16px;
+    color: #fff;
+    background-image: linear-gradient(to bottom, #c92437 10%, #4F1118);
+    border: 0;
+    border-radius: 5px;
+    box-shadow: 1px 1px 2px rgba(0,0,0,.3);
+    cursor:pointer;
+}
+
+.fa:first-child {
+    margin-right: 5px;
+}
+
+@media only screen and (max-width: 900px) {
+    
+    .mainContent textarea {
+        width: calc(100% - 10px);
+    }
+
+        
+    .inputArea {
+        width: calc(100% - 10px);
+    }
+}

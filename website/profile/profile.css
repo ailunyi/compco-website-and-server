@@ -1,0 +1,135 @@
+.banner {
+    position:absolute;
+    top:70px;
+    width: 100%;
+    height: 330px;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.realName {
+    position: absolute;
+    left: 350px;
+    top: 410px;
+    font-size: 45px;
+    font-family: Montserrat-Bold;
+}
+
+.description {
+    margin-top:20px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    font-family: Montserrat-Medium;
+}
+
+.profilePicture {
+    position: absolute;
+    top: 300px;
+    width: 200px;
+    height: 200px;
+    left: 100px;
+    border-radius: 10px;
+    border: solid black 2px;
+    background-color: var(--main-bg-color);
+}
+
+.username {
+    position: absolute;
+    left: 350px;
+    top: 460px;
+    font-size: 35px;
+    font-family: Montserrat-Medium;
+}
+
+.messageButton {
+    position: absolute;
+    right: 150px;
+    top: 430px;
+    width: 100px;
+    height: 33px;
+    background-color: var(--main-button-color);
+    color: white;
+    border: white;
+    border-radius: 5px;
+    padding-top: 20px;
+    text-align: center;
+    text-decoration: none;
+    font-family: Montserrat-Bold;
+}
+
+
+.title {
+    font-size: 20px;
+    font-family: Montserrat-Bold;
+    opacity: 60%;
+}
+
+.egg {
+    z-index: 1;
+    position: absolute;
+    top: 100px;
+    width: 80px;
+    height: 70px;
+    cursor: pointer;
+    background-image: url("/images/egg.gif");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.infoArea {
+    margin-bottom: 5px;
+    font-family: Montserrat-Medium;
+    font-size: 20px;
+}
+.infoArea label {
+    font-family: Montserrat-SemiBold;
+}
+.categoriesArea {
+    border-bottom: solid 1px var(--main-text-color);
+    font-family: Montserrat-SemiBold;
+    font-size: 20px;
+    padding-bottom: 5px;
+    margin-bottom:20px;
+}
+.categoriesArea a{
+    margin-right:20px;
+    cursor:pointer;
+    opacity:50%;
+}
+.categoriesAreaChosen {
+    opacity: 100% !important;
+    padding-bottom:2px;
+    border-bottom: 3px solid;
+}
+.categoriesArea a:hover{
+    margin-right:20px;
+    opacity:100%;
+}
+
+.inventory{
+    margin-top:20px;
+    float:right;
+    width:400px;
+    height:500px;
+    background-color:var(--main-panel-color);
+    border-radius:20px;
+}
+
+
+
+@media only screen and (max-width: 1200px) {
+    .realName {
+        left: 270px;
+    }
+
+    .profilePicture {
+        left: 20px;
+    }
+
+    .username {
+        left: 270px;
+    }
+
+    .messageButton {
+        right: 20px;
+    }
+}

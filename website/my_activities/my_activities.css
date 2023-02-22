@@ -1,0 +1,22 @@
+.viewArea {
+    width: 1300px;
+    min-height: 800px;
+    margin-top: 120px;
+    margin-left: calc((100vw - 1300px)/2);
+    margin-bottom: 50px;
+    border-radius: 10px;
+    background-color: var(--main-panel-color);
+    padding-top: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 40px;
+}
+
+.categoryButtons a {
+    text-align: center;
+    font-size: 20px;
+    padding-top: 10px;
+    cursor: pointer;
+    margin-left: 30px;
+    font-family: Montserrat-Bold;
+}

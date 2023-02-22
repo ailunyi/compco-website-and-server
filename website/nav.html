@@ -1,50 +1,149 @@
-﻿<nav class="navigation">
-    <!-- PC NAVIGATION -->
-    <a href="/"><img class="navLogo" alt="Bakeneko" src="/images/logo.png" /></a>
+﻿<nav id="navigation" class="navigation">
+    <a href="/">
+        <img class="navLogo" alt="Bakeneko" src="/images/logo2.png" />
+        <text class="compcoText">omp</text>
+        <text class="compcoText" style="top:28px">co</text>
+    </a>
 
-    <!-- login & signin buttons -->
+
+    <!-- PHONE NAVIGATION -->
+    <button onclick="showBar('#mobileNav')" id="mobileNavBars" class="navShowBar">☰</button>
+    <div id="mobileNav" hidden class="mobileNav dontHide">
+        <a href="/explore/" >
+            <div class="mobileNavItem">Explore</div>
+        </a>
+        <a href="/communities/" >
+            <div class="mobileNavItem">Communities</div>
+        </a>
+        <a href="/resources/" >
+            <div class="mobileNavItem">Resources</div>
+        </a>
+        <a href="/create/" >
+            <div class="mobileNavItem">Create</div>
+        </a>
+    </div>
+
+
+    <!-- when not logged in -->
     <div id="notLoggedIn">
+        <!--language toggler-->
+        <div onclick="toggleVisibility('languageTogglerDropdown')" id="languageToggler" class="languageToggler"><img src="/images/language.png" /> </div>
+        <div hidden id="languageTogglerDropdown" class="languageTogglerDropdown">
+            <a lang="en" style="cursor:default; color:darkred" href="#en">English</a>
+            <a lang="en" href="#cn">中文</a>
+            <a lang="en" href="#kor">한국어</a>
 
+            <a lang="zh" hidden href="#en">English</a>
+            <a lang="zh" hidden style="cursor:default; color:darkred">中文</a>
+            <a lang="zh" href="#kor">한국어</a>
+
+            <a lang="kor" hidden href="#en">English</a>
+            <a lang="kor" href="#cn" hidden>中文</a>
+            <a lang="kor" style="cursor:default; color:darkred">한국어</a>
+        </div>
+
+
+        <!-- login & signin buttons -->
         <a lang="en" class="registerButton" href="/register"><p>Register</p></a>
-        <a lang="en" class="signinButton" href="/signin">Sign in</a>
+        <a lang="en" class="signinButton" id="signin" href="/signin">Sign in</a>
 
         <a hidden lang="zh" class="registerButton" href="/register"><p>登记</p></a>
         <a hidden lang="zh" class="signinButton" href="/signin">登入</a>
+
     </div>
 
+    <!--when logged in-->
     <div id="loggedIn" hidden>
-        <a lang="en" class="signinButton" href="/logout">Logout</a>
+
+        <img id="profileIcon" onclick="toggleVisibilityNoFade('profileDropDown')" class="profileIcon dontHide" />
+        <div hidden id="profileDropDown" class="profileDropDown dontHide">
+            <img id="profileIcon2" class="profileIcon2 dontHide" />
+            <label id="profileUsername" class="profileUsername dontHide">Username</label>
+            <label id="profileName" class="profileName dontHide">...</label>
+
+            <hr />
+            <a lang="en" href="/profile">My Profile</a>
+            <a lang="en" href="/profile">Settings</a>
+            <!--<a lang="en" href="/my_activities">My Activities</a>-->
+            <a lang="en" target="_blank" href="http://localhost:8000/admin">Admin Panel</a>
+
+
+            <a lang="zh" href="/profile">Profile</a>
+            <!--<a lang="zh">我的活动</a>-->
+            <a lang="zh" href="/admin">管理</a>
+
+            <hr />
+            <a lang="en" class="dontHide" onclick="changeColor()" id="themeName">Theme: Light</a>
+            <a lang="en" href="#cn">Language: English</a>
+
+            <a lang="zh" class="dontHide" onclick="changeColor()" id="themeName">Theme: Light</a>
+            <a lang="zh" href="#en">语言：中文</a>
+
+            <hr />
+            <a lang="en" href="">Help</a>
+            <a lang="en" href="/logout">Logout</a>
+
+            <a lang="zh" href="">Help</a>
+            <a lang="zh" href="/logout">登出</a>
+        </div>
+
+
+        <a onclick="toggleVisibilityNoFade('profileDropDown')" onmouseover="toggleVisibilityNoFade('inboxSpan')" onmouseout="toggleVisibilityNoFade('inboxSpan')" class="inboxIcon dontHide"></a>
+        <span class="navIconSpan" style="right:40px" id="inboxSpan" hidden>Notifications</span>
+        <div>
+
+        </div>
+
+
+        <a lang="en" href="/create" class="createButton">Create</a>
+        <a lang="zh" href="/create" class="createButton">创建</a>
     </div>
 
-    <div style="margin-top:27px">
-        <a class="navLink" href="/news" lang="en" style="margin-left:250px">News</a>
-        <a class="navLink" href="/explore" lang="en" onmouseover="toggleVisibility('exploreDropdown')">Explore</a>
-        <a class="navLink" href="/forum" lang="en">Forum</a>
-        <a class="navLink" href="/about-us" lang="en">About us</a>
-        <a class="navLink" href="/download" lang="en">Download</a>
 
-        <a class="navLink" href="/news" hidden lang="zh" style="margin-left:250px">新闻</a>
-        <a class="navLink" href="/explore" hidden lang="zh" onmouseover="toggleVisibility('exploreDropdown')">探索</a>
-        <a class="navLink" href="/forum" hidden lang="zh">论坛</a>
-        <a class="navLink" href="/about-us" hidden lang="zh">关于我们</a>
-        <a class="navLink" href="/download" hidden lang="zh">下载</a>
+    <!-- PC NAVIGATION -->
+    <div id="pcNav" style="margin-top:27px">
+        <!-- <a class="navLink" href="/news" lang="en" style="margin-left:200px">News</a> -->
+        <a class="navLink" href="/explore" lang="en" style="margin-left:200px">Explore</a>
+        <a id="organizations" class="navLink" href="/communities" lang="en">Communities</a>
+        <a id="games" class="navLink" href="/resources" lang="en">Resources</a>
+
+        <!-- <a class="navLink"  href="/news" hidden lang="zh" style="margin-left:250px; width:50px;">新闻</a> -->
+        <a class="navLink" href="/explore" hidden lang="zh" style="margin-left:250px;" onmouseover="toggleVisibility('exploreDropdown')" style="width: 50px;">探索</a>
+        <a id="organizations" class="navLink" href="/communities" lang="zh" style="width: 50px;">社区</a>
+        <a id="games" class="navLink" href="/resources" lang="zh" style="width: 50px;">资源</a>
+
     </div>
 
+    <div id="icons" style="margin-top:27px" hidden>
+        <!-- <a onmouseover="toggleVisibilityNoFade('newsSpan')" onmouseout="toggleVisibilityNoFade('newsSpan')" class="navIcon" href="/news" style="margin-left:180px; mask:url(/images/icons/news.svg) no-repeat center;-webkit-mask: url(/images/icons/news.svg) no-repeat center;"></a>
+        <span class="navIconSpan" style="left:170px" id="newsSpan" hidden>News</span> -->
+
+        <a onmouseover="toggleVisibilityNoFade('exploreSpan')"  onmouseout="toggleVisibilityNoFade('exploreSpan')" class="navIcon" href="/explore" style="margin-left:180px; mask:url(/images/icons/explore.svg) no-repeat center;-webkit-mask: url(/images/icons/explore.svg) no-repeat center;"></a>
+        <span class="navIconSpan" style="left:155px" id="exploreSpan" hidden>Explore</span>
+
+        <!--<a onmouseover="toggleVisibilityNoFade('tutorsSpan')" onmouseout="toggleVisibilityNoFade('tutorsSpan')" class="navIcon" href="/tutor" lang="en" style="mask:url(/images/icons/tutors.svg) no-repeat center;-webkit-mask: url(/images/icons/tutors.svg) no-repeat center;"></a>
+        <span class="navIconSpan" style="left:260px" id="tutorsSpan" hidden>Tutors</span>-->
+
+        <a onmouseover="toggleVisibilityNoFade('communitiesSpan')" onmouseout="toggleVisibilityNoFade('communitiesSpan')" id="organizations" class="navIcon" href="/communities"  style="mask:url(/images/icons/communities.svg) no-repeat center;-webkit-mask: url(/images/icons/communities.svg) no-repeat center;"></a>
+        <span class="navIconSpan" style="left:180px" id="communitiesSpan" hidden>Communities</span>
+
+        <a onmouseover="toggleVisibilityNoFade('resourcesSpan')" onmouseout="toggleVisibilityNoFade('resourcesSpan')" id="resources" class="navIcon" href="/resources" style="mask:url(/images/icons/resources.svg) no-repeat center;-webkit-mask: url(/images/icons/resources.svg) no-repeat center;"></a>
+        <span class="navIconSpan" style="left:250px" id="resourcesSpan" hidden>Resources</span>
+    </div>
+
+    <form id="searchBarArea" action="/competitions/search/">
+        <!--<i class="fa fa-search searchIcon"></i>-->
+        <input id="searchBar" class="searchBar" type="search" name="q" placeholder="Search activities, communities, or accounts" />
+    </form>
     <!--explore-->
-    <div hidden onmouseout="toggleVisibility('exploreDropdown')" id="exploreDropdown" class="exploreDropdown">hi</div>
+    <!--<div hidden onmouseout="toggleVisibilityNoFade('exploreDropdown')" id="exploreDropdown" class="exploreDropdown">
+        <div>Competitions:</div>
+        <a>Subject:</a>
+        <a>Math</a>
+        <a>Computer Science</a>
+    </div>-->
 
-    <div onclick="toggleVisibility('languageTogglerDropdown')" id="languageToggler" class="languageToggler"><img src="/images/language.png" /> </div>
-    <div hidden id="languageTogglerDropdown" class="languageTogglerDropdown">
-        <a lang="en" style="cursor:default; color:darkred" href="#en">English</a>
-        <a lang="en" href="#cn">中文</a>
 
-        <a lang="zh" hidden href="#en">English</a>
-        <a lang="zh" hidden style="cursor:default; color:darkred">中文</a>
-    </div>
 
-    <!-- PHONE NAVIGATION -->
-    <button onclick="showBar('#mobileNav')" hidden id="showBar" class="navShowBar">☰</button>
-    <div id="mobileNav" hidden class="mobileNav">
 
-    </div>
 </nav>

@@ -1,0 +1,293 @@
+
+.exploreCompetitionsArea {
+    margin-left: 100px;
+    margin-top: 200px;
+    margin-bottom: 50px;
+    padding-top:30px;
+}
+.exploreCommunitiesArea {
+    position: absolute;
+    width: 400px;
+    right: 0px;
+    margin-top: 230px;
+    margin-bottom: 50px;
+}
+
+.exploreUsersArea {
+  
+    position: absolute;
+    width: 400px;
+    right: 0px;
+    margin-top: 765px;
+    margin-bottom: 50px;
+}
+
+
+.title {
+    font-size: 25px;
+    font-family: Montserrat-Bold;
+}
+.title a{
+    margin-left:5px;
+    font-size: 20px;
+    color:var(--main-panel-color);
+    
+    cursor:pointer;
+}
+.title a:hover {
+    color: var(--main-button-color);
+    transition: none !important;
+
+}
+.categoryTitle{
+    float:left;
+    width:120px;
+}
+
+/*competition preview area*/
+
+.competitionPreviewAreaTop {
+    width: calc(100vw - 530px);
+    margin-bottom: 50px;
+}
+
+.competitionPreviewArea {
+    height: 250px;
+    margin-bottom: 50px;
+    overflow: hidden;
+}
+
+.exploreCompetitionsArea {
+    float: left;
+    padding-bottom: 20px;
+    min-height: 1000px;
+}
+
+
+.competitionPreview {
+    position: relative;
+    margin-top: 30px;
+    display: inline-block;
+    background-color: white;
+    height: 200px;
+    /* width: 230px; */
+    aspect-ratio: 3/2;
+    margin-right: 20px;
+    cursor: pointer;
+    box-shadow: 2px 2px 4px 1px grey;
+    border-radius: 10px;
+
+}
+
+.competitionPreview:hover {
+    box-shadow: 2px 2px 4px 2px grey;
+}
+
+
+.competitionPreviewName {
+    float: left;
+    margin-left: 10px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 20px;
+}
+
+.competitionPreviewLocation {
+    float: left;
+    margin-left: 10px;
+    font-size: 20px;
+
+}
+
+.competitionPreviewViews {
+    position: absolute;
+    bottom: 5px;
+    left: 20px;
+    font-family: Montserrat-Medium;
+    font-size: 13px;
+}
+
+.competitionPreviewLikes {
+    position: absolute;
+    bottom: 5px;
+    right: 20px;
+    font-family: Montserrat-Medium;
+    font-size:13px;
+}
+
+.competitionPreviewImage {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    height: 120px;
+    width: 100%;
+    background-size: contain;
+}
+
+.userPreview {
+    margin-top: 20px;
+    width: 300px;
+    height: 65px;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-size: 25px;
+    border-radius: 10px;
+    padding-top: 5px;
+    padding-left: 5px;
+    cursor: pointer;
+    border: solid transparent 1px;
+}
+.userPreview:hover{
+    border: solid var(--main-text-color) 1px;
+}
+.userPreview label {
+    float:left;
+    margin-left:10px;
+    margin-top:10px;
+    cursor:pointer;
+}
+
+.userPreview img{
+    float:left;
+    width:60px;
+    height:60px;
+    border-radius: 30px;
+}
+
+.sortOptions div {
+    margin-left:15px;
+    float:left;
+    font-size:20px;
+    cursor:pointer;
+}
+
+.sortOptions div:hover{
+    color:var(--main-button-color);
+}
+.sortOptionsSelected {
+    color: var(--main-button-color);
+}
+
+.exploreCategories {
+    position: absolute;
+    height: 110px;
+    width: calc(100vw - 200px);
+    left: 100px;
+    border-bottom: 1px solid var(--main-text-color);
+    transition: border-bottom 1s;
+    font-family: Montserrat-Bold;
+    top: 70px;
+    padding-bottom: 30px;
+}
+.exploreCategories div{
+    margin-top:20px;
+    font-size: 50px;
+}
+.exploreCategories a {
+    float: left;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-right: 20px;
+    height: 28px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    border-radius: 10px;
+    background-color: var(--main-panel-color);
+    text-decoration: none;
+    color: var(--main-text-color);
+}
+.exploreCategories label {
+    float: left;
+    margin-top: 20px;
+    margin-right: 20px;
+    height: 28px;
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 10px;
+    color: var(--main-text-color);
+}
+
+.exploreCategories a:hover {
+    transition: none !important;
+    background-color: var(--main-text-color) !important;
+    color: var(--main-bg-color) !important;
+}
+
+
+.exploreCategoriesSelected {
+    background-color: var(--main-text-color) !important;
+    color: var(--main-bg-color) !important;
+    transition: background-color 1s, color 1s;
+}
+
+@media only screen and (max-width: 1600px) {
+    .exploreCategories {
+        width: calc(100% - 80px);
+        left: 40px;
+        margin-bottom: 50px;
+    }
+    .exploreCompetitionsArea {
+        width: calc(100% - 80px);
+        margin-left: 40px;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
+
+    .competitionPreviewAreaTop {
+        width: 100%;
+    }
+
+    .competitionPreview {
+        width: calc(100%/3 - 20px);
+        margin-right: 20px;
+    }
+
+    .exploreCategories {
+        margin-bottom: 50px;
+    }
+    .exploreCompetitionsArea {
+        margin-bottom: 50px;
+    }
+
+    .exploreCommunitiesArea {
+        position: relative;
+        width: 400px;
+        margin-left: 40px;
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
+
+    .exploreUsersArea {
+        position: relative;
+        width: 400px;
+        margin-left: 40px;
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
+}
+
+@media only screen and (max-width: 750px) {
+    .exploreCategories {
+        padding-bottom:100px;
+    }
+    .competitionPreviewAreaTop {
+        margin-top:280px;
+    }
+    .competitionPreview {
+        width: calc(100%/2 - 20px);
+        margin-right: 20px;
+    }
+}
+
+@media only screen and (max-width: 450px) {
+    .exploreCategories {
+        padding-bottom: 150px;
+    }
+    .exploreCompetitionsArea {
+        margin-top: 320px;
+    }
+
+    .competitionPreview {
+        width: 100%;
+        margin-right: 20px;
+    }
+}

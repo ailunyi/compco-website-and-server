@@ -1,9 +1,32 @@
-function delete_cookie(name, path, domain) {
-    document.cookie = name + "=" +
-        ((path) ? ";path=" + path : "") +
-        ((domain) ? ";domain=" + domain : "") +
-        ";expires=Thu, 01 Jan 1970 00:00:01 GMT";
+
+function logout(sessionID) {
+
+    return fetch(serverAddress +"/logout", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+
+        },
+        body: JSON.stringify({ SESSIONID: sessionID })
+    })
+    .then((res) => res.json()).then((data) => {
+        // Handle response 
+        console.log('Response: ', data);
+        delete_cookie("SESSIONID", "/", "");
+        delete_cookie("username", "/", "");
+        delete_cookie("profilePicture", "/", "");
+        delete_cookie("firstName", "/", "");
+        delete_cookie("lastName", "/", "");
+        window.location.replace("/");
+        return data;
+    })
+    .catch(err => {
+        // Handle error 
+        console.log('Error message: ', err);
+    });
+
 }
 
-delete_cookie("SESSIONID","/","")
-window.location.replace("/")
+logout(readCookie("SESSIONID"));
+

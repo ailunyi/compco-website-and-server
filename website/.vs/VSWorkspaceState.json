@@ -2,9 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\competitions",
+    "\\competitions\\page",
     "\\competitions\\search",
-    "\\signin"
+    "\\create",
+    "\\tutor"
   ],
-  "SelectedNode": "\\signin\\signin.js",
+  "SelectedNode": "\\homepage.css",
   "PreviewInSolutionExplorer": false
 }

@@ -1,0 +1,758 @@
+<script setup>
+import { RouterLink, RouterView } from 'vue-router'
+import HelloWorld from './components/HelloWorld.vue'
+import navBar from './components/navBar.vue'
+</script>
+
+<template>
+  <header>
+    <navBar />
+    <img alt="Vue logo" class="logo" src="@/assets/logo.svg" width="125" height="125" />
+
+    <div class="wrapper">
+      <HelloWorld msg="You did it!" />
+
+      <nav>
+        <RouterLink to="/">Home</RouterLink>
+        <RouterLink to="/about">About</RouterLink>
+      </nav>
+    </div>
+  </header>
+
+  <RouterView />
+</template>
+
+<style scoped>
+@font-face {
+    font-family: Montserrat-Bold;
+    src: url('Montserrat/montserrat-bold-webfont.woff2') format('woff2'),
+         url('Montserrat/montserrat-bold-webfont.woff') format('woff');
+}
+@font-face {
+    font-family: Montserrat-Regular;
+    src: url('Montserrat/Montserrat-Regular.ttf') format('truetype');
+}
+@font-face {
+    font-family: Montserrat-Medium;
+    src: url('Montserrat/Montserrat-Medium.ttf') format('truetype');
+}
+@font-face {
+    font-family: Montserrat-ExtraBold;
+    src: url('Montserrat/Montserrat-ExtraBold.ttf') format('truetype');
+}
+@font-face {
+    font-family: Montserrat-SemiBold;
+    src: url('Montserrat/Montserrat-SemiBold.ttf') format('truetype');
+}
+::-webkit-scrollbar {
+    width: 10px;
+    
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--main-panel-color);
+    border-radius:5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--main-text-color);
+}
+/*background: linear-gradient( to bottom, var(--main-panel-color) 80%, rgba(0, 0, 0, 0)) ;*/
+:root {
+    --main-bg-color: #fcfcfc;
+    --main-panel-color: #fcfcfc;
+    --secondary-panel-color: #fcfcfc;
+    --main-nav-color: white;
+    --main-text-color: black;
+    --secondary-bg-color: #f0f0f0;
+    --main-button-color: #3175fa;
+    --main-searchbar-color:white;
+    --searchbar-text-color:black;
+}
+
+.mainContent {
+    position:relative;
+    margin-top: 100px;
+    width: 1400px;
+    margin-left: calc((100% - 1400px)/2);
+    margin-bottom:50px;
+}
+html, body {
+    overflow-x: hidden;
+}
+body {
+    overflow-x: hidden;
+    background-color: var(--main-bg-color);
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    color: var(--main-text-color);
+    transition: background-color 1s, color 1s;
+
+}
+
+#nav-placeholder {
+    position: fixed;
+    background-color: var(--main-nav-color);
+    width: 100%;
+    height: 70px;
+    top: 0px;
+    left: 0px;
+    z-index: 1;
+    white-space: nowrap;
+    box-shadow: 0 1px 3px -2px grey;
+    transition: background-color 1s, color 1s;
+}
+
+.skeleton {
+    animation: skeleton-loading 1s linear infinite alternate;
+    opacity:0.7;
+}
+
+@keyframes skeleton-loading{
+    0%{
+        background-color:hsl(200,20%,70%);
+    }
+    100% {
+        background-color: hsl(200,20%,95%);
+    }
+}
+
+/*HOMEPAGE STUFF*/
+
+
+.competitionSearchArea {
+    position: absolute;
+    top: 90px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    min-height: 180px;
+    padding-bottom: 20px;
+    width: 1000px;
+    left: calc((100vw - 1000px)/2);
+    background-color: var(--main-bg-color);
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    transition: background-color 1s;
+}
+
+.sloganArea{
+    margin-top:30px;
+    font-family: Montserrat-Bold;
+    font-size:28px;
+    text-align:center;
+}
+
+.exploreDropdown {
+    position: fixed;
+    width: 100%;
+    height: 300px;
+    background-color: #3175fa;
+    top: 70px;
+}
+.featuredHomepage {
+    margin-top: 20px;
+    width: 100%;
+    aspect-ratio:3/1;
+    background-color:var(--main-panel-color);
+    border-radius: 30px;
+    background-image:url(/images/covers/cool.GIF);
+    background-size:cover;
+}
+.competitionSearchForm input {
+    height: 72px;
+    margin-top: 25px;
+    margin-left: 50px;
+    width: 850px;
+    font-size: 25px;
+    float: left;
+    padding-left: 10px;
+    border-radius: 3px;
+    border-top-right-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border: 1px solid black;
+    outline: 0;
+    background-color: var(--main-searchbar-color);
+    color: var(--searchbar-text-color);
+    transition: background-color 1s, color 1s;
+}
+
+
+
+.competitionSearchForm input:focus {
+    border-width: 2px;
+    border-color: #3175fa;
+}
+
+.competitionSearchPopular{
+    float:left;
+    margin-top:3px;
+    margin-left:50px;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.competitionSearchPopular a{
+    margin-left:10px;
+    float:left;
+    cursor:pointer;
+    color:var(--main-text-color);
+    
+    transition: background-color 1s, color 1s;
+    text-decoration:none;
+}
+
+
+.competitionSearchPopular a:hover {
+    color: #3175fa;
+    transition: none!important;
+}
+
+.competitionSearchPopular text{
+    float:left;
+}
+
+.bannerToggle {
+    position: absolute;
+    background-color: rgba(0,0,0,0.3 );
+    padding: 8px;
+    border-radius: 30px;
+    border-color: white;
+    top: 550px;
+    cursor: pointer;
+}
+
+
+.competitionSearchForm button {
+    float: left;
+    height: 72px;
+    margin-top: -72px;
+    margin-left: 850px;
+    width: 100px;
+    font-size: 25px;
+    cursor: pointer;
+    float: left;
+    border-left: 0;
+    border-radius: 3px;
+    border-width: 1px;
+    border-top-left-radius: 0px;
+    border-bottom-left-radius: 0px;
+    background-color: #BCBCBC;
+    border-left: black solid 1px;
+}
+.homepageButtons a {
+    margin-top:20px;
+    background-color: var(--main-panel-color);
+    float: left;
+    margin-left: 20px;
+    width: calc((100% - 40px)/3);
+    text-align: center;
+    font-size:20px;
+    padding-top: 30px;
+    padding-bottom: 30px;
+
+    border-radius: 10px;
+    text-decoration: none;
+    color: var(--main-text-color);
+    transition: background-color 1s, color 1s;
+}
+
+.homepageButtons a:hover{
+    background-color:var(--secondary-panel-color);
+}
+
+.registerButton {
+    float: right;
+    margin-right: 10px;
+    width: 100px;
+    margin-top: 10px;
+    height: 50px;
+    background-color: var(--main-button-color);
+    color: white;
+    border: white;
+    border-radius: 5px;
+    text-align: center;
+    text-decoration: none;
+    font-family: Montserrat-Bold;
+    transition: background-color 1s, color 1s;
+}
+
+
+.signinButton {
+    float: right;
+    margin-right: 20px;
+    margin-top: 27px;
+    height: 50px;
+    color: var(--main-text-color);
+    text-decoration: none;
+    font-family: Montserrat-Bold;
+    transition: background-color 1s, color 1s;
+}
+
+.createButton {
+    float: right;
+    margin-right: 20px;
+    width: 100px;
+    margin-top: 10px;
+    height: 35px;
+    background-color: var(--main-button-color);
+    color: white;
+    border: white;
+    border-radius: 5px;
+    padding-top: 18px;
+    text-align: center;
+    text-decoration: none;
+    font-family: Montserrat-Bold;
+    transition: background-color 1s, color 1s;
+}
+
+
+.languageToggler {
+    float: right;
+    margin-right: 10px;
+    margin-top: 10px;
+    height: 50px;
+    width: 50px;
+    cursor: pointer;
+    border-radius: 10px;
+    background-color: rgba(0,0,0,0.8);
+}
+
+.languageToggler:hover{
+    background-color:rgba(0,0,0,0.2);
+}
+
+.languageTogglerDropdown {
+    background-color: white;
+    position: absolute;
+    right: 25px;
+    margin-top: 65px;
+    width: 100px;
+    height: 100px;
+    box-shadow: 0px 2px 4px 1px grey;
+}
+
+.languageTogglerDropdown a {
+    cursor:pointer;
+    width:100%;
+    text-align:center;
+    margin-top:15px;
+    text-align:center;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    text-decoration: none;
+    color:black;
+    display:block;
+}
+
+
+.languageToggler img {
+    margin-top: 7.5px;
+    margin-left: 7.5px;
+    height: 32px;
+    width: 32px;
+}
+
+.bannerImage {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    filter: brightness(60%);
+    background-repeat: no-repeat;
+    background-position: bottom;
+    background-attachment: fixed;
+    background-size: cover;
+    border: 0;
+    transition: 1s;
+    /*cursor: pointer;*/
+    /*background-color: #4B4B4B;*/
+}
+.blur {
+    filter: blur(10px) brightness(60%);
+    -webkit-filter: blur(10px) brightness(60%);
+    transition: all 1s;
+}
+.noBlur {
+    transition: all 1s;
+}
+.banner {
+    position: relative;
+    width: 100%;
+    height: 600px;
+    overflow: hidden;
+    background-color:black;
+}
+
+@keyframes animate {
+
+    0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+        border-radius: 0;
+    }
+
+    100% {
+        transform: translateY(-1000px) rotate(720deg);
+        opacity: 0;
+        border-radius: 50%;
+    }
+}
+
+@viewport{
+    zoom:1.0;
+    width: auto;
+}
+@-ms-viewport {
+    zoom: 1.0;
+    width: auto;
+}
+
+/*FOOTER*/
+.footer {
+    position: relative;
+    margin-top: 100px;
+    padding: 0;
+    height: 260px;
+    width: 100%;
+    background-color: var(--secondary-bg-color);
+    transition: background-color 1s;
+    left: 0px;
+}
+.footerDescription {
+    position: absolute;
+    left: calc(50% - 300px);
+    top:10px;
+
+}
+.footerLinks {
+    position: absolute;
+    left: calc(50% - 300px);
+    top: 130px;
+}
+.footerLinks a div {
+    margin-right: 10px;
+    float: left;
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--main-text-color);
+}
+.footerLinks a div:hover {
+    border-radius: 10px;
+    width: 50px;
+    height: 50px;
+    background-color: var(--main-button-color);
+}
+.footerLinks a div img{
+    width:50px;
+    height:40px;
+    margin-top:5px;
+}
+.footerDescription label { /*COMPCO TITLE*/
+
+    font-family: Montserrat-Bold;
+    float: left;
+    font-size:25px;
+    margin-left: 10px;
+    margin-top: 20px;
+}
+.footerDescription div {
+    margin-left: 10px;
+    margin-top: 70px;
+    font-size: 17px;
+}
+
+.footerCompanyCategory {
+    margin-top:10px;
+    position: absolute;
+    left: calc(50% + 200px);
+    top: 20px;
+}
+
+.footerCompanyCategory label {
+    font-size: 22px;
+    font-family: Montserrat-Bold;
+    color: var(--main-text-color);
+    transition: background-color 1s, color 1s;
+}
+.footerCompanyCategory a {
+    display: block;
+    margin-top: 7px;
+    font-size: 15px;
+    font-family: Montserrat-Medium;
+    text-decoration: none;
+    color: var(--main-text-color);
+}
+.footerCompanyCategory a:hover {
+    color: var(--main-button-color);
+}
+.bottomLogo {
+    float: left;
+    height: 60px;
+    width: 60px;
+    position: relative;
+}
+.trademarkText {
+    position: absolute;
+    padding-top: 10px;
+    height: 30px;
+    bottom: 0px;
+    font-size: 15px;
+    color: var(--main-bg-color);
+    width: 100%;
+    text-align: center;
+    background-color: var(--main-text-color);
+    font-family: Montserrat-SemiBold;
+    transition: background-color 1s, color 1s;
+}
+
+/*FOOTER END*/
+.profileIcon {
+    float: right;
+    height: 50px;
+    width: 50px;
+    margin-top: 10px;
+    margin-right: 20px;
+    background-color: var(--main-text-color);
+    border-radius: 30px;
+    cursor: pointer;
+    transition: background-color 1s, color 1s;
+}
+
+.profileIcon:hover {
+    outline: solid 1px var(--main-button-color);
+}
+
+.profileDropDown hr {
+    margin-top: 20px;
+}
+
+.profileDropDown {
+    background-color: var(--main-nav-color);
+    position: absolute;
+    right: 10px;
+    margin-top: 68px;
+    width: 250px;
+    padding-bottom: 20px;
+    box-shadow: 0px 0px 2px 1px grey;
+    border-radius: 5px;
+    transition: background-color 1s, color 1s;
+}
+
+.profileUsername {
+    font-size: 25px;
+    margin-left: 80px;
+    text-decoration: none;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: block;
+    margin-top: 20px;
+    color: var(--main-text-color);
+    transition: background-color 1s, color 1s;
+}
+.profileName {
+    font-size: 20px;
+    margin-left: 80px;
+    text-decoration: none;
+    font-family: Arial;
+    display: block;
+    margin-top: 5px;
+    color: var(--main-text-color);
+    transition: background-color 1s, color 1s;
+}
+
+.profileIcon2 {
+    float: left;
+    margin-left: 10px;
+    height: 60px;
+    width: 60px;
+    margin-top: 15px;
+    background-color: var(--main-text-color);
+    border-radius: 30px;
+    transition: background-color 1s, color 1s;
+}
+
+.profileDropDown a {
+    margin-left: 10px;
+    text-decoration: none;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    display: block;
+    margin-top: 20px;
+    color: var(--main-text-color);
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 1s, color 1s;
+}
+
+.inboxIcon {
+    float: right;
+    margin-right: 15px;
+    margin-top: 10px;
+    cursor: pointer;
+    background-color: var(--main-text-color);
+    -webkit-mask: url(/images/icons/inbox.svg) no-repeat center;
+    mask: url(/images/icons/inbox.svg) no-repeat center;
+    width: 40px;
+    height: 50px;
+    transition: background-color 1s, color 1s;
+}
+
+.recommendedCompetitions {
+    font-size:25px;
+    font-family: Montserrat-SemiBold;
+    width: calc(100% - 200px);
+    margin-left:100px;
+    margin-top: 50px;
+}
+
+
+#titleT:hover {
+    color: #FC3434;
+}
+
+
+/*
+
+    #navGames:hover + .navGamesDropDown {
+    visibility: visible;
+    }
+
+    .navAboutDropDown {
+    position: fixed;
+    top: 7%;
+    width: 10%;
+    left: 19%;
+    height: 16%;
+    background-color: white;
+    visibility: hidden;
+}
+
+
+    #navAbout:hover + .navAboutDropDown {
+    visibility: visible;
+}
+*/
+
+@media only screen and (max-width: 1500px) {
+    .mainContent {
+        width: 1000px;
+        margin-left: calc((100% - 1000px)/2);
+    }
+}
+@media only screen and (max-width: 1400px) {
+
+    .competitionSearchArea {
+        width: 800px;
+        left: calc((100vw - 800px)/2);
+    }
+
+    .competitionSearchArea2 {
+        width: 800px;
+        margin-left: calc((100% - 800px)/2)!important;
+    }
+    .banner {
+        height: 500px;
+    }
+    .recommendedCompetitions {
+        width: calc(100% - 100px);
+        margin-left:50px;
+    }
+
+    .bannerToggle {
+        top: 450px;
+    }
+
+
+    .competitionSearchForm input {
+        width: 650px;
+    }
+
+    .competitionSearchForm button {
+        margin-left: 650px;
+    }
+
+}
+@media only screen and (max-width: 1100px) {
+    /*.searchBar{
+        display:none;
+    }*/
+    .mainContent {
+        width: calc(100% - 40px);
+        margin-left: 20px;
+    }
+
+}
+@media only screen and (max-width: 900px) {
+    .featuredHomepage{
+        aspect-ratio:2/1;
+    }
+    .homepageButtons a {
+        width: 100%;
+        margin-left: 0px;
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+    #icons {
+        display: none;
+    }
+    .navShowBar{
+        display:block;
+    }
+    .searchBar {
+        display: none;
+    }
+    .createButton{
+        visibility:hidden;
+    }
+    .mobileNavBars {
+        display: none;
+    }
+    .signinButton {
+        visibility: hidden;
+    }
+    .registerButton {
+        visibility: hidden;
+    }
+    .competitionSearchArea {
+        width: 80%;
+        left: 10%;
+    }
+    .competitionSearchPopular {
+        display: none;
+    }
+    .competitionSearchArea2 {
+        width: calc(100% - 20px) !important;
+        margin-left: 10px !important;
+    }
+    .recommendedCompetitions {
+        width: 90%;
+        margin-left: 5%;
+        margin-top: 50px;
+    }
+    .competitionSearchForm input {
+        width:calc(100% - 20px);
+        margin-left:10px;
+    }
+
+    .competitionSearchForm button {
+        margin-left: calc(100% - 60px);
+        width: 50px;
+    }
+
+    .footerCompanyCategory {
+        display:none;
+    }
+
+
+    .footerLinks {
+        left: 10px;
+    }
+    .footerDescription {
+        left: 10px;
+    }
+}
+
+
+</style>

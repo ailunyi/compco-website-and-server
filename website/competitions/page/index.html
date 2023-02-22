@@ -1,0 +1,95 @@
+﻿<!doctype html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>COMPCO | Home</title>
+    <link rel="stylesheet" href="/homepage.css" />
+    <link rel="stylesheet" href="competitionPage.css" />
+    <link rel="shortcut icon" type="/image/x-icon" href="/images/logo.ico" />
+    <script src="/loadtheme.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    <div class="mainContent">
+        <div id="competitionImageArea" class="competitionImageArea" onclick="toggleImage(1)">
+            <img id="competitionImage" class="skeleton">
+        </div>
+        <div class="competitionBasicInfo">
+            <div id="competitionNameTitle" class="competitionName">...</div>
+            <div class="userOptions">
+                <a>Share</a>
+                <a>Save</a>
+                <!-- <a>0 Dislikes</a> -->
+                <a>0 Likes</a>
+                <div><label id="views">...</label> views</div>
+            </div>
+        </div>
+
+        <div class="competitionInfoArea">
+            <div style="float:left;width:100%">
+                <div class="userPreview" onclick="redirectToProfile()">
+                    <img class="userPreviewImage" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" />
+                    <div id="competitionCreator" class="competitionCreator">...</div>
+                    <div class="contactInfo">contact: <label id="contactInfo">...</label></div>
+                </div>
+
+                <div class="joinButton">Follow</div>
+            </div>
+
+
+            <img class="competitionIcon skeleton" id="competitionIcon" />
+            <div class="competitionInfoPart">
+                location
+                <div id="competitionLocation"></div>
+            </div>
+            <div class="competitionInfoPart">
+                Time & Date
+                <div id="competitionDate">  </div>
+                <div id="competitionDuration">  </div>
+            </div>
+            <div class="competitionInfoPart">
+                Register By
+            </div>
+            <div class="competitionInfoPart">
+                Register Location
+            </div>
+            <div class="competitionInfoPart">
+                Category
+            </div>
+            <div class="competitionInfoPart">
+                Rewards
+            </div>
+            <div class="competitionInfoPart">
+                Difficulty
+            </div>
+            <div class="competitionInfoPart">
+                Entry Fee
+            </div>
+            <div class="competitionInfoPart">
+                Requirements
+            </div>
+            <div class="competitionInfoPart">
+                Joined
+            </div>
+            <div id="competitionDescription" style="white-space: pre-line" class="competitionDescription">  </div>
+
+            
+        </div>
+        <div class="commentsArea">
+            <div class="commentCount"><label>0</label> Comments</div>
+            <div></div>
+        </div>
+    </div>
+    
+    
+
+    <footer id="footer"></footer>
+</body>
+</html>
+
+<script src="/jquery-3.6.0.js"></script>
+<script src="/jquery-ui-1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="/loadEssentials.js"></script>
+<script type="text/javascript" src="competitionPage.js"></script>

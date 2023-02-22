@@ -2,7 +2,6 @@
 
 .searchInfoArea{
     margin-top:20px;
-    margin-left:250px;
     font-family:Arial, Helvetica, sans-serif;
 }
 
@@ -12,46 +11,13 @@
 
 .competitionPreviewArea {
     margin-top: 20px;
-    margin-left: calc((100vw - 1300px)/2);
-    margin-right: calc((100vw - 1300px)/2);
     margin-bottom: 200px;
-    width: 1300px;
-}
-
-.competitionPreview {
-    margin-top: 30px;
-    float: left;
-    background-color: white;
-    height: 300px;
-    width: 300px;
-    margin-left: 20px;
-    cursor: pointer;
-    box-shadow: 2px 2px 4px 1px grey;
-    border-radius:10px;
-}
-
-.competitionPreview:hover {
-    box-shadow: 2px 2px 4px 2px grey;
+    min-height:500px;
 }
 
 
-.competitionPreviewName{
-    float:left;
-    margin-left:10px;
-    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size:20px;
-}
-
-.competitionPreviewLocation {
-    float: left;
-    margin-left:10px;
-    font-size:20px;
-}
-
-.competitionPreviewImage {
-    border-top-left-radius:10px;
-    border-top-right-radius:10px;
-    height: 200px;
-    width: 300px;
-    background-size: contain;
+.competitionSearchArea2 {
+    height: 140px;
+    width: 100%;
+    margin-left: calc((100% - 1000px)/2);
 }

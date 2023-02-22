@@ -1,0 +1,40 @@
+﻿<!doctype html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Love Calculator</title>
+    <link rel="stylesheet" href="/homepage.css" />
+    <link rel="stylesheet" href="love_calculator.css" />
+    <link rel="shortcut icon" type="/image/x-icon" href="/images/logo.ico" />
+    <script src="/loadtheme.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+    <div class="mainContent">
+        <form id="loveForm" class="loveForm">
+            <div class="title">? ♥ LOVE ♥ ?</div>
+            <div>calculate your love compatibility with ur crush</div>
+            <input style="background-color:#018D93" placeholder="your name" />
+            <input id="crush-field" style="background-color:#B20115" type="password" placeholder="crush's name" />
+            <span toggle="#crush-field" class="fa fa-fw fa-eye-slash field-icon toggle-password"></span>
+            <!--<div>names are not sent to server</div>-->
+            <button type="submit">calculate</button>
+        </form>
+        <div class="predictionArea">
+            <div class="score" id="score">???</div>
+            <div class="description" style="font-size:20px" id="description"><div>enter some names :)</div> <div>(full names for extra accuracy)</div></div>
+            <div id="heart" hidden></div>
+            <div class="description" style="position:absolute; bottom:5px;">*don't take these results too seriously, they are just for fun*</div>
+        </div>
+    </div>
+
+    <footer id="footer"></footer>
+</body>
+</html>
+
+<script src="/jquery-3.6.0.js"></script>
+<script src="/jquery-ui-1.12.1/jquery-ui.js"></script>
+<script type="text/javascript" src="/loadEssentials.js"></script>
+<script type="text/javascript" src="love_calculator.js"></script>
