@@ -18,7 +18,7 @@ var currentImage = 0;
 //document.getElementById("searchedItemName").innerHTML = searchedCompetition;
 
 function redirectToProfile() {
-    window.location.href = "/profile/?q=" + competition["creatorName"]; // or use windlow.location.replace()
+    window.location.href = "/profile/?username=" + competition["creatorName"]; // or use windlow.location.replace()
 }
 
 function toggleImage(dir) {
@@ -38,7 +38,7 @@ function toggleImage(dir) {
 }
 
 function toggleImageNum(num) {
-    console.log(num);
+    currentImage = num;
     document.getElementById("competitionImage").src = competition.images[num];
 
     document.getElementById("img-" + String(prevBanner)).style.backgroundColor = "rgba(0,0,0,0.3 )";
@@ -46,6 +46,10 @@ function toggleImageNum(num) {
     document.getElementById("img-" + String(num)).style.backgroundColor = "white";
     clearTimeout(toggleImageTimer);
     toggleImageTimer = setTimeout(function () { toggleImage(1) }, 5000);
+}
+
+function openImage(){
+    window.open(competition.images[currentImage],"_blank")
 }
 
 function getCompetitionInfo(url) {
@@ -63,11 +67,33 @@ function getCompetitionInfo(url) {
             document.getElementById("competitionLocation").innerHTML = competition["location"];
             document.getElementById("competitionDescription").innerHTML = competition["description"];
             document.getElementById("competitionCreator").innerHTML = competition["creatorName"];
-            document.getElementById("contactInfo").innerHTML = competition["contact"];
-            document.getElementById("competitionDate").innerHTML = competition["date"];
+            document.getElementById("name").innerHTML = competition["creatorRealName"];
+            if (competition["creatorAdmin"] == true){
+                document.getElementById("adminImg").hidden = false;
+            }
+
             document.getElementById("views").innerHTML = competition["views"];
 
-            document.getElementById("competitionDuration").innerHTML = competition["time"];
+            document.getElementById("competitionDateStart").innerHTML = competition["dateStart"];
+            document.getElementById("competitionTimeStart").innerHTML = competition["timeStart"];
+            
+            document.getElementById("competitionDateEnd").innerHTML = competition["dateEnd"];
+            document.getElementById("competitionTimeEnd").innerHTML = competition["timeEnd"];
+            
+            document.getElementById("competitionDateRegister").innerHTML = competition["dateRegister"];
+            document.getElementById("competitionTimeRegister").innerHTML = competition["timeRegister"];
+
+            
+            document.getElementById("registerLocation").innerHTML = competition["registerLocation"];
+            document.getElementById("category1").innerHTML = competition["category1"];
+            document.getElementById("category2").innerHTML = competition["category2"];
+            document.getElementById("prize").innerHTML = competition["prize"];
+            document.getElementById("difficulty").innerHTML = competition["difficulty"];
+            document.getElementById("fee").innerHTML = competition["fee"];
+            document.getElementById("requirements").innerHTML = competition["requirements"];
+            document.getElementById("type").innerHTML = competition["type"];
+            document.getElementById("contact").innerHTML = competition["contact"];
+
             if (competition.preview.substring(0,6) == "static") 
                 competition.preview = serverAddress +"/"+ competition.preview
             document.getElementById("competitionIcon").src = competition.preview;

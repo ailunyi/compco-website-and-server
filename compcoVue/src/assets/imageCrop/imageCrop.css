@@ -1,0 +1,88 @@
+
+.ic-container {
+    position: relative;
+}
+
+.ic-overlay-n,
+.ic-overlay-e,
+.ic-overlay-s,
+.ic-overlay-w {
+    position: absolute;
+    background-color: #000;
+    opacity: 0.7;
+}
+
+.ic-overlay-n {
+    top: 0;
+}
+
+.ic-overlay-e {
+    top: 0;
+    right: 0;
+    bottom: 0;
+}
+
+.ic-overlay-s {
+    bottom: 0;
+}
+
+.ic-overlay-w {
+    top: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.ic-resize-handle-ne,
+.ic-resize-handle-se,
+.ic-resize-handle-nw,
+.ic-resize-handle-sw {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: #c92437;
+    z-index: 999;
+}
+
+.ic-resize-handle-nw {
+    top: -5px;
+    left: -5px;
+    cursor: nw-resize;
+}
+
+.ic-resize-handle-sw {
+    bottom: -5px;
+    left: -5px;
+    cursor: sw-resize;
+}
+
+.ic-resize-handle-ne {
+    top: -5px;
+    right: -5px;
+    cursor: ne-resize;
+}
+
+.ic-resize-handle-se {
+    bottom: -5px;
+    right: -5px;
+    cursor: se-resize;
+}
+
+.ic-crop-marker {
+    position: absolute;
+    z-index: 999;
+    border: solid 2px rgba(201,36,55,.5);
+    cursor: move;
+}
+
+.ic-move-handle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.ic-container img {
+    display: block;
+    max-width: 100%;
+}

@@ -55,28 +55,30 @@
     <!--when logged in-->
     <div id="loggedIn" hidden>
 
-        <img id="profileIcon" onclick="toggleVisibilityNoFade('profileDropDown')" class="profileIcon dontHide" />
-        <div hidden id="profileDropDown" class="profileDropDown dontHide">
-            <img id="profileIcon2" class="profileIcon2 dontHide" />
-            <label id="profileUsername" class="profileUsername dontHide">Username</label>
-            <label id="profileName" class="profileName dontHide">...</label>
+        <img id="profileIcon" onclick="openProfile()" class="profileIcon dontHide1" />
+        <div hidden id="profileDropDown" class="profileDropDown dontHide1">
+            <img id="profileIcon2" class="profileIcon2 dontHide1" />
+            <label id="profileUsername" class="profileUsername dontHide1">Username</label>
+            <label id="profileName" class="profileName dontHide1">...</label>
 
             <hr />
             <a lang="en" href="/profile">My Profile</a>
             <a lang="en" href="/profile">Settings</a>
             <!--<a lang="en" href="/my_activities">My Activities</a>-->
-            <a lang="en" target="_blank" href="http://localhost:8000/admin">Admin Panel</a>
+            <!-- <a lang="en" target="_blank" onclick="goToAdminPanel()">Admin Panel</a> -->
 
 
             <a lang="zh" href="/profile">Profile</a>
             <!--<a lang="zh">我的活动</a>-->
-            <a lang="zh" href="/admin">管理</a>
+            <!-- <a lang="zh" href="/admin" onclick="goToAdminPanel()" hidden>管理</a> -->
+            <div id="placeholder">
 
+            </div>
             <hr />
-            <a lang="en" class="dontHide" onclick="changeColor()" id="themeName">Theme: Light</a>
+            <a lang="en" class="dontHide1" onclick="changeColor()" id="themeName">Theme: Light</a>
             <a lang="en" href="#cn">Language: English</a>
 
-            <a lang="zh" class="dontHide" onclick="changeColor()" id="themeName">Theme: Light</a>
+            <a lang="zh" class="dontHide1" onclick="changeColor()" id="themeName">Theme: Light</a>
             <a lang="zh" href="#en">语言：中文</a>
 
             <hr />
@@ -88,10 +90,10 @@
         </div>
 
 
-        <a onclick="toggleVisibilityNoFade('profileDropDown')" onmouseover="toggleVisibilityNoFade('inboxSpan')" onmouseout="toggleVisibilityNoFade('inboxSpan')" class="inboxIcon dontHide"></a>
+        <a id="inboxDropDownButton" onclick="toggleVisibilityNoFade('inboxDropDown')" onmouseover="toggleVisibilityNoFade('inboxSpan')" onmouseout="toggleVisibilityNoFade('inboxSpan')" class="inboxIcon dontHide2"></a>
         <span class="navIconSpan" style="right:40px" id="inboxSpan" hidden>Notifications</span>
-        <div>
-
+        <div hidden id="inboxDropDown" class="profileDropDown notificationDropdown dontHide2">
+            Coming Soon
         </div>
 
 
@@ -133,7 +135,7 @@
 
     <form id="searchBarArea" action="/competitions/search/">
         <!--<i class="fa fa-search searchIcon"></i>-->
-        <input id="searchBar" class="searchBar" type="search" name="q" placeholder="Search activities, communities, or accounts" />
+        <input id="searchBar" class="searchBar" type="search" name="q" placeholder="Search activities, communities, or users" />
     </form>
     <!--explore-->
     <!--<div hidden onmouseout="toggleVisibilityNoFade('exploreDropdown')" id="exploreDropdown" class="exploreDropdown">

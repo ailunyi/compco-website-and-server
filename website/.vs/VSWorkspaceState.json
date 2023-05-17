@@ -5,8 +5,9 @@
     "\\competitions\\page",
     "\\competitions\\search",
     "\\create",
+    "\\explore",
     "\\tutor"
   ],
-  "SelectedNode": "\\homepage.css",
+  "SelectedNode": "\\explore\\explore.js",
   "PreviewInSolutionExplorer": false
 }

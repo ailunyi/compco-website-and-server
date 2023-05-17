@@ -4,9 +4,13 @@ import re
 import sys
 import random, string, uuid
 from datetime import datetime
+import time
 import os
 import bcrypt
 from pymongo import ReturnDocument
+from PIL import Image
+import io
+import cropper 
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
 
@@ -18,12 +22,18 @@ pendingCompCol = mydb["pendingCompetitions"]
 rejectedCompCol = mydb["rejectedCompetitions"]
 sessions = mydb["sessions"]
 Trending = mydb["trending"]
+activityComments = mydb["activityComments"]
+activityLikes = mydb["activityLikes"]
 
 def getCurrentTime():
     return str(datetime.now())
 
+# so javascript can understand
+def getCurrentTimeMktime():
+    return str(int(time.mktime(datetime.now().timetuple())) * 1000)
+
 def getRandomString(num):
-    return ''.join(random.choices(string.ascii_lowercase, k=num))
+    return ''.join(random.choices(string.ascii_uppercase, k=num))
 
 def getUserByID(ID):
     user = userCol.find_one({"USERID": ID})
@@ -64,15 +74,73 @@ def addUser(firstName, lastName, username,email, password):
             return -2
         return -1
 
+
+
+def editUserProfile(userInfo):
+    print("editing " + userInfo["username"] + "'s profile")
+    user = getUserBySession(userInfo["sessionId"])
+    if (user == None): return 0; #user not found, could be exploiter
+    userCol.update_one({"USERID": user["USERID"]}, {"$set": {"firstName":userInfo["firstName"],
+    "lastName":userInfo["lastName"],"contact":userInfo["contact"],"school":userInfo["school"],
+    "birthday":userInfo["birthday"],"bio":userInfo["bio"]}})
+
 def deleteUser(username):
     userCol.delete_one({"username": username})
 
-def addCompetition(name,location, description, prize, category1, category2,date, time, images, sessionId, contact):
-    creator = getUserBySession(sessionId)
+def toggleActivityLike(userID, competitionUrl, change):
+    like = activityLikes.find_one({"competitionUrl":competitionUrl,"userID":userID},{})
+    if not change: #dont add or subtract
+        return not (like == None)
+    if like == None:
+        activityLikes.insert_one({"competitionUrl":competitionUrl,"userID":userID})
+        compCol.find_one_and_update({"url":competitionUrl}, {"$inc": {"likes":1}})
+        return True
+    else:
+        activityLikes.delete_one({"competitionUrl":competitionUrl,"userID":userID})
+        compCol.find_one_and_update({"url":competitionUrl}, {"$inc": {"likes":-1}})
+        return False
+
+def addActivityComment(userID,username,profilePic, competitionUrl, message):
+    time = getCurrentTime()
+    mktime = getCurrentTimeMktime()
+    COMMENTID = str(uuid.uuid4())
+    activityComments.insert_one({
+        "timeCreated":time,
+        "mktimeCreated":mktime,
+        "COMMENTID":COMMENTID,
+        "USERID":userID,
+        "username":username,
+        "profilePic":profilePic,
+        "competitionUrl":competitionUrl,
+        "message":message,
+        "likes":0,
+        "dislikes":0
+    })
+    comp = compCol.find_one_and_update({"url":competitionUrl}, {"$inc": {"comments":1}}, return_document = ReturnDocument.AFTER) #add view
+    if not comp == None:    
+        print(comp["name"]+ " competition gotten " + getCurrentTime())
+        if (Trending.find_one({"url":competitionUrl}) == None): #add to trending
+            comp["viewDate"] = getCurrentTime()
+            comp["commentToday"] = 1
+            Trending.insert_one(comp)
+        else:
+            Trending.find_one_and_update({"url":competitionUrl}, {"$inc": {"commentToday":1}})
+
+    print(userID + " commented on "+competitionUrl)
+
+def getActivityComments(url):
+    comments = activityComments.find({"competitionUrl":url},{}).sort("timeCreated",pymongo.DESCENDING).limit(10)
+    comments = dumps(comments)
+    print(comments)
+    return comments
+
+
+def addCompetition(compInfo,images):
+    creator = getUserBySession(compInfo["sessionId"])
     if creator == None:
         return None
-    url = creator["username"]+name+getRandomString(5)
-    directory = "static/images/competitions/"+creator["USERID"]+"/"
+    url = creator["username"]+"_"+getRandomString(6)
+    directory = "static/images/competitions/"+creator["USERID"]+"/"+getRandomString(6)+"/"
 
     if os.path.exists(directory) == False:
         os.makedirs(directory)
@@ -80,15 +148,45 @@ def addCompetition(name,location, description, prize, category1, category2,date,
     logoPath = ""
     imagePaths = []
     for i in range(0, len(images)):
-        filename = directory+creator["username"]+"_"+getRandomString(5)+images[i].filename
+        filename = directory+getRandomString(3)+"_"+images[i].filename
+        
         if (i == 0):
-            logoPath = filename
+            logoPath = filename        
+            cropDetails = compInfo["croppedLogoDetails"]
         else:
             imagePaths.append(filename)
-        with open(filename, 'wb') as f:
-                f.write(images[i].file.read())
+            cropDetails = compInfo["croppedDetails"][i-1]
+
+        img = Image.open(io.BytesIO(images[i].file.read()))
+        box = (int(cropDetails["x"]), int(cropDetails["y"]), int(cropDetails["x"]+cropDetails["width"]), int(cropDetails["y"]+cropDetails["height"]))
+        if (images[i].content_type == "image/gif"):
+            img2 = cropper.MultiFrameImage(img)
+            croppedImage = img2.crop(box)
+            buffered = io.BytesIO()
+            croppedImage.save(filename, format="GIF",  loop=0, save_all=True, duration= img.info['duration'])
+        else:
+            #crop images
+            croppedImg = img.crop(box)
+            if (i == 0):
+                croppedImg.thumbnail((300, 200))
+            else: #change image resolution
+                croppedImg.thumbnail((1080, 1080))
+            if (images[i].content_type != "image/png"):
+                croppedImg = croppedImg.convert('RGB')
+            croppedImg.save(filename)
+        # with open(filename, 'wb') as f:
+        #     f.write(compInfo["images"][i].file.read())
     
-    competitionInfo = {"name": name,"location": location, "description": description, "category1":category1,"category2":category2,"date":date, "time":time, "images":imagePaths, "prize": prize, "preview": logoPath, "url": url, "creatorName": creator["username"], "contact":contact, "creatorID": creator["USERID"], "timeCreated": getCurrentTime()}
+    competitionInfo = {"name": compInfo["name"],"location": compInfo["location"],"description": compInfo["description"],"registerLocation":compInfo["signUpLocation"],
+     "category1":compInfo["chosenCategory1"],"category2":compInfo["chosenCategory2"],
+     "difficulty":compInfo["chosenDifficulty"],"type":compInfo["chosenType"],
+     "dateRegister":compInfo["dateRegister"], "timeRegister":compInfo["timeRegister"],
+     "dateStart":compInfo["dateStart"],"timeStart":compInfo["timeStart"],
+     "dateEnd":compInfo["dateEnd"],"timeEnd":compInfo["timeEnd"],
+      "images":imagePaths, "prize": compInfo["prize"],"fee": compInfo["fee"],
+      "organization":compInfo["organization"],"requirements":compInfo["requirements"],
+       "preview": logoPath, "url": url, "creatorName": creator["username"],"creatorRealName": creator["firstName"]+" "+creator["lastName"],"creatorAdmin": creator["admin"],
+        "contact":compInfo["contact"], "creatorID": creator["USERID"], "timeCreated": getCurrentTime()}
     x = pendingCompCol.insert_one(competitionInfo)
     return x
 
@@ -116,13 +214,12 @@ def loginUser(username,password):
     else: 
         return {"message":"user found but wrong password", "login": 1}
 
-def getAll():
-    cursor =  mycol.find()
-    docs = list(cursor)
-    docs = dumps(docs, indent=2, sort_keys=True)
 
 def getCompetitionsWithName(name):
-    comps = compCol.find({"name":re.compile(name, re.IGNORECASE)},{})
+    if (name == "all"):
+        comps = compCol.find();
+    else:
+        comps = compCol.find({"name":re.compile(name, re.IGNORECASE)},{})
     comps = dumps(comps)
     print(comps)
     return comps
@@ -173,12 +270,34 @@ def rejectCompetition(url):
 
 #EXPLORE
 def getTrendingCompetitions(category):
-    comps = compCol.find()
+    if (category == "all"):
+        comps = compCol.find().sort("views",pymongo.DESCENDING).limit(8)
+    else:
+        comps = compCol.find({"category1":category}).sort("views",pymongo.DESCENDING).limit(8)
+    comps = dumps(comps)
+    return comps
+
+def getNewestCompetitions(category):
+    if (category == "all"):
+        comps = compCol.find().sort("timeCreated",pymongo.DESCENDING).limit(8)
+    else:
+        comps = compCol.find({"category1":category}).sort("timeCreated",pymongo.DESCENDING).limit(8)
+    comps = dumps(comps)
+    return comps
+
+def getTrendingSubcategory(category,subcategory):
+    comps = compCol.find({"category1":category,"category2":subcategory}).sort("views",pymongo.DESCENDING).limit(10)
     comps = dumps(comps)
     return comps
 
 def getNewUsers():
     users = userCol.find().sort("timeJoined",-1).limit(5)
+    users = dumps(users)
+    return users
+
+#PROFILE
+def getUser(name):
+    users = userCol.find_one({"username":name})
     users = dumps(users)
     return users
 

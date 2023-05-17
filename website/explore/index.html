@@ -4,13 +4,13 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Explore</title>
-    <link rel="stylesheet" href="/homepage.css" />
-    <link rel="stylesheet" href="/explore/explore.css" />
+    <link rel="stylesheet" href="/homepage.css?0.1" />
+    <link rel="stylesheet" href="/explore/explore.css?0.1" />
     <link rel="shortcut icon" type="/image/x-icon" href="/images/logo.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/common/css/competitionPreview.css" />
 
-
-    <script src="/loadtheme.js"></script>
+    <script src="/loadtheme.js?0.1"></script>
     <script src="/jquery-3.6.0.js"></script>
     <script src="/jquery-ui-1.12.1/jquery-ui.js"></script>
 </head>
@@ -24,6 +24,7 @@
         <a href="/explore" class="exploreCategoriesSelected">All</a>
         <a href="/explore/subject">Subject</a>
         <a href="/explore/sports">Sports</a>
+        <a href="/explore/hobbies">Hobbies</a>
         <a href="/explore/other">Other</a>
         <label> | </label>
         <a>Users</a>
@@ -43,6 +44,18 @@
         <div class="title">Trending</div>
         <div id="competitionPreviewArea-Trending" class="competitionPreviewAreaTop"></div>
 
+        <div class="exploreCommunitiesArea">
+            <div class="title">Communities</div>
+        </div>
+    
+    
+        <div class="exploreUsersArea">
+            <div class="title" style="margin-bottom:30px;">Newest Users</div>
+            <div id="exploreUsersArea">
+
+            </div>
+        </div>
+        
         <div class="title">Ongoing Activites <a>see more</a></div>
         <div id="competitionPreviewArea-Ongoing" class="competitionPreviewArea"></div>
 
@@ -143,16 +156,9 @@
         </div>-->
     </div>
 
-    <div class="exploreCommunitiesArea">
-        <div class="title">Communities</div>
-    </div>
-
-
-    <div class="exploreUsersArea" id="exploreUsersArea">
-        <div class="title">Newest Users</div>
-    </div>
+   
     <footer id="footer"></footer>
 </body>
 </html>
 
-<script type="text/javascript" src="explore.js"></script>
+<script type="text/javascript" src="explore.js?0.1"></script>

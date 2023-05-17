@@ -4,10 +4,10 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>COMCO | Home</title>
-    <link rel="stylesheet" href="/homepage.css" />
-    <link rel="stylesheet" href="profile.css" />
+    <link rel="stylesheet" href="/homepage.css?0.1" />
+    <link rel="stylesheet" href="profile.css?0.1" />
     <link rel="shortcut icon" type="/image/x-icon" href="/images/logo.png" />
-    <script src="/loadtheme.js"></script>
+    <script src="/loadtheme.js?0.1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
@@ -15,36 +15,91 @@
 
     </div>
     <div id="nav-placeholder"></div>
-    <div>
-        <div class="banner skeleton"></div>
-        <img class="profilePicture skeleton" />
-        <div class="realName">...</div>
-        <div class="username">
-            <div>...</div>
+
+    <div id="popup" hidden>
+        <div class="overlay" onclick="toggleVisibilityNoFade('popup')"></div>
+        <div class="popup">
+            <form id="editProfilePopup">
+                <div>Edit Profile</div>
+                <hr>
+                <div style="float:left">
+                    <label for="pic-input" style="cursor: pointer;margin-top: 0px;" title="choose profile picture"> 
+                        <img class="profilePic" id="editProfilePic">
+                    </label>
+                    <input style="display:none" id="pic-input" accept="image/*"  type="file">
+
+                   <label for="banner-input" style="cursor: pointer;margin-top: 0px;" title="choose profile banner">
+                        <img class="banner" id="editBannerPic">
+                   </label>
+                   <input style="display:none" id="banner-input" accept="image/*"  type="file">
+
+                </div>
+                <label style="margin-top: 5px;">Username:</label>
+                <input style="margin-top: 5px; background-color: grey;" placeholder="username" id="editUsername" readonly>
+
+                <label >First Name:</label>
+                <input  placeholder="your first name" id="editFirstName">
+                <label>Last Name:</label>
+                <input placeholder="your last name" id="editLastName">
+
+                
+                <label>School:</label>
+                <input id="editSchool" placeholder="school name (ex. SHSID)">
+                
+                <label>Birthday:</label>
+                <input id="editBirthday" type="date">
+
+                <input id="editContact" placeholder="email, wechat, qq, etc.">
+                <label>Contact:</label>
+                
+                <textarea placeholder="bio..." id="editBio"></textarea>
+                <label>Bio:</label>
+
+                <button>Save</button>
+                <div style="height: 20px; float: left; width: 100%;"></div>
+            </form>
+            <a onclick="toggleVisibilityNoFade('popup')" class="closePopup">X</a>
         </div>
-        <a class="messageButton">Message</a>
     </div>
-    <div class="mainContent" style="margin-top:550px;min-height:600px">
+
+    <div>
+        <div class="banner skeleton" id="banner"></div>
+        <img class="profilePicture skeleton" id="profilePicture" style="opacity: 100%;"/>
+        <div class="realName">
+            <div id="realName">...</div>
+            <img id="compcoTeamIcon" class="verifiedIcon" title="compco team" src="/images/logo.ico" hidden>
+        </div>
+        <div class="username">
+            @<text id="username">...</text>        
+        </div>
+        <a id="messageButton" class="messageButton button" hidden>Message</a>
+        <a id="editButton" class="editButton button" onclick="showPopup()" hidden >edit profile</a>
+        <!-- <div class="followersArea">
+            <div>0 Followers</div>
+            <div>0 Following</div>
+        </div> -->
+    </div>
+    <div id="mainContent" class="mainContent" style="margin-top:550px;min-height:600px;">
         <div class="infoArea">
-            <label>School:</label> ...
+            School: <label id="school">...</label>
         </div>
         <div class="infoArea">
-            <label>Contact:</label> ...
+            Contact: <label id="contact">...</label>
         </div>
         <div class="infoArea">
-            <label>Age:</label> ...
+            Birthday: <label id="birthday">...</label>
         </div>
         <div class="infoArea">
-            <label>Hobbies:</label> ...
+            Hobbies: <label>...</label> 
         </div>
-        <div class="description">
+        <div id="bio" class="description">
             ...
         </div>
         <div class="categoriesArea">
             <a class="categoriesAreaChosen">Overview</a>
-            <a>Activities</a>
-            <a>Posts</a>
-            <a>Saved</a>
+            <a id="activitiesButton">Activities</a>
+            <a id="postsButton">Posts</a>
+            <a id="savedButton" hidden><i class="fa fa-lock"></i> Saved</a>
         </div>
 
         <div id="overview">
@@ -60,5 +115,5 @@
 
 <script src="/jquery-3.6.0.js"></script>
 <script src="/jquery-ui-1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="/loadEssentials.js"></script>
-<script type="text/javascript" src="profile.js"></script>
+<script type="text/javascript" src="/loadEssentials.js?0.1"></script>
+<script type="text/javascript" src="profile.js?0.1"></script>

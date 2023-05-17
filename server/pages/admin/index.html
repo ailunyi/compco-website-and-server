@@ -11,8 +11,8 @@
             top:0px;
             left:300px;
             height:100%;
-            width:calc(100% - 300px);
-            background-color: rgba(0,0,0,0.5);
+            width:calc(100% - 320px);
+            background-color: #F8F9FD;
             padding-top: 15px;
             padding-left: 10px;
             padding-right: 10px;
@@ -26,27 +26,41 @@
             top:0px;
             width:300px;
             height:100vh;
-            background-color: #66B0BE;
+            background-color: #4E73DF;
             font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            color:#D7D7D7;
+            box-shadow:0px 0px 3px 0px black;
+        }
+        hr{
+            width: 80%;
         }
         .navigation div{
             text-align: center;
             font-size: 30px;
             margin-top: 20px;
             margin-bottom: 20px;
+            color:white;
+        }
+        .navigationChosen{
+            color: white !important;;
         }
         .navigation a {
             padding-bottom: 10px;
-            text-align: center;
+            text-align: left;
             font-size: 20px;
             padding-top: 10px;
             cursor: pointer;
             display: block;
-
+            width: 80%;
+            margin-left: 10%;
+            border-radius: 10px;
+            padding-left: 10px;
+            text-decoration: none;
+            color: #D7D7D7;
         }
 
         .navigation a:hover {
-            background-color: #417681;
+            background-color: rgba(0,0,0,0.5);
         }
 
 
@@ -92,27 +106,33 @@
             left: 0px;
             width: 100vw;
             height: 100vh;
+            z-index: 3;
         }
 
         .competitionInfoArea {
             position: fixed;
+            overflow-y: auto;
             width: 1000px;
             height: 80%;
             top: 10%;
             left: calc((100vw - 1000px)/2);
             border-radius: 10px;
-            background-color: rgb(128 128 128);
+            background-color: white;
             padding-top: 15px;
             padding-left: 10px;
             padding-right: 10px;
+            
+            z-index: 4;
         }
-
+        .competitionImage{
+            width:80%;
+        }
         .approveCompetitionButton {
             position: fixed;
             width: 200px;
             border-radius: 10px;
-            top: 85%;
-            background-color: chocolate;
+            bottom: 10%;
+            background-color: #4E73DF;
             height: 40px;
             text-align: center;
             padding-top: 15px;
@@ -132,20 +152,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <div class="navigation">
-        <div>ADMIN PANEL</div>
-        
-        <hr />
-        <a>Pending Competitions</a>
-        <a>Users</a>
-        <a>Articles</a>
-        <a>Statistics</a>
-        <hr />
-        
-        <a href="http://127.0.0.1:5500/">Back To Compco</a>
-    </div>
-    <div class="viewArea">
-        
+    
+    <div class="viewArea" id="area-0">
         <text>Total Pending Competitions: </text>
         <text id="searchedItemNumber">0</text>
         <div hidden id="competitionInfoPopup">
@@ -156,28 +164,66 @@
                 <div id="competitionDescription">Description</div>
                 <div id="competitionCreator">Creator</div>
                 <div id="competitionURL">Url</div>
-                <img id="competitionImage" style="cursor:pointer" onclick="toggleImage(1)" />
-                <div onclick="rejectCompetition()" class="approveCompetitionButton" style="left: calc((100vw - 500px)/2)">Reject</div>
-                <div onclick="approveCompetition()" class="approveCompetitionButton" style="right: calc((100vw - 500px)/2)">Approve</div>
+                <img class="competitionImage" id="competitionImage" style="cursor:pointer" onclick="toggleImage(1)" />
+                <div onclick="rejectCompetition()" class="approveCompetitionButton" style="margin-left: 200px">Reject</div>
+                <div onclick="approveCompetition()" class="approveCompetitionButton" style="margin-left: 450px">Approve</div>
                 <div class="officialButton" onclick="toggleOfficial()" >Official?: <label id="officialButton">NO</label></div>
             </div>
         </div>
         <div id="competitionPreviewArea"></div>
     </div>
-
-    <footer id="footer"></footer>
+    <div class="viewArea" id="area-1" hidden> 
+        <text>Total Approved: Coming Soon</text>
+    </div>
+    <div class="viewArea" id="area-2" hidden> 
+        <text>Total Rejected: Coming Soon</text>
+    </div>
+    <div class="viewArea" id="area-3" hidden> 
+        <text>Total Users: Coming Soon</text>
+    </div>
+    <div class="viewArea" id="area-4" hidden> 
+        <text>Articles: Coming Soon</text>
+    </div>
+    <div class="viewArea" id="area-5" hidden> 
+        <text>stuff: Coming Soon</text>
+    </div>
+    <div class="navigation">
+        <div>ADMIN PANEL</div>
+        
+        <hr />
+        <a class="navigationChosen" onclick="toggleArea(0)" id="button-0">Pending Activities</a>
+        
+        <a  onclick="toggleArea(1)" id="button-1">Approved Activities</a>
+        <a onclick="toggleArea(2)" id="button-2">Rejected Activities</a>
+        <hr />
+        <a onclick="toggleArea(3)" id="button-3">Users</a>
+        <a onclick="toggleArea(4)" id="button-4">Articles</a>
+        <a onclick="toggleArea(5)" id="button-5">Statistics</a>
+        <hr />
+        
+        <a href="https://compco.cc">Back To Compco</a>
+    </div>
 </body>
 </html>
 
 <script>
 
-    const serverAddress = "http://localhost:8000";
+    //const serverAddress = "http://localhost:8000";
+    const serverAddress = "https://compco.cc:8000";
     var competitions = [];
     var previews = [];
     var currentImage = 0;
     var currentCompetition = 0;
     var official = false;
 
+    var prev = 0;
+    function toggleArea(num){
+        document.getElementById("area-"+prev).hidden = true;
+        document.getElementById("button-"+prev).classList.remove("navigationChosen");
+        prev = num;
+        document.getElementById("area-"+num).hidden = false;
+        document.getElementById("button-"+num).classList.add("navigationChosen");
+    }
 
     function toggleVisibilityNoFade(element) {
         if (document.getElementById(element).hidden == true) {

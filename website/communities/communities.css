@@ -4,13 +4,19 @@
     width: 260px;
     height: calc(100vh - 70px);
     position: fixed;
-    background-color: var(--main-nav-color);
+    background-color: var(--main-bg-color);
     font-size: 20px;
     font-family: Montserrat-Bold;
     overflow-y: scroll;
     transition: background-color 1s,box-shadow 1s;
     /*box-shadow: 0 1px 3px -2px grey;*/
     box-shadow: 0px 0px 2px 0px var(--main-text-color);
+}
+
+.navigation{
+    box-shadow: 0 1px 3px -2px var(--main-text-color)!important;
+    transition: box-shadow 1s,background-color 1s;
+    background-color: var(--main-bg-color)!important;
 }
 
 .sideBar div {

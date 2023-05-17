@@ -11,52 +11,68 @@ function setFormMessage(type, message) {
 }
 
 // need serverside
-function validate(name, location, date, time, description, logo, images, prize, chosenCategory1, chosenCategory2, sessionId, contact) {
+function validate(details,pics) {
     //session
-    if (sessionId == null) {
+    if (details.sessionId == null) {
         setFormMessage("error","Not logged in");
         return false;
     }
     
     //lengths
-    if (name.length < 3) {
+    if (details.name.length < 3) {
         setFormMessage("error", "name length too short");
         return false;
     }
-    if (location.length < 5) {
+    if (details.location.length < 5) {
         setFormMessage("error", "location length too short");
         return false;
     }
-    if (time.length < 4) {
-        setFormMessage("error", "time too short");
+    if (details.timeRegister.length < 3) {
+        setFormMessage("error", "register time too short");
         return false;
     }
-    if (description.length < 20) {
+    if (details.timeStart.length < 3) {
+        setFormMessage("error", "start time too short");
+        return false;
+    }
+    if (details.timeEnd.length < 3) {
+        setFormMessage("error", "end time too short");
+        return false;
+    }
+    if (details.description.length < 20) {
         setFormMessage("error", "description too short");
         return false;
     }
 
     // images
-    if (images.length < 1 || logo == null) {
+    if (pics.images.length < 1 || pics.logo == null) {
         setFormMessage("error","Please select logo and images");
         return false;
     }
 
-    if (contact.length < 5) {
-        setFormMessage("error", "contact info too short");
+    if (details.signUpLocation.length < 3) {
+        setFormMessage("error", "sign up location too short");
         return false;
     }
 
+    
+
+    if (details.chosenType == "None"){
+        setFormMessage("error","Please choose activity type");
+        return false;
+    }
+    if (details.chosenDifficulty == "None"){
+        setFormMessage("error","Please choose difficulty");
+        return false;
+    }
 
     // categories
-    if (chosenCategory1 == "None" || chosenCategory1 == undefined || ((chosenCategory2 == "None" || chosenCategory2 == undefined) && chosenCategory1 != "Other")) {
-       
+    if (details.chosenCategory1 == "None" || details.chosenCategory1 == undefined || ((details.chosenCategory2 == "None" || details.chosenCategory2 == undefined) && details.chosenCategory1 != "Other")) {
+        
         setFormMessage("error","Please choose category");
         return false;
     }
-
-
-    
+        
    
     return true;
 }
@@ -71,12 +87,13 @@ function setDate() {
     let year = newDate.getFullYear();
     if (month < 10)
         month = "0" + month;
+    if (day < 10)
+        day = "0"+day;
     let tmrDate = `${year}-${month}-${day}`;
-    console.log(tmrDate); 
     var elements =  document.getElementsByClassName("date");
+    
     for (var i = 0; i < elements.length; i++){
         if (elements[i] != null){
-
             elements[i].min = tmrDate;
             elements[i].value = tmrDate;
         }
@@ -176,7 +193,7 @@ function cropImage(originalImage) {
     if (previewID2 == "logo")
         apR = 3/2;
     else
-        apR = 16 / 9;
+        apR = NaN;
     
     cropper = new Cropper(originalImage, {
         dragMode: 'move',
@@ -198,30 +215,37 @@ function delay(time) {
     return new Promise(resolve => setTimeout(resolve, time));
 }
 
-
-function removeCompImage(el) {
-    var element = el;
-    element.remove();
-    document.getElementById("drop2").style.boxShadow = "0px 0px 3px 1px var(--main-text-color)";
-    delay(10).then(() =>document.getElementById("drop2").setAttribute("onClick", "triggerImageSelection('#preview2')"));
-    document.getElementById("drop2").onmouseout = function () {
-        document.getElementById("drop2").style.boxShadow = "";
-    }
+function auto_grow(element) {
+    element.style.height = "5px";
+    element.style.height = (element.scrollHeight)+"px";
 }
-var compImages = []
-var logo;
+
+var compImages = [];
+var croppedDetails = [];
+var croppedImagesId = [];
+var croppedLogo;
+var croppedLogoDetails;
 var uploadedCount = 0;
 $('#crop').on('click', function () {
     // Get a string base 64 data url
 
     $('body').removeClass('stop-scrolling');
 
-    var croppedImg = cropper.getCroppedCanvas({ maxWidth: 1920, maxHeight: 1080 }).toDataURL("image/png");
+    var croppedImg = cropper.getCroppedCanvas({ 
+        
+        minWidth: (previewID2  == "logo") ? 300 : 500,
+        minHeight: (previewID2  == "logo") ? 200 : 500,
+        maxWidth: (previewID2  == "logo") ? 600 : 1920/2,
+        maxHeight: (previewID2  == "logo") ? 400 : 1080/2,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
+        
+    }).toDataURL("image/png");
     var img;
     if (previewID2 == "logo") {
         $('#' + previewID2).removeAttr("hidden");
     } else {
-
+        //document.getElementById("drop2").style.width = "100%";
         img = document.createElement("img");
         img.className = "compImage";
         img.id = "images-" + uploadedCount;
@@ -245,20 +269,21 @@ $('#crop').on('click', function () {
         document.getElementById("drop2").appendChild(img);
     }
 
+    var cropData = cropper.getData();
+    var cropDataString = JSON.stringify({
+        left: cropData.x /*+ (zoomRatio - 0.75) * cropData.width*/,
+        upper: cropData.y /*+ (zoomRatio - 0.75) * cropData.height*/,
+        right: cropData.x + cropData.width,
+        lower: cropData.y + cropData.height
+    });
+
     // if gif then post to server
     if (fileType == "image/gif") {
         const formData = new FormData();
         var zoomRatio = cropper.getImageData().naturalWidth / cropper.getImageData().width;
         //var zoomRatioH = cropper.getImageData().height / cropper.getImageData().naturalHeight;
-        console.log(zoomRatio);
+
         
-        var cropData = cropper.getData();
-        var cropDataString = JSON.stringify({
-            left: cropData.x /*+ (zoomRatio - 0.75) * cropData.width*/,
-            upper: cropData.y /*+ (zoomRatio - 0.75) * cropData.height*/,
-            right: cropData.x + cropData.width,
-            lower: cropData.y + cropData.height
-        });
         
 
         $('#sectionResize').attr('hidden', 'hidden');
@@ -277,10 +302,14 @@ $('#crop').on('click', function () {
             console.log('cropped: ', cropped);
             $('#' + previewID2).removeAttr("hidden");
             $('#' + previewID2).attr('src', cropped);
-            if (previewID2 != "logo") {
-                compImages.push(data);
+            if (previewID2 == "logo") {
+                croppedLogo = file2;
+                croppedLogoDetails = cropData;
+
             } else {
-                logo = data;
+                croppedImagesId.push(previewID2);
+                compImages.push(file2);
+                croppedDetails.push(cropData);
             }
             return data;
         })
@@ -294,26 +323,48 @@ $('#crop').on('click', function () {
         $('#' + previewID2).attr('src', croppedImg);
         $('#sectionResize').attr('hidden', 'hidden');
         if (previewID2 != "logo") {
-            compImages.push(croppedImg);
+            croppedImagesId.push(previewID2);
+            compImages.push(file2);
+            croppedDetails.push(cropData);
         } else {
-            logo = croppedImg;
+            croppedLogo = file2;
+            croppedLogoDetails = cropData;
         }
     }
 
 });
 
+function removeCompImage(el) {
+    
+    var element = el;
+    for (var i =0; i<croppedImagesId.length; i++){
+        if (croppedImagesId[i] == element.id){
+            croppedImagesId.splice(i,1);
+            croppedDetails.splice(i,1);
+            compImages.splice(i,1);
+        }
+    }
+    
+    element.remove();
+    document.getElementById("drop2").style.boxShadow = "0px 0px 3px 1px var(--main-text-color)";
+    delay(10).then(() =>document.getElementById("drop2").setAttribute("onClick", "triggerImageSelection('#preview2')"));
+    document.getElementById("drop2").onmouseout = function () {
+        document.getElementById("drop2").style.boxShadow = "";
+    }
+}
 
 // create competition
-function createCompetition(name, location, date, time, description, logo, images, prize, chosenCategory1, chosenCategory2,  sessionId, contact) {
+function createCompetition(details,pics) {
     const formData = new FormData();
 
-    console.log(logo)
-    formData.append('files', logo);
-    for (var i = 0; i < images.length; i++) {
-        formData.append('files', images[i]);
+    console.log(pics.logo)
+    formData.append('files', pics.logo);
+    for (var i = 0; i < pics.images.length; i++) {
+        formData.append('files', pics.images[i]);
     }
 
-    var compInfo = JSON.stringify({ name: name, location: location, description: description, prize: prize, sessionId: sessionId, category1: chosenCategory1, category2: chosenCategory2, date: date, time: time, contact: contact});
+    var compInfo = JSON.stringify({details});
+
     //console.log(compInfo);
     formData.append("content", compInfo );
 
@@ -324,31 +375,18 @@ function createCompetition(name, location, date, time, description, logo, images
     .then((res) => res.json()).then((data) => {
         // Handle response 
         console.log('Response: ', data);
+        toggleVisibilityNoFade("area1");
+        toggleVisibility("area2");
         return data;
     })
     .catch(err => {
         // Handle error 
         console.log('Error message: ', err);
+        
+        setFormMessage("error", "unkown server error, please try again later");
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    //fetch(serverAdress, {
-    //    method: 'POST',
-    //    headers: {
-    //        'Accept': 'application/json',
-    //        'Content-Type': 'application/json'
-
-    //    },
-    //    body: JSON.stringify({ name: name, location: location, description: description, prize: prize, preview: logo, creator: sessionId, category1: chosenCategory1, category2: chosenCategory2, date: date, time: time, images: images })
-    //})
-    //.then((res) => res.json()).then((data) => {
-    //    // Handle response 
-    //    console.log('Response: ', data);
-    //    return data;
-    //})
-    //.catch(err => {
-    //    // Handle error 
-    //    console.log('Error message: ', err);
-    //});
 
 }
 
@@ -356,8 +394,20 @@ document.addEventListener("DOMContentLoaded", () => {
     const area1 = document.querySelector("#area1");
     const next = document.getElementById("next");
     const back = document.getElementById("back");
-    const category1 = document.getElementById("mainCategories");
 
+    const type = document.getElementById("type");
+    var chosenType = "None";
+    type.addEventListener("change", function () {
+        chosenType = type.value;
+    })
+
+    const difficulty = document.getElementById("difficulty");
+    var chosenDifficulty = "None";
+    difficulty.addEventListener("change", function () {
+        chosenDifficulty = difficulty.value;
+    })
+    
+    const category1 = document.getElementById("mainCategories");
     const categorySports = document.getElementById("sports");
     const categoryHobbies = document.getElementById("hobbies");
     const categorySubject = document.getElementById("subject");
@@ -400,36 +450,54 @@ document.addEventListener("DOMContentLoaded", () => {
         chosenCategory2 = categorySubject.value;
     })
 
+    
+
 
     area1.addEventListener("submit", e => {
         e.preventDefault();
-        name = document.querySelector("#name").value;
-        location = document.querySelector("#location").value;
-
-        dateRegister = document.querySelector("#date1").value;
-        timeRegister = document.querySelector("#time1").value;
-        dateStart = document.querySelector("#date2").value;
-        timeStart = document.querySelector("#time2").value;
-        dateEnd = document.querySelector("#date3").value;
-        timeEnd = document.querySelector("#time3").value;
-
-        description = document.querySelector("#description").value;
-        logo = document.querySelector("#preview1").files[0];
-        images = document.querySelector("#preview2").files;
-        contact = document.querySelector("#name").value;
-        prize = document.querySelector("#prize").value;
-
-        var sessionId = readCookie("SESSIONID");
+        const details = new Object();
+        const pics = new Object();
         
-        // validate
-        if (validate(name, location, dateRegister, timeRegister, description, logo, images,
-             prize, chosenCategory1, chosenCategory2, sessionId, contact)) {
+        pics.logo = croppedLogo;
+        pics.images = compImages;
+        details.croppedLogoDetails = croppedLogoDetails;
+        details.croppedDetails = croppedDetails;
 
-            createCompetition(name, location, date, time, description, logo,
-                 images, prize, chosenCategory1, chosenCategory2, sessionId, contact)
+        details.name = document.querySelector("#name").value;
+        details.location = document.querySelector("#location").value;
+        details.signUpLocation = document.querySelector("#signUpLocation").value;
+
+        details.dateRegister = document.querySelector("#date1").value;
+        details.timeRegister = document.querySelector("#time1").value;
+        details.dateStart = document.querySelector("#date2").value;
+        details.timeStart = document.querySelector("#time2").value;
+        details.dateEnd = document.querySelector("#date3").value;
+        details.timeEnd = document.querySelector("#time3").value;
+
+        details.description = document.querySelector("#description").value;
+        details.contact = document.querySelector("#contact").value;
+        
+        details.requirements = document.querySelector("#requirements").value;
+        details.organization = document.querySelector("#organization").value;
+        details.fee = document.querySelector("#fee").value;
+        details.prize = document.querySelector("#prize").value;
+
+        details.sessionId = readCookie("SESSIONID");
+        
+        details.chosenCategory1 = chosenCategory1;
+        details.chosenCategory2 = chosenCategory2;
+
+        details.chosenDifficulty = chosenDifficulty;
+        details.chosenType = chosenType;
+        // validate
+        if (validate(details,pics)) {
+
+            createCompetition(details,pics)
                  
-            toggleVisibilityNoFade("area1");
-            toggleVisibility("area2");
+            setFormMessage("success", "loading, please wait...");
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+            // toggleVisibilityNoFade("area1");
+            // toggleVisibility("area2");
         } else {
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }

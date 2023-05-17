@@ -4,21 +4,22 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>COMPCO | Home</title>
-    <link rel="stylesheet" href="/homepage.css" />
-    <link rel="stylesheet" href="competitionPage.css" />
+    <link rel="stylesheet" href="/homepage.css?0.1" />
+    <link rel="stylesheet" href="competitionPage.css?0.1" />
     <link rel="shortcut icon" type="/image/x-icon" href="/images/logo.ico" />
-    <script src="/loadtheme.js"></script>
+    <script src="/loadtheme.js?0.1"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
     <div id="nav-placeholder"></div>
     <div class="mainContent">
-        <div id="competitionImageArea" class="competitionImageArea" onclick="toggleImage(1)">
-            <img id="competitionImage" class="skeleton">
+        <div id="competitionImageArea" class="competitionImageArea">
+            <img id="competitionImage" class="skeleton" onclick="openImage()">
         </div>
         <div class="competitionBasicInfo">
             <div id="competitionNameTitle" class="competitionName">...</div>
             <div class="userOptions">
+                <a>Report</a>
                 <a>Share</a>
                 <a>Save</a>
                 <!-- <a>0 Dislikes</a> -->
@@ -31,11 +32,13 @@
             <div style="float:left;width:100%">
                 <div class="userPreview" onclick="redirectToProfile()">
                     <img class="userPreviewImage" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" />
-                    <div id="competitionCreator" class="competitionCreator">...</div>
-                    <div class="contactInfo">contact: <label id="contactInfo">...</label></div>
+                    <div class="competitionCreator"><label id="competitionCreator"></label><img src="/images/logo.ico" class="adminImg" title="compco team" id="adminImg" hidden></div>
+                    
+                    <div class="contactInfo" id="name"></div>
+                    <!-- <div class="contactInfo"><label id="name">...</label></div> -->
                 </div>
 
-                <div class="joinButton">Follow</div>
+                <div class="joinButton" title="join competition to be notified of updates">Join</div>
             </div>
 
 
@@ -45,33 +48,56 @@
                 <div id="competitionLocation"></div>
             </div>
             <div class="competitionInfoPart">
-                Time & Date
-                <div id="competitionDate">  </div>
-                <div id="competitionDuration">  </div>
+                Start Time
+                <div id="competitionDateStart">  </div>
+                <div id="competitionTimeStart">  </div>
+            </div>
+            <div class="competitionInfoPart">
+                End Time
+                <div id="competitionDateEnd">  </div>
+                <div id="competitionTimeEnd">  </div>
             </div>
             <div class="competitionInfoPart">
                 Register By
+                <div id="competitionDateRegister">  </div>
+                <div id="competitionTimeRegister">  </div>
             </div>
             <div class="competitionInfoPart">
                 Register Location
+                <div id="registerLocation">  </div>
             </div>
             <div class="competitionInfoPart">
                 Category
+                <div id="category1">  </div>
+                <div id="category2">  </div>
             </div>
             <div class="competitionInfoPart">
                 Rewards
+                <div id="prize">  </div>
             </div>
             <div class="competitionInfoPart">
                 Difficulty
+                <div id="difficulty">  </div>
             </div>
             <div class="competitionInfoPart">
                 Entry Fee
+                <div id="fee">  </div>
             </div>
             <div class="competitionInfoPart">
                 Requirements
+                <div id="requirements">  </div>
             </div>
             <div class="competitionInfoPart">
                 Joined
+            </div>
+            
+            <div class="competitionInfoPart">
+                Activity type
+                <div id="type"></div>
+            </div>
+            <div class="competitionInfoPart">
+                Contact
+                <div id="contact"></div>
             </div>
             <div id="competitionDescription" style="white-space: pre-line" class="competitionDescription">  </div>
 
@@ -91,5 +117,5 @@
 
 <script src="/jquery-3.6.0.js"></script>
 <script src="/jquery-ui-1.12.1/jquery-ui.js"></script>
-<script type="text/javascript" src="/loadEssentials.js"></script>
-<script type="text/javascript" src="competitionPage.js"></script>
+<script type="text/javascript" src="/loadEssentials.js?0.1"></script>
+<script type="text/javascript" src="competitionPage.js?0.1"></script>

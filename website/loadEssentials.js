@@ -79,11 +79,16 @@ window.onhashchange = function () {
 
 // close profileDropDown
 document.addEventListener("click", (e) => {
-    if (!document.getElementById("profileDropDown").hidden && !e.target.classList.contains("dontHide"))
-        toggleVisibilityNoFade("profileDropDown");
+    if (!document.getElementById("profileDropDown").hidden && !e.target.classList.contains("dontHide1") ){
+        document.getElementById("profileDropDown").hidden = true;
+    }
     if (!document.getElementById("mobileNav").hidden && !e.target.classList.contains("dontHide") && e.target != document.getElementById("mobileNavBars")) {
         toggleVisibilityNoFade("mobileNav");
         console.log("ok");
+    }
+
+    if (!document.getElementById("inboxDropDown").hidden && !e.target.classList.contains("dontHide2")){
+        document.getElementById("inboxDropDown").hidden = true;
     }
 });
 
@@ -115,9 +120,10 @@ function writeCookie(name, value, days) {
     }
     document.cookie = name + "=" + value + expires + "; path=/";
 }
-
+var userInfo;
+var alreadyAddedAdmin = false;
 function getUserInfo(sessionID) {
-    return fetch("http://localhost:8000/userInfo", {
+    return fetch(serverAddress+"/userInfo", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -128,7 +134,32 @@ function getUserInfo(sessionID) {
     })
     .then((res) => res.json()).then((data) => {
         // Handle response 
+        data = JSON.parse(data);
         console.log('Response: ', data);
+        //document.getElementById("aboutUs1").hidden = true;
+        //document.getElementById("aboutUs2").hidden = true;
+        
+        if (data["admin"] && alreadyAddedAdmin == false){
+            alreadyAddedAdmin = true;
+            const element = document.createElement("a");
+            element.target = "_blank";
+            element.innerHTML = "Admin Panel";
+            element.addEventListener("click",function handleClick() {goToAdminPanel()});
+            document.getElementById("placeholder").appendChild(element);
+        }
+
+        var username = data["username"];
+        var firstName = data["firstName"];
+        var lastName = data["lastName"];
+        var profilePicture = data["profilePicture"];
+
+        document.getElementById("profileIcon").src = profilePicture;
+        if (username.length > 11)
+            username = username.slice(0, 11) + "...";
+        document.getElementById("profileUsername").innerHTML = username;
+        document.getElementById("profileName").innerHTML = firstName + " " + lastName;
+        document.getElementById("profileIcon2").src = profilePicture;
+
         return data;
     })
     .catch(err => {
@@ -137,31 +168,33 @@ function getUserInfo(sessionID) {
     });
 }
 
+var opened = false;
+function openProfile(){
+    toggleVisibilityNoFade('profileDropDown');
+    if (!opened){ //prevent refresh profile on exit
+        opened = true;
+        userInfo = getUserInfo(readCookie("SESSIONID"));
+    }
+    else
+        opened = false;
+}
+
 function refreshUserInfo() {
 
     if (readCookie("SESSIONID") != "") {
+        
         document.getElementById("loggedIn").hidden = false;
         
         document.getElementById("organizations").hidden = false;
         document.getElementById("notLoggedIn").hidden = true;
-        //document.getElementById("aboutUs1").hidden = true;
-        //document.getElementById("aboutUs2").hidden = true;
-
-        var username = readCookie("username");
-        var firstName = readCookie("firstName");
-        var lastName = readCookie("lastName");
+        
         var profilePicture = readCookie("profilePicture");
-
         document.getElementById("profileIcon").src = profilePicture;
-        if (username.length > 11)
-            username = username.slice(0, 11) + "...";
-        document.getElementById("profileUsername").innerHTML = username;
-        document.getElementById("profileName").innerHTML = firstName + " " + lastName;
-        document.getElementById("profileIcon2").src = profilePicture;
-        //userInfo = getUserInfo(readCookie("SESSIONID"));
         //$('[id="loggedIn"]').show();
         //$('[id="notLoggedIn"]').hide();
 
+    }else{
+        
     }
 }
 function delete_cookie(name, path, domain) {
@@ -215,6 +248,33 @@ function showBar(element) {
     else {
         $(element).fadeIn();
     }
+}
+
+function goToAdminPanel(){
+    sessionID = readCookie("SESSIONID");
+    
+    window.location.href = serverAddress+"/adminPanel/"+sessionID;
+
+    // fetch(serverAddress+"/admin/"+sessionID, {
+    //     method: 'GET',
+    //     headers: {
+    //         'Accept': 'text/html',
+    //         'Content-Type': 'text/html'
+
+    //     },
+    //     //body: JSON.stringify({ "SESSIONID": sessionID })
+    // })
+    // .then((data) => {
+    //     // Handle response 
+    //     var parser = new DOMParser();
+    //     var doc = parser.parseFromString(data, 'text/html');
+    //     console.log('Response: ', doc);
+    //     return data;
+    // })
+    // .catch(err => {
+    //     // Handle error 
+    //     console.log('Error message: ', err);
+    // });
 }
 
 

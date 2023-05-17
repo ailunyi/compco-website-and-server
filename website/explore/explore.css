@@ -6,10 +6,12 @@
     padding-top:30px;
 }
 .exploreCommunitiesArea {
+    display: none;
+    
     position: absolute;
     width: 400px;
     right: 0px;
-    margin-top: 230px;
+    top: 230px;
     margin-bottom: 50px;
 }
 
@@ -18,7 +20,8 @@
     position: absolute;
     width: 400px;
     right: 0px;
-    margin-top: 765px;
+    top: 230px;
+    /* margin-top: 765px; */
     margin-bottom: 50px;
 }
 
@@ -49,10 +52,11 @@
 .competitionPreviewAreaTop {
     width: calc(100vw - 530px);
     margin-bottom: 50px;
+    min-height: 500px;
 }
 
 .competitionPreviewArea {
-    height: 250px;
+    height: 350px;
     margin-bottom: 50px;
     overflow: hidden;
 }
@@ -64,13 +68,14 @@
 }
 
 
-.competitionPreview {
+.competitionPreview2 {
     position: relative;
     margin-top: 30px;
     display: inline-block;
     background-color: white;
-    height: 200px;
+    /* height: 200px; */
     /* width: 230px; */
+    width: calc(100%/4 - 20px);
     aspect-ratio: 3/2;
     margin-right: 20px;
     cursor: pointer;
@@ -79,34 +84,75 @@
 
 }
 
-.competitionPreview:hover {
-    box-shadow: 2px 2px 4px 2px grey;
+.competitionPreview2:hover {
+    box-shadow: 2px 2px 4px 2px var(--main-text-color);
 }
 
 
-.competitionPreviewName {
-    float: left;
-    margin-left: 10px;
+.competitionPreviewName2 {
+    
+    position: absolute;
+    /* float: left;
+    margin-left: 10px; */
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 20px;
+    font-size: 19px;
+    bottom: 5px;
+    left: 10px;
+    background-color: var(--main-text-color);
+    color:var(--main-bg-color);
+
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+
+    border:solid 1px black;
+    border-radius: 5px;
+    transition: text-color 1s, background-color 1s;
 }
 
-.competitionPreviewLocation {
+.officialIcon{
+    margin-bottom: -3px;
+    height: 20px;
+    width: 20px;
+    background-color: var(--main-button-color);
+    border-radius: 5px;
+    margin-right: 5px;
+    transition: background-color 1s;
+}
+
+.competitionPreviewLocation2 {
+    display: none;
+
     float: left;
     margin-left: 10px;
     font-size: 20px;
 
 }
 
-.competitionPreviewViews {
+.competitionPreviewViews2 {
     position: absolute;
     bottom: 5px;
-    left: 20px;
+    right: 10px;
     font-family: Montserrat-Medium;
     font-size: 13px;
+    
+    background-color: var(--main-text-color);
+    color:var(--main-bg-color);
+    
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    
+    border:solid 1px black;
+    border-radius: 5px;
+    transition: text-color 1s, background-color 1s;
 }
 
-.competitionPreviewLikes {
+.competitionPreviewLikes2 {
+    display: none;
+
     position: absolute;
     bottom: 5px;
     right: 20px;
@@ -114,12 +160,16 @@
     font-size:13px;
 }
 
-.competitionPreviewImage {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    height: 120px;
+.competitionPreviewImage2 {
+    position: absolute;
+    border-radius: 10px;
+    height: 100%;
     width: 100%;
     background-size: contain;
+}
+
+.competitionPreview{
+    width:calc(100%/5 - 40px)!important;
 }
 
 .userPreview {
@@ -137,10 +187,30 @@
 .userPreview:hover{
     border: solid var(--main-text-color) 1px;
 }
-.userPreview label {
+.userPreview .username {
     float:left;
+    
+    font-size: 23px;
     margin-left:10px;
-    margin-top:10px;
+    margin-top:5px;
+    cursor:pointer;
+}
+.userPreview .adminImg{
+    float:left;
+    
+    margin-top:12px;
+    margin-left:5px;
+    height:15px;
+    width: 15px;
+    background-image: url(/images/logo.ico);
+    background-size: cover;
+}
+.userPreview .realName {
+    float:left;
+    width: calc(100% - 70px);
+    margin-left:10px;
+    margin-top:5px;
+    font-size: 16px;
     cursor:pointer;
 }
 
@@ -224,22 +294,41 @@
         left: 40px;
         margin-bottom: 50px;
     }
+    .competitionPreview2 {
+        width: calc(100%/4 - 20px);
+    }
     .exploreCompetitionsArea {
         width: calc(100% - 80px);
         margin-left: 40px;
     }
-}
 
-@media only screen and (max-width: 1200px) {
-
+    
     .competitionPreviewAreaTop {
         width: 100%;
     }
 
-    .competitionPreview {
-        width: calc(100%/3 - 20px);
-        margin-right: 20px;
+    .exploreCommunitiesArea {
+        top:0px;
+        position: relative;
+        width: 400px;
+        margin-top: 20px;
+        margin-bottom: 50px;
     }
+
+    .exploreUsersArea {
+        top:0px;
+        position: relative;
+        width: 400px;
+        margin-top: 20px;
+        margin-bottom: 50px;
+    }
+
+    .competitionPreview{
+        width:calc(100%/4 - 20px)!important;
+    }
+}
+
+@media only screen and (max-width: 1200px) {
 
     .exploreCategories {
         margin-bottom: 50px;
@@ -248,20 +337,19 @@
         margin-bottom: 50px;
     }
 
-    .exploreCommunitiesArea {
-        position: relative;
-        width: 400px;
-        margin-left: 40px;
-        margin-top: 20px;
-        margin-bottom: 50px;
+    .competitionPreview{
+        width:calc(100%/3 - 20px)!important;
     }
+}
 
-    .exploreUsersArea {
-        position: relative;
-        width: 400px;
-        margin-left: 40px;
-        margin-top: 20px;
-        margin-bottom: 50px;
+@media only screen and (max-width: 950px) {
+    
+    .competitionPreview2 {
+        width: calc(100%/2 - 20px);
+        margin-right: 20px;
+    }
+    .competitionPreview{
+        width:calc(100%/2 - 20px)!important;
     }
 }
 
@@ -269,16 +357,13 @@
     .exploreCategories {
         padding-bottom:100px;
     }
-    .competitionPreviewAreaTop {
+    .exploreCompetitionsArea {
         margin-top:280px;
-    }
-    .competitionPreview {
-        width: calc(100%/2 - 20px);
-        margin-right: 20px;
     }
 }
 
-@media only screen and (max-width: 450px) {
+
+@media only screen and (max-width: 550px) {
     .exploreCategories {
         padding-bottom: 150px;
     }
@@ -286,8 +371,11 @@
         margin-top: 320px;
     }
 
-    .competitionPreview {
+    .competitionPreview2 {
         width: 100%;
         margin-right: 20px;
+    }
+    .competitionPreview{
+        width:100%!important;
     }
 }

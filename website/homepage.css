@@ -68,7 +68,7 @@ body {
     flex-direction: column;
     color: var(--main-text-color);
     transition: background-color 1s, color 1s;
-
+    font-size: 1rem;
 }
 
 #nav-placeholder {
@@ -151,8 +151,10 @@ body {
     z-index: 2;
     color: var(--main-text-color);
     font-family: Montserrat-Bold;
+    
 
 }
+
 .searchBar {
     margin-left: 40px;
     width: calc(100% - 850px);
@@ -390,8 +392,8 @@ body {
     float: right;
     margin-right: 20px;
     width: 100px;
-    margin-top: 10px;
-    height: 35px;
+    margin-top: 12px;
+    height: 32px;
     background-color: var(--main-button-color);
     color: white;
     border: white;
@@ -644,9 +646,32 @@ body {
 }
 .navLogo {
     position: fixed;
-    top: 0.5%;
+    top: 5px;
     left: 10px;
-    max-height: 60px;
+    height: 60px;
+}
+#wechatIconPopup{
+    
+    display: none;
+    align-items: center;
+    justify-content: center;
+
+    height:200px;
+    width: 200px;
+    background-color: var(--main-text-color);
+
+    position: absolute;
+    bottom:65px;
+    left:50px;
+}
+#wechatIconPopup img{
+    height:150px;
+    width:150px;
+}
+
+
+#wechatIcon:hover + #wechatIconPopup{
+    display: flex;
 }
 
 /*FOOTER END*/
@@ -680,6 +705,11 @@ body {
     box-shadow: 0px 0px 2px 1px grey;
     border-radius: 5px;
     transition: background-color 1s, color 1s;
+}
+
+.notificationDropdown {
+    height: 400px;
+    width: 300px;
 }
 
 .profileUsername {

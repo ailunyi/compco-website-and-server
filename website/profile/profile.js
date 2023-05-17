@@ -2,7 +2,15 @@ const params = new Proxy(new URLSearchParams(window.location.search), {
     get: (searchParams, prop) => searchParams.get(prop),
 });
 
-const searchedProfile = params.q;
+var searchedProfile = params.username;
+if (searchedProfile == null){
+    searchedProfile = readCookie("username");
+    if (searchedProfile == ""){
+        window.location.href = "/signin/";
+    }
+}
+
+document.title = searchedProfile+"'s profile";
 
 var links = ['https://funvizeo.com/media/memes/3b25a6767a2c44f0/when-you-fart-but-you-poop-meme-1d7d4a1aa0753e35-b18ab626096ee820.jpg',
     'https://s3.amazonaws.com/rails-camp-tutorials/blog/programming+memes/programming-or-googling.jpg',
@@ -35,17 +43,125 @@ function createEgg() {
     })
 }
 
-//createEgg();
+function showPopup(){
+    
+    toggleVisibilityNoFade('popup');
+    // document.body.style.overflow = "hidden";
+    // document.getElementById("mainContent").style.overflow = "hidden";
+}
 
-function getUserInfo(url) {
-    fetch(serverAddress + "/competitions/page/" + url).then((Response) => {
+//createEgg();
+var user;
+function getUserProfile(name) {
+    fetch(serverAddress + "/getUser/" + name).then((Response) => {
         return Response.json()
     }).then((data) => {
-        console.log(JSON.parse(data));
-        competition = JSON.parse(data);
-        
+        data = JSON.parse(data);
+        console.log(data);
+        user = data;
+        if (user == null){
+            
+            document.getElementById("realName").innerHTML = "user not found";
+            return;
+        }
+        document.getElementById("username").innerHTML = data.username;
+        document.getElementById("realName").innerHTML = data.firstName + " " + data.lastName;
+        document.getElementById("school").innerHTML = data.school;
+        document.getElementById("contact").innerHTML = data.contact;
+        document.getElementById("birthday").innerHTML = data.birthday;
+        document.getElementById("profilePicture").src = data.profilePicture;
+        document.getElementById("profilePicture").classList.remove("skeleton");
+        if (data.bio == null)
+            document.getElementById("bio").innerHTML = "user has no bio yet...";
+        else
+            document.getElementById("bio").innerHTML = data.bio;
+        if (data.banner != null){
+            document.getElementById("banner").style.backgroundImage = "url("+data.banner+")";
+            document.getElementById("banner").classList.remove("skeleton");   
+        }
+
+        if (data.admin == true)
+            document.getElementById("compcoTeamIcon").hidden = false;
+
+        if (readCookie("username") == data.username){ // user
+            document.getElementById("editProfilePic").src = data.profilePicture;
+            document.getElementById("editButton").hidden = false;
+            document.getElementById("editUsername").value = data.username;
+            document.getElementById("editFirstName").value = data.firstName;
+            document.getElementById("editLastName").value = data.lastName;
+            document.getElementById("editBio").value = data.bio;
+            document.getElementById("editSchool").value = data.school;
+            document.getElementById("editContact").value = data.contact;
+            document.getElementById("editBirthday").value = data.birthday;
+            
+            document.getElementById("savedButton").hidden = false;
+
+            if (data.banner != null){
+                document.getElementById("editBannerPic").src = data.banner;
+            }
+        }else{
+            document.getElementById("messageButton").hidden = false;
+        }
+        if (data.egg == true)
+            createEgg();
 
     })
 }
 
+
+// create competition
+function editProfile(details) {
+    const formData = new FormData();
+    
+    //formData.append('files', logo);
+    //formData.append('files', logo);
+
+    formData.append("content", JSON.stringify({details}) );
+
+    fetch(serverAddress + "/editUserProfile", {
+        method: 'POST',
+        body: formData
+    })
+    .then((res) => res.json()).then((data) => {
+        // Handle response 
+        console.log('Response: ', data);        
+        location.reload();
+    })
+    .catch(err => {
+        // Handle error 
+        console.log('Error message: ', err);
+    });
+
+
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+    const editProfilePopup = document.querySelector("#editProfilePopup");
+
+    editProfilePopup.addEventListener("submit", e => {
+        e.preventDefault();
+        const details = new Object();
+        
+        details.username = document.querySelector("#editUsername").value;
+        details.pic = document.querySelector("#pic-input").files[0];
+        details.banner = document.querySelector("#banner-input").files[0];
+
+        details.firstName = document.querySelector("#editFirstName").value;
+        details.lastName = document.querySelector("#editLastName").value;
+
+        details.school = document.querySelector("#editSchool").value;
+        details.birthday = document.querySelector("#editBirthday").value;
+        details.bio = document.querySelector("#editBio").value;
+        details.contact = document.querySelector("#editContact").value;
+
+        details.sessionId = readCookie("SESSIONID");
+        
+        console.log(details);
+        editProfile(details);
+
+    });
+});
+
+getUserProfile(searchedProfile);
 console.log(searchedProfile);

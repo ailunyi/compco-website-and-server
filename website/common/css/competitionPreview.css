@@ -5,14 +5,14 @@
     background-color: white;
     height: 300px;
     width: 300px;
-    margin-left: 20px;
+    margin-right: 20px;
     cursor: pointer;
     box-shadow: 2px 2px 4px 1px grey;
     border-radius: 10px;
 }
 
 .competitionPreview:hover {
-    box-shadow: 2px 2px 4px 2px grey;
+    box-shadow: 2px 2px 4px 2px var(--main-text-color);
 }
 
 
@@ -33,6 +33,6 @@
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     height: 200px;
-    width: 300px;
+    width: 100%;
     background-size: contain;
 }
