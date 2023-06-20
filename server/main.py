@@ -197,6 +197,12 @@ async def getUsersInfo(name):
     users = getUser(name)
     return users
 
+
+@app.get("/getUserMadeComps/{id}")
+async def getUsersMadeInfo(id):
+    comps = getUserMadeComps(id)
+    return comps
+
 @app.get("/explore/newUsers")
 async def getNewUsersInfo():
     users = getNewUsers()

@@ -301,6 +301,11 @@ def getUser(name):
     users = dumps(users)
     return users
 
+def getUserMadeComps(id):
+    comps = compCol.find({"creatorID":id})
+    comps = dumps(comps)
+    return comps
+
 # system command line arguments
 n = len(sys.argv)
 for i in range(1,n):

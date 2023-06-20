@@ -7,6 +7,7 @@ import themes from "../assets/themes.js"
 <template>
     <nav id="navigation" class="navigation" 
     :style="{'background-color': transparentNav ? 'transparent': 'var(--main-nav-color)',
+            'position':absolute?'absolute':'fixed',
             'box-shadow': transparentNav ? 'none': '0 1px 3px -2px grey'}">
         <router-link to="/">
             <img class="navLogo" alt="Bakeneko" src="../assets/images/logo2.png" />
@@ -16,9 +17,11 @@ import themes from "../assets/themes.js"
 
 
         <!-- PHONE NAVIGATION -->
-        <button  id="mobileNavBars" class="navShowBar">☰</button>
-        <div id="mobileNav" hidden class="mobileNav dontHide">
-
+        <button  id="mobileNavBars" class="navShowBar" @click="showMobileNav()">☰</button>
+        <div v-if="showMobileNavigation" id="mobileNav"  class="mobileNav dontHide">
+            <div class="mobileNavItem" @click="goToPage('/Explore')">Explore</div>
+            <div class="mobileNavItem" @click="goToPage('/Communities')">Communities</div>
+            <div class="mobileNavItem" @click="goToPage('/Resources')">Resources</div>
         </div>
 
 
@@ -251,7 +254,7 @@ a.router-link-active {
 }
 
 .navLogo {
-    position: fixed;
+    position: absolute;
     top: 3px;
     left: 18px;
     height: 53px;
@@ -514,8 +517,8 @@ a.router-link-active {
 
 .navShowBar {
     float: right;
-    margin-right: 10px;
-    margin-top: 10px;
+    margin-right: 20px;
+    margin-top: 5px;
     font-size: 30px;
     color: var(--main-text-color);
     transition: background-color 1s, color 1s;
@@ -532,7 +535,7 @@ a.router-link-active {
     top: 0%;
     height: 100%;
     width: 60vw;
-    background-color: #1F1E1E;
+    background-color: var(--main-nav-color);
     z-index:2;
 }
 
@@ -543,7 +546,8 @@ a.router-link-active {
     text-align:center;
     cursor:pointer;
     color:white;
-    border:2px solid black;
+    border-bottom: 2px solid black;
+    border-left:2px solid black;
     padding-top:10px;
     padding-bottom:10px;
 }
@@ -586,8 +590,9 @@ import { defineComponent } from 'vue'
 import { useRouter  } from 'vue-router';
 import { computed } from "vue";
 
+import router from '../router';
 export default defineComponent({
-    props:["transparentNav"],
+    props:["transparentNav","absolute"],
     setup() {
         
     },
@@ -595,11 +600,22 @@ export default defineComponent({
         return {
             showLanguageToggler:false,
             showProfile: false,
-            showIconToolkit:-1
+            showIconToolkit:-1,
+            showMobileNavigation: false
         }
     },
+    mounted(){
+        this.$router.beforeEach((to, from, next) => {
+            this.showMobileNavigation = false;
+            
+            next();
+        });
+    },
     methods:{
-        
+        goToPage(page){
+            this.showMobileNavigation = false;
+            router.push(page);
+        },
         toggleLangageToggler(input){
             this.showLanguageToggler = !this.showLanguageToggler;
         },
@@ -649,6 +665,9 @@ export default defineComponent({
             
             common.delete_cookie("SESSIONID");
             window.location.href = '/';
+        },
+        showMobileNav(){
+            this.showMobileNavigation = true;
         }
     },
     beforeMount(){

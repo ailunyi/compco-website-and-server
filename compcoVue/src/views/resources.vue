@@ -5,7 +5,7 @@
 
 <template>
     <main>
-        <router-view></router-view>
+        <router-view v-bind="$attrs"></router-view>
         <footerVue></footerVue>
     </main>
 </template>
@@ -13,3 +13,13 @@
 <style scoped>
 
 </style>
+
+<script>
+import { defineComponent } from 'vue'
+
+export default defineComponent({
+    setup() {
+        
+    },
+})
+</script>

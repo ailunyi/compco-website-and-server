@@ -18,9 +18,9 @@
                 <div class="competitionSearchPopular">
                     <text lang="en">Trending Searches:</text>
                     <text hidden lang="zh">热门搜索：</text>
+                    <a href="/search/?q=olympiad">olympiad</a>
                     <a href="/search/?q=USACO">USACO</a>
-                    <a href="/search/?q=business">business</a>
-                    <a href="/search/?q=NSL">NSL</a>
+                    <a href="/search/?q=physics">Physics</a>
                 </div>
             </div>
 
@@ -146,45 +146,6 @@
 
 
 
-.competitionPreview {
-    margin-top: 30px;
-    float: left;
-    background-color: white ;
-    height: 300px;
-    width: 300px;
-    margin-right: 20px;
-    cursor: pointer;
-    box-shadow: 2px 2px 4px 1px grey;
-    border-radius: 10px;
-}
-
-.competitionPreview:hover {
-    box-shadow: 2px 2px 4px 2px var(--main-text-color);
-}
-
-
-.competitionPreviewName {
-    float: left;
-    margin-left: 10px;
-    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-    font-size: 20px;
-}
-
-.competitionPreviewLocation {
-    float: left;
-    margin-left: 10px;
-    font-size: 17px;
-    font-family:Arial, Helvetica, sans-serif;
-}
-
-.competitionPreviewImage {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    height: 200px;
-    width: 100%;
-    background-size: contain;
-}
-
 .searchInfoArea{
     margin-top:20px;
     font-family:Arial, Helvetica, sans-serif;
@@ -193,16 +154,17 @@
 .searchInfo{
     color: green;
 }
-
+.competitionPreview{
+    flex-grow: 1;
+    max-width: 400px;
+}
 .competitionPreviewArea {
     margin-top: 20px;
     margin-bottom: 200px;
     min-height:500px;
     display: flex;
     gap:10px;
-    
     flex-wrap: wrap;
-
 }
 
 

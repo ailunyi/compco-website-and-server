@@ -124,6 +124,7 @@
                     <option value="Computer Science">Computer Science</option>
                     <option value="Chinese">Chinese</option>
                     <option value="History">History</option>
+                    <option value="Biology">Biology</option>
                     <option value="English">English</option>
                     <option value="Innovation">Innovation/Science Fair</option>
                     <option value="Debate">Debate</option>
@@ -712,7 +713,6 @@ export default defineComponent({
             
             for (var i = 0; i < elements.length; i++){
                 if (elements[i] != null){
-                    elements[i].min = tmrDate;
                     elements[i].value = tmrDate;
                 }
             }

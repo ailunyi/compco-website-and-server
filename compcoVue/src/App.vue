@@ -12,10 +12,10 @@ import themes from "./assets/themes"
         <vue-progress-bar></vue-progress-bar>
         <link rel="stylesheet" 
         href="node_modules/@fortawesome/fontawesome-free/css/all.css">
-        <navBar v-if="renderComponent" :transparentNav="transparentNav" />
+        <navBar v-if="renderComponent" :transparentNav="transparentNav" :absolute="absoluteNav" />
 
 
-        <RouterView v-if="renderComponent"  @toggleNav="toggleNav"/>
+        <RouterView v-if="renderComponent"  @toggleNav="toggleNav" @absolute="setNavAbs"/>
     </main>
 </template>
 
@@ -134,7 +134,8 @@ export default defineComponent({
     data() {
         return {
             renderComponent: true,
-            transparentNav:false
+            transparentNav:false,
+            absoluteNav:false
         };
     },
     methods: {
@@ -148,6 +149,9 @@ export default defineComponent({
         },
         toggleNav(visible){
             this.transparentNav = !visible;
+        },
+        setNavAbs(absolute){
+            this.absoluteNav = absolute;
         },
         refreshLanguage(){
             if (window.location.hash == "#cn") {

@@ -12,25 +12,25 @@
     <div id="banner" class="banner">
         <div :style="{'background-image':'url(/covers/' + covers[prevBanner]}" id="bannerimg" class="bannerImage fadeAnimation"></div>
         <div id="toggleButtonArea" class="toggleButtonArea">
-            <button v-for="(cover, index) in covers" :key="cover" @click="toggleBanner(index)" :style="{backgroundColor: (index == prevBanner?'white':'rgba(0,0,0,0.3)') }" ></button>
+            <button v-for="(cover, index) in covers" :key="cover" @click="toggleBanner(index)" :style="{backgroundColor: (index == prevBanner?'white':'rgba(0,0,0,0.6)') }" ></button>
         </div>
     </div>
     <div class="competitionSearchArea">
         <div class="sloganArea">
-            <h1 v-if="common.language == 'en' "  >CompCo, your personalized activity and community finder.</h1>
+            <h1 v-if="common.language == 'en' "  >CompCo, a Compassionate Community of students working to impact the world.</h1>
             <h1 v-if="common.language == 'cn'"  >CompCo, 您的个性化活动和社区查找器</h1>
         </div>
         <form class="competitionSearchForm" action="/search/">
 
             <input id="competitionSearchBar" type="search" name="q" placeholder="Competition/Activity/Community Search..." />
-            <button type="submit"><font-awesome-icon icon="search"></font-awesome-icon></button>
+            <button type="submit"><font-awesome-icon icon="search" style="color:black"></font-awesome-icon></button>
         </form>
         <div class="competitionSearchPopular">
             <text v-if="common.language == 'en' ">Trending Searches:</text>
             <text  v-if="common.$language == 'cn'">热门搜索：</text>
+            <a href="/search/?q=olympiad">olympiad</a>
             <a href="/search/?q=USACO">USACO</a>
-            <a href="/search/?q=business">business</a>
-            <a href="/search/?q=NSL">NSL</a>
+            <a href="/search/?q=physics">Physics</a>
         </div>
     </div>
     <div class="mainContent">
@@ -58,7 +58,7 @@
                 </div>
             </div>
         </div>
-        <h3 class="quote">Embrace every challenge, explore new opportunities, and let your passions guide you towards a future full of possibilities. <br> —— Chat GPT</h3>
+        <h3 class="quote">Building an interschool community and providing resources for all students to excel in every aspect of life. <br> —— Compco's Mission</h3>
         <div class="seperators">
             <svg width="132" height="9" viewBox="0 0 132 9" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M0 0H131.131V8.19566H0V0Z" fill="#444444"/>
@@ -86,6 +86,9 @@
                 <br>
                 <br>
                 Club Showcase/Interesting color themes/GPA & Love<br> calculator Games 
+                <br>
+                <br>
+                <router-link to="register" style="text-decoration: none;color:var(--main-nav-color)">sign up</router-link> to join a community of 1000+ students!
             </h4>
             <img class="dots" src="/src/assets/images/home/dots.png" alt="dots">
             <img class="fish" src="/src/assets/images/home/mascot.png" alt="compcoLogo">
@@ -202,13 +205,13 @@ main{
     position: absolute;
     width: 697px;
     height: 366px;
-    margin-top: 200px;
+    margin-top: 150px;
 }
 .screenshot2{
     position: absolute;
     width: 697px;
     height: 366px;
-    margin-top: 450px;
+    margin-top: 400px;
     left:600px;
 }
 
@@ -300,7 +303,9 @@ h2{
     font-family: Montserrat-Bold;
     font-size:28px;
     text-align:center;
-    line-height: 35px;
+    line-height: 40px;
+    padding-left:4px;
+    padding-right: 4px;
 }
 
 h1{
@@ -386,10 +391,12 @@ h1{
     justify-content: center;
 }
 .toggleButtonArea button {
-    background-color: rgba(0,0,0,0.3);
+    background-color: rgba(0,0,0,0.5);
     padding: 8px;
+    width:50px;
+    height:10px;
     border-radius: 30px;
-    border-color: white;
+    border: solid 1px rgba(255,255,255,0.2);
     cursor: pointer;
 }
 
@@ -412,11 +419,11 @@ h1{
     float: left;
     border-left: 0;
     border-radius: 3px;
-    border-width: 1px;
     border-top-left-radius: 0px;
     border-bottom-left-radius: 0px;
     background-color: #BCBCBC;
     border-left: black solid 1px;
+    border:solid black 1px;
 }
 
 .homepageButtons a {
@@ -471,6 +478,7 @@ h1{
     height: 600px;
     overflow: hidden;
     background-color:black;
+    transition:height 1s;
 }
 
 @media only screen and (max-width: 1500px) {
@@ -632,7 +640,7 @@ export default defineComponent({
             height:0,
                         
             prevBanner: 0,
-            covers: ["shanghai.jpg", "tokyo2.jpg", "cherry.jpg", "china.jpg", "cool.gif"],
+            covers: ["teamCover.png", "tokyo2.jpg", "china.jpg"],
             coversSmall: ["shanghaiSmall.jpg", "tokyo2Small.jpg", "cherrySmall.jpg", "chinaSmall.jpg", "cool.gif"],
             images: [],
             imagesSmall: [],

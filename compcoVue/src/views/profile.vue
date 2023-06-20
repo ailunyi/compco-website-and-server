@@ -3,6 +3,7 @@
     import common from "../assets/common"
     
     import footerVue from '../components/footerVue.vue'
+    import compPreview from '../components/compPreview.vue'
 </script>
 
 <template>
@@ -111,11 +112,8 @@
                 <a id="postsButton">Posts</a>
                 <a id="savedButton" hidden><i class="fa fa-lock"></i> Saved</a>
             </div>
-
-            <div id="overview">
-                <div class="title">Recent Activity</div>
-                <div class="inventory"></div>
-                <div></div>
+            <div class="usermadeActivities">
+               <compPreview v-for="comp in userMadeComps" :key="comp" :name="comp.name" :location="comp.location" :preview="comp.preview" :views="comp.views" :difficulty="comp.difficulty" :url="comp.url"></compPreview>
             </div>
         </div>
         <footerVue></footerVue>
@@ -130,6 +128,15 @@
     height: 330px;
     background-repeat: no-repeat;
     background-size: cover;
+}
+
+.usermadeActivities{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.competitionPreview{
+    flex-grow: 1;
 }
 
 .realName {
@@ -481,7 +488,8 @@ export default defineComponent({
             eggLeft:0,
             userInfo:[],
             showEditPopup:false,
-            newUserInfo:[]
+            newUserInfo:[],
+            userMadeComps:[]
         }
     },
     mounted(){
@@ -571,47 +579,23 @@ export default defineComponent({
                 that.userInfo = data;
                 that.newUserInfo = data;
                 
-                // document.getElementById("username").innerHTML = data.username;
-                // document.getElementById("realName").innerHTML = data.firstName + " " + data.lastName;
-                // document.getElementById("school").innerHTML = data.school;
-                // document.getElementById("contact").innerHTML = data.contact;
-                // document.getElementById("birthday").innerHTML = data.birthday;
-                // document.getElementById("profilePicture").src = data.profilePicture;
-                // document.getElementById("profilePicture").classList.remove("skeleton");
-                // if (data.bio == null)
-                //     document.getElementById("bio").innerHTML = "user has no bio yet...";
-                // else
-                //     document.getElementById("bio").innerHTML = data.bio;
                 if (data.banner != null){
                     document.getElementById("banner").style.backgroundImage = "url("+data.banner+")";
                     document.getElementById("banner").classList.remove("skeleton");   
                 }
 
-                // if (data.admin == true)
-                //     document.getElementById("compcoTeamIcon").hidden = false;
-
-                // if (common.username == data.username){ // user
-                //     document.getElementById("editProfilePic").src = data.profilePicture;
-                //     document.getElementById("editButton").hidden = false;
-                //     document.getElementById("editUsername").value = data.username;
-                //     document.getElementById("editFirstName").value = data.firstName;
-                //     document.getElementById("editLastName").value = data.lastName;
-                //     document.getElementById("editBio").value = data.bio;
-                //     document.getElementById("editSchool").value = data.school;
-                //     document.getElementById("editContact").value = data.contact;
-                //     document.getElementById("editBirthday").value = data.birthday;
-                    
-                //     document.getElementById("savedButton").hidden = false;
-
-                //     if (data.banner != null){
-                //         document.getElementById("editBannerPic").src = data.banner;
-                //     }
-                // }else{
-                //     document.getElementById("messageButton").hidden = false;
-                // }
-
                 that.showEgg = data.egg;
-
+                that.getUserMadeCompetitions(data.USERID)
+            })
+        },
+        getUserMadeCompetitions(id) {
+            let that =this;
+            fetch(common.serverAddress + "/getUserMadeComps/" + id).then((Response) => {
+                return Response.json()
+            }).then((data) => {
+                data = JSON.parse(data);
+                console.log(data);
+                that.userMadeComps = data;
             })
         }
     }

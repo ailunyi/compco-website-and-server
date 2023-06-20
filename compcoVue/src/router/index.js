@@ -137,6 +137,11 @@ const router = createRouter({
           path: 'love_calculator',
           name: 'love_calculator',
           component: () => import('../views/resources/love_calculator.vue')
+        },
+        {
+          path: 'harrypotter',
+          name: 'harrypotter',
+          component: () => import('../views/resources/harrypoter.vue')
         }
       ]
     },

@@ -8,8 +8,13 @@
         <img v-if="preview!=null" class="competitionPreviewImage" :src="preview.substring(0, 6) == 'static'?common.serverAddress + '/' + preview:preview" :alt="name">
         <div class="competitionPreviewName">{{ name }}</div>
         <div class="competitionPreviewLocation">{{ location }}</div>
-        <div class="competitionPreviewViews">{{ views }} 👁</div>
+        <!-- <div style="display: flex; width: 100%;">
+            <v-chip>Chemistry</v-chip>
+            <v-chip>Free</v-chip>
+        </div> -->
+        <div class="competitionPreviewViews">{{ views==null?0:views }} <font-awesome-icon style="font-size: 10px; bottom:1px" icon="fa-solid fa-eye" /></div>
         <div class="competitionPreviewDifficulty" :style="{color:difficultyColor}">{{ difficulty }}</div>
+        
     </main>
 </template>
 
@@ -17,15 +22,15 @@
 
 .competitionPreview {
     margin-top: 30px;
-    float: left;
-    background-color: white;
+    background-color: var(--main-bg-color);
     height: 300px;
     width: 300px;
-    margin-right: 20px;
+    margin-left: 10px;
     cursor: pointer;
-    box-shadow: 1px 1px 3px 1px grey;
+    box-shadow: 0px 2px 4px 0.01em rgba(0,0,0,0.5);
     border-radius: 10px;
-
+    background:var(--main-bg-color);
+    float:left;
 }
 .competitionPreviewViews{
     position: absolute;
@@ -41,6 +46,7 @@
     right:10px;
     font-family: montserrat-semibold;
 }
+
 .competitionPreview:after {
     content:'\A';
     position:absolute;
@@ -48,8 +54,8 @@
     top:0; left:0;
     background:rgba(0,0,0,0.6);
     opacity:0;
-    transition: all 0.5s;
-    -webkit-transition: all 0.5s;
+    transition: all 0.3s;
+    -webkit-transition: all 0.3s;
     border-radius: 10px;
 }
 .competitionPreview:hover:after {
@@ -57,20 +63,22 @@
     opacity: 1;
 }
 
-
 .competitionPreviewName {
+    width:100%;
     float: left;
-    margin-left: 10px;
-    
+    padding-left: 10px;
+    padding-right: 10px;
     font-family: montserrat-Bold;
     line-height: 20px;
-    font-size: 20px;
+    font-size: 17px;
+    
+    word-wrap: break-word;
 }
 
 .competitionPreviewLocation {
     float: left;
     margin-left: 10px;
-    font-size: 16px;
+    font-size: 14px;
     line-height: 20px;
     
     font-family: montserrat-medium;
@@ -82,100 +90,11 @@
     height: 200px;
     width: 100%;
     background-size: contain;
-}
-
-
-@media only screen and (max-width: 1600px) {
-    .exploreCategories {
-        width: calc(100% - 80px);
-        left: 40px;
-        margin-bottom: 50px;
-    }
-    .competitionPreview2 {
-        width: calc(100%/4 - 20px);
-    }
-    .exploreCompetitionsArea {
-        width: calc(100% - 80px);
-        margin-left: 40px;
-    }
-
     
-    .competitionPreviewAreaTop {
-        width: 100%;
-    }
-
-    .exploreCommunitiesArea {
-        top:0px;
-        position: relative;
-        width: 400px;
-        margin-top: 20px;
-        margin-bottom: 50px;
-    }
-
-    .exploreUsersArea {
-        top:0px;
-        position: relative;
-        width: 400px;
-        margin-top: 20px;
-        margin-bottom: 50px;
-    }
-
-    .competitionPreview{
-        width:calc(100%/4 - 20px)!important;
-    }
-}
-
-@media only screen and (max-width: 1200px) {
-
-    .exploreCategories {
-        margin-bottom: 50px;
-    }
-    .exploreCompetitionsArea {
-        margin-bottom: 50px;
-    }
-
-    .competitionPreview{
-        width:calc(100%/3 - 20px)!important;
-    }
-}
-
-@media only screen and (max-width: 950px) {
-    
-    .competitionPreview2 {
-        width: calc(100%/2 - 20px);
-        margin-right: 20px;
-    }
-    .competitionPreview{
-        width:calc(100%/2 - 20px)!important;
-    }
-}
-
-@media only screen and (max-width: 750px) {
-    .exploreCategories {
-        padding-bottom:100px;
-    }
-    .exploreCompetitionsArea {
-        margin-top:280px;
-    }
+    box-shadow: 0px 0px 2px 0.01em rgba(0,0,0,0.5);
 }
 
 
-@media only screen and (max-width: 550px) {
-    .exploreCategories {
-        padding-bottom: 150px;
-    }
-    .exploreCompetitionsArea {
-        margin-top: 320px;
-    }
-
-    .competitionPreview2 {
-        width: 100%;
-        margin-right: 20px;
-    }
-    .competitionPreview{
-        width:100%!important;
-    }
-}
 </style>
 
 <script>
