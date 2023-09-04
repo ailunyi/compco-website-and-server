@@ -10,7 +10,8 @@ import bcrypt
 from pymongo import ReturnDocument
 from PIL import Image
 import io
-import cropper 
+import cropper
+import numpy as np
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
 
@@ -24,13 +25,19 @@ sessions = mydb["sessions"]
 Trending = mydb["trending"]
 activityComments = mydb["activityComments"]
 activityLikes = mydb["activityLikes"]
+locationdata = mydb["locations"]
+locations = np.array([doc for doc in locationdata["region"].find()])
+def locationSearch(string):
+    return [s for s in locations if string in s]
 
 def getCurrentTime():
     return str(datetime.now())
+def getCurrentDate():
+    return str(datetime.now().date())
 
 # so javascript can understand
 def getCurrentTimeMktime():
-    return str(int(time.mktime(datetime.now().timetuple())) * 1000)
+    return str(int(time.mktime(datetime.now().timetuple())))
 
 def getRandomString(num):
     return ''.join(random.choices(string.ascii_uppercase, k=num))
@@ -177,19 +184,28 @@ def addCompetition(compInfo,images):
         # with open(filename, 'wb') as f:
         #     f.write(compInfo["images"][i].file.read())
     
-    competitionInfo = {"name": compInfo["name"],"location": compInfo["location"],"description": compInfo["description"],"registerLocation":compInfo["signUpLocation"],
-     "category1":compInfo["chosenCategory1"],"category2":compInfo["chosenCategory2"],
-     "difficulty":compInfo["chosenDifficulty"],"type":compInfo["chosenType"],
-     "dateRegister":compInfo["dateRegister"], "timeRegister":compInfo["timeRegister"],
-     "dateStart":compInfo["dateStart"],"timeStart":compInfo["timeStart"],
-     "dateEnd":compInfo["dateEnd"],"timeEnd":compInfo["timeEnd"],
-      "images":imagePaths, "prize": compInfo["prize"],"fee": compInfo["fee"],
-      "organization":compInfo["organization"],"requirements":compInfo["requirements"],
-       "preview": logoPath, "url": url, "creatorName": creator["username"],"creatorRealName": creator["firstName"]+" "+creator["lastName"],"creatorAdmin": creator["admin"],
-        "contact":compInfo["contact"], "creatorID": creator["USERID"], "timeCreated": getCurrentTime()}
+    competitionInfo = {"name": compInfo["name"],
+    "region":compInfo["region"],"location":compInfo["location"],"online":compInfo["isOnline"],
+    "description": compInfo["description"],"registerLocation":compInfo["signUpLocation"],
+    "category1":compInfo["chosenCategory1"],"category2":compInfo["chosenCategory2"],
+    "difficulty":compInfo["chosenDifficulty"],"type":compInfo["chosenType"],
+    "dateRegister":compInfo["dateRegister"], "timeRegister":compInfo["timeRegister"],
+    "dateStart":compInfo["dateStart"],"timeStart":compInfo["timeStart"],
+    "dateEnd":compInfo["dateEnd"],"timeEnd":compInfo["timeEnd"],
+    "images":imagePaths, "prize": compInfo["prize"],"fee": compInfo["fee"],
+    "organization":compInfo["organization"],"requirements":compInfo["requirements"],
+    "preview": logoPath, "url": url, "creatorName": creator["username"],"creatorRealName": creator["firstName"]+" "+creator["lastName"],"creatorAdmin": creator["admin"],
+    "contact":compInfo["contact"], "creatorID": creator["USERID"], "timeCreated": getCurrentTimeMktime()}
+    
+    locationdata.update_one({"region":compInfo["region"]}, {"$inc": {"compsHosted":1}})
     x = pendingCompCol.insert_one(competitionInfo)
     return x
 
+def isActive(compID):
+    return compCol.find_one({"compID":compID},{})["dateEnd"] < datetime.now().date()
+
+def getActiveComps():
+    return compCol.find().where('this.dateEnd < {}'.format(datetime.now().date()))
 
 def createSession(username, userID):
     time = getCurrentTime()
@@ -215,9 +231,10 @@ def loginUser(username,password):
         return {"message":"user found but wrong password", "login": 1}
 
 
+#SEARCH OPTIONS
 def getCompetitionsWithName(name):
     if (name == "all"):
-        comps = compCol.find();
+        comps = compCol.find()
     else:
         comps = compCol.find({"name":re.compile(name, re.IGNORECASE)},{})
     comps = dumps(comps)
@@ -229,6 +246,7 @@ def getCompetitionWithUrl(url, addView):
         comp = compCol.find_one_and_update({"url":url}, {"$inc": {"views":1}}, return_document = ReturnDocument.AFTER) #add view
         if not comp == None:    
             print(comp["name"]+ " competition gotten " + getCurrentTime())
+            locationdata.update_one({"region":comp["region"]}, {"$inc": {"timesViewed":1}})
             if (Trending.find_one({"url":url}) == None): #add to trending
                 comp["viewDate"] = getCurrentTime()
                 comp["viewToday"] = 1
@@ -241,6 +259,76 @@ def getCompetitionWithUrl(url, addView):
     comp = dumps(comp)
     return comp
 
+
+#FILTERS
+def applyAllFilters(filters:dict):
+    query = {}
+
+    if "category" in filters:
+        cat1,cat2 = filters["category"]
+        if cat1:
+            query["category1"] = cat1
+        if cat2:
+            query["category2"] = cat2
+    
+    if "date" in filters:
+        d1,d2 = filters["date"]
+        query["date"] = {}
+        if d1:
+            query["date"]["$gte"] = d1
+        if d2:
+            query["date"]["$lte"] = d2
+    
+    if "difficulty" in filters:
+        query["difficulty"] = filters["difficulty"]
+    
+    if "region" in filters:
+        query["region"] = filters["region"]
+    
+    if "online" in filters:
+        query["online"] = "Yes"
+    
+    if "free" in filters:
+        query["fee"] = ""
+    
+    comps = compCol.find(query).sort("views",pymongo.DESCENDING)
+    comps = dumps(comps)
+    print(comps)
+    return comps
+
+# def filterCategory(cat1,cat2):
+#     if cat2=="Any":
+#         comps = compCol.find({"category1":cat1}).where('this.dateEnd < ' + getCurrentDate()).sort("views",pymongo.DESCENDING)
+#     else:
+#         comps = compCol.find({"category1":cat1,"category2":cat2}).where('this.dateEnd < ' + getCurrentDate()).sort("views",pymongo.DESCENDING)
+#     comps = dumps(comps)
+#     return comps
+
+# def filterDate(d1,d2):
+
+#     if(d1=="None"):
+#         if(d2=="None"):
+#             comps = compCol.find().sort("views",pymongo.DESCENDING)
+#         else:
+#             comps = compCol.find().where('this.dateEnd < ' + d2)
+#     else:
+#         if(d2=="None"):
+#             comps = compCol.find().where('this.dateStart > ' + d1)
+#         else:
+#             comps = compCol.find().where('this.dateStart > {} && this.dateEnd < {}'.format(d1,d2))
+
+# def filterDifficulty(diff):
+#     comps = compCol.find({"difficulty":diff}).sort("views",pymongo.DESCENDING)
+#     comps = dumps(comps)
+#     return comps
+
+# def filterLocation(loc):
+#     comps = compCol.find({"region":loc})
+#     comps = dumps(comps)
+#     return comps
+
+
+#ADMIN STUFF
 def getPendingCompetitions():
     comps = pendingCompCol.find()
     comps = dumps(comps)
@@ -268,12 +356,13 @@ def rejectCompetition(url):
     pendingCompCol.delete_one({"url": url})
     rejectedCompCol.insert_one(comp)
 
+
 #EXPLORE
 def getTrendingCompetitions(category):
     if (category == "all"):
-        comps = compCol.find().sort("views",pymongo.DESCENDING).limit(8)
+        comps = compCol.find().sort("views",pymongo.DESCENDING).limit(8)#.where('this.dateEnd < ' + getCurrentDate())
     else:
-        comps = compCol.find({"category1":category}).sort("views",pymongo.DESCENDING).limit(8)
+        comps = compCol.find({"category1":category}).sort("views",pymongo.DESCENDING).limit(8)#.where('this.dateEnd < ' + getCurrentDate())
     comps = dumps(comps)
     return comps
 
@@ -286,7 +375,7 @@ def getNewestCompetitions(category):
     return comps
 
 def getTrendingSubcategory(category,subcategory):
-    comps = compCol.find({"category1":category,"category2":subcategory}).sort("views",pymongo.DESCENDING).limit(10)
+    comps = compCol.find({"category1":category,"category2":subcategory}).sort("views",pymongo.DESCENDING).limit(10)#.where('this.dateEnd < ' + getCurrentDate())
     comps = dumps(comps)
     return comps
 

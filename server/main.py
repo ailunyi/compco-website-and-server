@@ -221,6 +221,7 @@ class RegisterInfo(BaseModel):
     
 class CompetitionInfo(BaseModel):
     name: str
+    region: str
     location: str
     description: str
     prize: str
