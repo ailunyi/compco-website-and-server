@@ -28,7 +28,7 @@
 
                 <div class="inputLabel">Activity Type <label class="star">*</label></div>
                 <div class="app flex flex-col w-3/5 min-w-fit max-w-full pt-4 cursor-pointer" @click="this.actTypeOpen=!this.actTypeOpen">
-                    <section class="w-full bg-white rounded-lg font-montserrat">
+                    <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
                         <div class="p-[10px] py-6 text-[#9ca3af]">{{this.typePlaceholder}}</div>
                         <div v-if="this.actTypeOpen">
                             <ul class="rounded border shadow list-reset w-full mt-1">
@@ -45,8 +45,8 @@
 
                 <div class="font-franklin mt-12">Region <label class="star">*</label></div>
                 <div class="app flex flex-col w-3/6 min-w-fit max-w-full pt-4 ">
-                    <section class="w-full bg-white rounded-lg">
-                        <input id="region" type="text" class="border shadow py-5 px-2 w-full font-montserrat" v-model="filter" placeholder="Gimme a city..." />
+                    <section class="w-full bg-[#e8e8e8] rounded-lg">
+                        <input id="region" type="text" class="  py-5 px-2 w-full font-montserrat" v-model="filter" placeholder="Gimme a city..." />
                         <div v-if="filteredItems && filter">
                             <ul class="overflow-y-scroll max-h-48 rounded border shadow list-reset w-full mt-1">
                             <li v-for="item in filteredItems()" class="list-reset m-0 p-2 border-b" @click="setRegion(item)" style="cursor:pointer;">{{item}}</li>
@@ -54,7 +54,7 @@
                         </div>
                         <p v-if="filteredItems().length <= 0" class="text-grey-dark p-1">Sorry we can't find that</p>
                     </section>
-                    <p v-if="this.currRegion" class="text-white p-1 pt-3 font-montserrat">Selected: {{this.currRegion}}</p>
+                    <p v-if="this.currRegion" class="text-[var(--main-text-color)] p-1 pt-3 font-montserrat">Selected: {{this.currRegion}}</p>
                     <a v-if="this.currRegion" @click="clearRegion()" style="cursor:pointer;" class="pl-1 w-fit"><u>Clear</u></a>
                 </div>
 
@@ -81,7 +81,7 @@
 
                 <div class="inputLabel">Difficulty<label class="star">*</label></div>
                 <div class="app flex flex-col w-3/5 min-w-fit max-w-full pt-4 cursor-pointer" @click="this.diffOpen=!this.diffOpen">
-                    <section class="w-full bg-white rounded-lg font-montserrat">
+                    <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
                         <div class="p-[10px] py-6 text-[#9ca3af]">{{this.diffPlaceholder}}</div>
                         <div v-if="this.diffOpen">
                             <ul class="rounded border shadow list-reset w-full mt-1">
@@ -145,7 +145,7 @@
                 
                 <div class="inputLabel">Category<label class="star">*</label></div>
                 <div class="app flex flex-col w-3/5 min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat1Open=!this.cat1Open">
-                    <section class="w-full bg-white rounded-lg font-montserrat">
+                    <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
                         <div class="p-2 py-6 text-[#9ca3af]">{{this.cat1Placeholder}}</div>
                         <div v-if="this.cat1Open">
                             <ul class="rounded border shadow list-reset w-full mt-1">
@@ -200,7 +200,7 @@
 
 
                 <div v-if="this.chosenCategory1==='Subject'" class="app flex flex-col w-3/5 min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat2Open=!this.cat2Open">
-                    <section class="w-full bg-white rounded-lg font-montserrat">
+                    <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
                         <div class="p-2 py-6 text-[#9ca3af]">{{this.cat2PlaceHolder}}</div>
                         <div v-if="this.cat2Open">
                             <ul class="rounded border shadow list-reset w-full mt-1">
@@ -224,7 +224,7 @@
                 </div>
 
                 <div v-if="this.chosenCategory1==='Sports'" class="app flex flex-col w-3/5 min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat2Open=!this.cat2Open">
-                    <section class="w-full bg-white rounded-lg font-montserrat">
+                    <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
                         <div class="p-2 py-6 text-[#9ca3af]">{{this.cat2PlaceHolder}}</div>
                         <div v-if="this.cat2Open">
                             <ul class="rounded border shadow list-reset w-full mt-1">
@@ -243,7 +243,7 @@
                 </div>
 
                 <div v-if="this.chosenCategory1==='Hobbies'" class="app flex flex-col w-3/5 min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat2Open=!this.cat2Open">
-                    <section class="w-full bg-white rounded-lg font-montserrat">
+                    <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
                         <div class="p-2 py-6 text-[#9ca3af]">{{this.cat2PlaceHolder}}</div>
                         <div v-if="this.cat2Open">
                             <ul class="rounded border shadow list-reset w-full mt-1">
@@ -295,7 +295,7 @@ body {
     margin-top: 10px;
     height: 70px;
     font-size: 15px;
-    background-color: #fff;
+    background-color: #e8e8e8;
     border: none;
     padding-left: 10px;
     font-family: Montserrat-Bold;
@@ -315,7 +315,7 @@ body {
     font-size: 15px;
     display: inline-block;
     min-width: 70%;
-    background-color: #fff;
+    background-color: #e8e8e8;
     border: none;
     padding-top: 10px;
     font-family: Montserrat-Bold;
@@ -364,7 +364,7 @@ input[type="file"] {
     margin-top: 15px;
     height: 70px;
     font-size: 15px;
-    background-color: #fff;
+    background-color: #e8e8e8;
     border: none;
     padding-left: 10px;
     font-family: Montserrat-Bold;
@@ -392,7 +392,7 @@ input[type="file"] {
     margin-top: 10px;
     min-height: 100px;
     font-size: 15px;
-    background-color: #fff;
+    background-color: #e8e8e8;
     border: none;
     padding-left: 10px;
     padding-right: 10px;
@@ -486,7 +486,7 @@ input[type="file"] {
     padding: 8px 25px;
     font-family: "Ubuntu";
     font-size: 16px;
-    color: #fff;
+    color: #e8e8e8;
     background-image: linear-gradient(to bottom, #c92437 10%, #4F1118);
     border: 0;
     border-radius: 5px;

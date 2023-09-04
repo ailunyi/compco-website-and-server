@@ -651,6 +651,8 @@ export default defineComponent({
     methods:{
         toggleLike(change){
             const formData = new FormData();
+            if (common.sessionID == -1)
+                return;
             var compInfo = JSON.stringify({'sessionID':common.sessionID,
                                             'competitionUrl':this.$route.params.url,
                                             "change":change});
@@ -658,6 +660,7 @@ export default defineComponent({
             formData.append('content',compInfo);
             let that =this;
             console.log(formData);
+            
             fetch(common.serverAddress + "/competitions/like", {
                 method: 'POST',
                 body: formData

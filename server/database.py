@@ -15,7 +15,7 @@ import numpy as np
 # SQLALCHEMY_DATABASE_URL = "postgresql://user:password@postgresserver/db"
 
 
-myclient = pymongo.MongoClient("mongodb://localhost:27017")
+myclient = pymongo.MongoClient("mongodb://admin2:Ismell123@compco.cc:27018/admin")
 mydb = myclient["mydatabase"]
 userCol = mydb["users"]
 compCol = mydb["competitions"]

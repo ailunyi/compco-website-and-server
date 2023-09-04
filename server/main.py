@@ -26,6 +26,7 @@ from fastapi.exceptions import HTTPException
 from fastapi import WebSocket, WebSocketDisconnect
 
 from database import  *
+from database2 import *
 import cropper 
 
 
@@ -170,7 +171,10 @@ async def getCompetitionComments(competition_query):
     comments = getActivityComments(competition_query)
     return comments
 
-
+@app.get("/communities/explore")
+async def exploreCommunities():
+    posts = getCommunityPosts()
+    return posts
 
 @app.get("/admin/pendingComptitions")
 async def getPendingCompsInfo():

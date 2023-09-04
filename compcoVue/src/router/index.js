@@ -92,10 +92,31 @@ const router = createRouter({
         component: () => import('../views/communities.vue'),
         children: [
             
+            // {
+            //     path: 'chat',
+            //     name: 'chat',
+            //     component: () => import('../views/communities/chat.vue')
+            // },
             {
-                path: '',
-                name: 'chat',
-                component: () => import('../views/communities/chat.vue')
+              path: '',
+              name: 'exploreFeed',
+              component: () => import('../views/communities/exploreFeed.vue')
+            },
+            {
+              path: 'explore/:community',
+              name: 'exploreCommunity',
+              component: () => import('../views/communities/exploreFeed.vue')
+            },
+            {
+              path: 'joined',
+              name: 'joinedCommunity',
+              component: () => import('../views/communities/exploreFeed.vue')
+            }
+            ,
+            {
+              path: 'clubshowcase',
+              name: 'clubshowcase',
+              component: () => import('../views/communities/clubshowcase.vue')
             }
         ]
     },
@@ -142,6 +163,11 @@ const router = createRouter({
           path: 'harrypotter',
           name: 'harrypotter',
           component: () => import('../views/resources/harrypoter.vue')
+        },
+        {
+          path: 'quantumHunter',
+          name: 'quantumHunter',
+          component: () => import('../views/resources/quantumHunter.vue')
         }
       ]
     },

@@ -11,6 +11,7 @@
             <div class="toolsArea">
                 <router-link to="/resources/gpa_calculator" >GPA CALCULATOR</router-link>
                 <router-link to="/resources/love_calculator">LOVE CALCULATOR</router-link>
+                <router-link to="/resources/quantumHunter">QUANTUM HUNTER GAME</router-link>
                 <a href="http://www.bakeneko.games/index.html" target="_blank">BAKENEKO GAMES</a>
                 <!-- <a href="gpa_calculator">CHILL LOUNGE</a> -->
                 <!--<a href="gpa_calculator">MEMES</a>-->

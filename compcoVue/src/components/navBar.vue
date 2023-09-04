@@ -10,7 +10,7 @@ import themes from "../assets/themes.js"
             'position':absolute?'absolute':'fixed',
             'box-shadow': transparentNav ? 'none': '0 1px 3px -2px grey'}">
         <router-link to="/">
-            <img class="navLogo" alt="Bakeneko" src="../assets/images/logo2.png" />
+            <img class="navLogo" alt="compco" src="../assets/images/logo2.png" />
             <text class="compcoText" :style="{'color': transparentNav ? 'white': 'var(--main-text-color)'}" >omp</text>
             <text class="compcoText" :style="{'color': transparentNav ? 'white': 'var(--main-text-color)', 'top':'13px'}">co</text>
         </router-link>
@@ -254,7 +254,7 @@ a.router-link-active {
 }
 
 .navLogo {
-    position: absolute;
+    position: fixed;
     top: 3px;
     left: 18px;
     height: 53px;

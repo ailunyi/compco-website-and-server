@@ -1,8 +1,8 @@
 import { createCommentVNode } from "vue";
 
 let exports = {}
-//exports.serverAddress = "http://localhost:8000";
-exports.serverAddress = "https://www.compco.cc:8000";
+exports.serverAddress = "http://localhost:8000";
+//exports.serverAddress = "https://www.compco.cc:8000";
 exports.sessionID = -1;
 exports.username = "username..";
 exports.firstName = "firstName..";
