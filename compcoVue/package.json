@@ -17,7 +17,7 @@
     "@gtm-support/vue-gtm": "^2.0.0",
     "@mdi/font": "^5.9.55",
     "chalk": "^4.1.2",
-    "cropperjs": "^1.5.13",
+    "cropperjs": "^1.6.1",
     "each-async": "^2.0.0",
     "fuzzaldrin": "^2.1.0",
     "indent-string": "^5.0.0",

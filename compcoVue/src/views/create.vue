@@ -31,7 +31,7 @@
                     <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
                         <div class="p-[10px] py-6 text-[#9ca3af]">{{this.typePlaceholder}}</div>
                         <div v-if="this.actTypeOpen">
-                            <ul class="rounded border shadow list-reset w-full mt-1">
+                            <ul class="absolute z-50 bg-[#e8e8e8] rounded border shadow list-reset w-full mt-1">
                                 <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changeType('None','Choose Type')">Choose Type</li>
                                 <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changeType('Competition','Competition')">Competition</li>
                                 <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changeType('Event','Club/Event')">Club/Event</li>
@@ -46,21 +46,20 @@
                 <div class="font-franklin mt-12">Region <label class="star">*</label></div>
                 <div class="app flex flex-col w-3/6 min-w-fit max-w-full pt-4 ">
                     <section class="w-full bg-[#e8e8e8] rounded-lg">
-                        <input id="region" type="text" class="  py-5 px-2 w-full font-montserrat" v-model="filter" placeholder="Gimme a city..." />
+                        <input id="region" type="text" class="  py-5 px-2 w-full font-montserrat" v-model="filter" :placeholder="regionPlaceholder" />
                         <div v-if="filteredItems && filter">
-                            <ul class="overflow-y-scroll max-h-48 rounded border shadow list-reset w-full mt-1">
-                            <li v-for="item in filteredItems()" class="list-reset m-0 p-2 border-b" @click="setRegion(item)" style="cursor:pointer;">{{item}}</li>
+                            <ul class="absolute z-50 bg-[#e8e8e8] overflow-y-scroll max-h-48 rounded border shadow list-reset w-full mt-1">
+                                <li class="list-reset m-0 p-2 border-b text-gray-500" @click="setRegion('Online')" style="cursor:pointer;">Online</li>
+                                <li v-for="item in filteredItems()" class="list-reset m-0 p-2 border-b" @click="setRegion(item)" style="cursor:pointer;">{{item}}</li>
                             </ul>
                         </div>
                         <p v-if="filteredItems().length <= 0" class="text-grey-dark p-1">Sorry we can't find that</p>
                     </section>
-                    <p v-if="this.currRegion" class="text-[var(--main-text-color)] p-1 pt-3 font-montserrat">Selected: {{this.currRegion}}</p>
-                    <a v-if="this.currRegion" @click="clearRegion()" style="cursor:pointer;" class="pl-1 w-fit"><u>Clear</u></a>
                 </div>
 
                 
-                <div class="inputLabel">Location <label class="star">*</label></div>
-                <input class="inputArea" id="location" type="text" placeholder="Location" />
+                <div v-if="currRegion!='Online'" class="inputLabel">Location <label class="star">*</label></div>
+                <input v-if="currRegion!='Online'" class="inputArea" id="location" type="text" placeholder="Location" />
 
                 <div class="inputLabel">Sign Up Location <label class="star">*</label></div>
                 <input class="inputArea" id="signUpLocation" type="text" placeholder="Website link, wechat, etc." />
@@ -84,7 +83,7 @@
                     <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
                         <div class="p-[10px] py-6 text-[#9ca3af]">{{this.diffPlaceholder}}</div>
                         <div v-if="this.diffOpen">
-                            <ul class="rounded border shadow list-reset w-full mt-1">
+                            <ul class="absolute z-50 bg-[#e8e8e8] rounded border shadow list-reset w-full mt-1">
                                 <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changeDiff('None','Choose Difficulty')">Choose Difficulty</li>
                                 <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changeDiff('Beginner','Beginner')">Beginner</li>
                                 <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changeDiff('Intermediate','Intermediate')">Intermediate</li>
@@ -97,7 +96,7 @@
 
 
                 <div class="inputLabel">Description <label class="star">*</label></div>
-                <textarea @input="auto_grow($event)" id="description" placeholder="Description (20 letters minimum)"></textarea>
+                <textarea maxlength="1000" @input="auto_grow($event)" id="description" placeholder="Description (20 letters minimum)"></textarea>
 
                 <div class="inputLabel">Thumbnail/logo <label class="star">*</label></div>
 
@@ -144,121 +143,80 @@
                 </select> -->
                 
                 <div class="inputLabel">Category<label class="star">*</label></div>
-                <div class="app flex flex-col w-3/5 min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat1Open=!this.cat1Open">
-                    <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
-                        <div class="p-2 py-6 text-[#9ca3af]">{{this.cat1Placeholder}}</div>
-                        <div v-if="this.cat1Open">
-                            <ul class="rounded border shadow list-reset w-full mt-1">
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat1('None','Choose Category')">Choose Category</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat1('Subject','Subject')">Subject</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat1('Sports','Sports')">Sports</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat1('Hobbies','Hobbies')">Hobbies</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat1('Other','Other')">Other</li>
-                            </ul>
-                        </div>
-                    </section>
+                <div class="flex">
+                    <div class="app flex flex-col w-[45%] min-w-fit max-w-full pt-4 mr-[10%] cursor-pointer" @click="this.cat1Open=!this.cat1Open">
+                        <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
+                            <div class="p-2 py-6 text-[#9ca3af]">{{this.cat1Placeholder}}</div>
+                            <div v-if="this.cat1Open">
+                                <ul class="absolute z-50 bg-[#e8e8e8] rounded border shadow list-reset w-full mt-1">
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat1('None','Choose Category')">Choose Category</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat1('Subject','Subject')">Subject</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat1('Sports','Sports')">Sports</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat1('Hobbies','Hobbies')">Hobbies</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat1('Other','Other')">Other</li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+                    
+                    <div v-if="this.chosenCategory1==='Subject'" class="app flex flex-col w-[45%] min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat2Open=!this.cat2Open">
+                        <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
+                            <div class="p-2 py-6 text-[#9ca3af]">{{this.cat2PlaceHolder}}</div>
+                            <div v-if="this.cat2Open">
+                                <ul class="absolute z-50 bg-[#e8e8e8] rounded border shadow list-reset w-full mt-1">
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('None','Choose Category')">Choose Category</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Math','Math')">Math</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Chemistry','Chemistry')">Chemistry</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Economics','Economics')">Economics</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Business','Business')">Business</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Physics','Physics')">Physics</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Computer Science','Computer Science')">Computer Science</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Chinese','Chinese')">Chinese</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('History','History')">History</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Biology','Biology')">Biology</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('English','English')">English</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Innovation','Innovation/Science Fair')">Innovation/Science Fair</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Debate','Debate')">Debate</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Other','Other')">Other</li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div v-if="this.chosenCategory1==='Sports'" class="app flex flex-col w-[45%] min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat2Open=!this.cat2Open">
+                        <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
+                            <div class="p-2 py-6 text-[#9ca3af]">{{this.cat2PlaceHolder}}</div>
+                            <div v-if="this.cat2Open">
+                                <ul class="absolute z-50 bg-[#e8e8e8] rounded border shadow list-reset w-full mt-1">
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('None','Choose Category')">Choose Category</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Tennis','Tennis')">Tennis</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Basketball','Basketball')">Basketball</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Volleyball','Volleyball')">Volleyball</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Hockey','Hockey')">Hockey</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Badminton','Badminton')">Badminton</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Table Tennis','Table Tennis')">Table Tennis</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Soccer','Soccer')">Soccer</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Other','Other')">Other</li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
+
+                    <div v-if="this.chosenCategory1==='Hobbies'" class="app flex flex-col w-[45%] min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat2Open=!this.cat2Open">
+                        <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
+                            <div class="p-2 py-6 text-[#9ca3af]">{{this.cat2PlaceHolder}}</div>
+                            <div v-if="this.cat2Open">
+                                <ul class="absolute z-50 bg-[#e8e8e8] rounded border shadow list-reset w-full mt-1">
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('None','Choose Category')">Choose Category</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Game Jam','Game Jam')">Game Jam</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Gaming','Gaming')">Gaming</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Eating','Eating')">Eating</li>
+                                    <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Other','Other')">Other</li>
+                                </ul>
+                            </div>
+                        </section>
+                    </div>
                 </div>
-
-                <!-- <select id="subject" hidden>
-                    <option value="None">Choose Subject</option>
-                    <option value="Math">Math</option>
-                    <option value="Chemistry">Chemistry</option>
-                    <option value="Economics">Economics</option>
-                    <option value="Business">Business</option>
-                    <option value="Physics">Physics</option>
-                    <option value="Computer Science">Computer Science</option>
-                    <option value="Chinese">Chinese</option>
-                    <option value="History">History</option>
-                    <option value="Biology">Biology</option>
-                    <option value="English">English</option>
-                    <option value="Innovation">Innovation/Science Fair</option>
-                    <option value="Debate">Debate</option>
-                    <option value="Other">Other</option>
-                </select>
-
-                <select id="sports" hidden>
-                    <option value="None">Choose Sport</option>
-                    <option value="Tennis">Tennis</option>
-                    <option value="Basketball">Basketball</option>
-                    <option value="Volleyball">Volleyball</option>
-                    <option value="Hockey">Hockey</option>
-                    <option value="Badminton">Badminton</option>
-                    <option value="Table Tennis">Table Tennis</option>
-                    <option value="Soccer">Soccer</option>
-                    <option value="Other">Other</option>
-                </select>
-
-                <select id="hobbies" hidden>
-                    <option value="None">Choose Hobby</option>
-                    <option value="Game Jam">Game Jam</option>
-                    <option value="Gaming">Gaming</option>
-                    <option value="Eating">Eating</option>
-                    <option value="Other">Other</option>
-                </select> -->
-
-
-
-
-                <div v-if="this.chosenCategory1==='Subject'" class="app flex flex-col w-3/5 min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat2Open=!this.cat2Open">
-                    <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
-                        <div class="p-2 py-6 text-[#9ca3af]">{{this.cat2PlaceHolder}}</div>
-                        <div v-if="this.cat2Open">
-                            <ul class="rounded border shadow list-reset w-full mt-1">
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('None','Choose Category')">Choose Category</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Math','Math')">Math</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Chemistry','Chemistry')">Chemistry</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Economics','Economics')">Economics</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Business','Business')">Business</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Physics','Physics')">Physics</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Computer Science','Computer Science')">Computer Science</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Chinese','Chinese')">Chinese</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('History','History')">History</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Biology','Biology')">Biology</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('English','English')">English</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Innovation','Innovation/Science Fair')">Innovation/Science Fair</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Debate','Debate')">Debate</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Other','Other')">Other</li>
-                            </ul>
-                        </div>
-                    </section>
-                </div>
-
-                <div v-if="this.chosenCategory1==='Sports'" class="app flex flex-col w-3/5 min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat2Open=!this.cat2Open">
-                    <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
-                        <div class="p-2 py-6 text-[#9ca3af]">{{this.cat2PlaceHolder}}</div>
-                        <div v-if="this.cat2Open">
-                            <ul class="rounded border shadow list-reset w-full mt-1">
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('None','Choose Category')">Choose Category</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Tennis','Tennis')">Tennis</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Basketball','Basketball')">Basketball</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Volleyball','Volleyball')">Volleyball</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Hockey','Hockey')">Hockey</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Badminton','Badminton')">Badminton</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Table Tennis','Table Tennis')">Table Tennis</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Soccer','Soccer')">Soccer</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Other','Other')">Other</li>
-                            </ul>
-                        </div>
-                    </section>
-                </div>
-
-                <div v-if="this.chosenCategory1==='Hobbies'" class="app flex flex-col w-3/5 min-w-fit max-w-full pt-4 cursor-pointer" @click="this.cat2Open=!this.cat2Open">
-                    <section class="w-full bg-[#e8e8e8] rounded-lg font-montserrat">
-                        <div class="p-2 py-6 text-[#9ca3af]">{{this.cat2PlaceHolder}}</div>
-                        <div v-if="this.cat2Open">
-                            <ul class="rounded border shadow list-reset w-full mt-1">
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('None','Choose Category')">Choose Category</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Game Jam','Game Jam')">Game Jam</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Gaming','Gaming')">Gaming</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Eating','Eating')">Eating</li>
-                                <li class="list-reset m-0 p-2 border-b text-[#9ca3af] hover:bg-blue-500 hover:text-black" @click="changecat2('Other','Other')">Other</li>
-                            </ul>
-                        </div>
-                    </section>
-                </div>
-
-                
-
 
 
                 <!--<div>Once you submit, your competition will be avaliable once we approve it.</div>-->
@@ -384,7 +342,6 @@ input[type="file"] {
 .title {
     font-family: Montserrat-Bold;
     font-size: 45px;
-    margin-bottom: 40px;
 }
 
 .mainContent textarea {
@@ -615,6 +572,7 @@ export default defineComponent({
             typePlaceholder: "Choose Type",
             filter: "",
             currRegion: "",
+            regionPlaceholder: "Gimme a city...",
             chosenDifficulty:"None",
             diffPlaceholder: "Choose Difficulty",
             chosenCategory1: "None",
@@ -652,10 +610,12 @@ export default defineComponent({
         changecat1(cat,ph){
             this.chosenCategory1 = cat;
             this.cat1Placeholder = ph;
+            this.chosenCategory2 = "None";
+            this.cat2PlaceHolder = "Choose Category";
         },
         changecat2(cat,ph){
             this.chosenCategory2 = cat;
-            this.cat2PlaceHolder = cat;
+            this.cat2PlaceHolder = ph;
         },
         filteredItems(){
         if(this.filter === "")
@@ -665,9 +625,7 @@ export default defineComponent({
         setRegion(reg){
             this.filter = "";
             this.currRegion = reg;
-        },
-        clearRegion(){
-            this.currRegion = "";
+            this.regionPlaceholder = "Selected: "+reg;
         },
         startDrag(previewID){
             if (previewID == 'preview1')

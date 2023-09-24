@@ -168,6 +168,11 @@ const router = createRouter({
           path: 'quantumHunter',
           name: 'quantumHunter',
           component: () => import('../views/resources/quantumHunter.vue')
+        },
+        {
+          path: 'hypercube',
+          name: 'hypercube',
+          component: () => import('../views/resources/hypercube.vue')
         }
       ]
     },
